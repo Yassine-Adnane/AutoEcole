@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - Admin</title>
+        <title>Dashboard - SB Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -39,7 +39,7 @@
                 </li>
             </ul>
         </nav>
-        <div id="layoutSidenav" class="StyleNav">
+        <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
@@ -112,25 +112,17 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Dashboard</h1>
+                        <h1 class="mt-4">Gestion Candidats</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
+                           <!-- <li class="breadcrumb-item active">liste des candidats</li> -->
                         </ol>
                         <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Gestion Candidats</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="gestion_candidats.php">Voir les détails</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
                                     <div class="card-body">Candidats (Examen Théorie)</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="#">Voir les détails</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -139,7 +131,7 @@
                                 <div class="card bg-success text-white mb-4">
                                     <div class="card-body">Candidats (Examen Pratique)</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="#">Voir les détails</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -148,36 +140,22 @@
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">Informations important</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="#">Voir les détails</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-4">
+                        
+                        <div class="card mb-4 justify-content-md-end">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                les Candidats qui ont examens prochainement :
+                                Listes des Candidats
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a href="add_candidat.php">
+                                        <button class="btn btn-success  btn-sm" type="button">Ajouter Candidat</button>
+                                    </a>
+                                </div>
                             </div>
                             
                             <div class="card-body">
@@ -185,120 +163,140 @@
                                 <thead>
                                     <tr>
                                     <th scope="col">#</th>
+                                    <th scope="col">Image</th>
                                     <th scope="col">Nom</th>
                                     <th scope="col">Prénom</th>
                                     <th scope="col">CIN</th>
-                                    <th scope="col">Date Examen Théorie</th>
-                                    <th scope="col">Date Examen Pratique</th>
+                                    <th scope="col">Dossier</th>
+                                    <th scope="col">Frais DH</th>
+                                    <th scope="col">Reste DH</th>
+                                    <th scope="col">Forfait TH</th>
+                                    <th scope="col">Forfait PR</th>
+                                    <th scope="col">Consulter</th>
+                                    <th scope="col">Modifier</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                     <th scope="row">1</th>
+                                    <td>image_Mark</td>
                                     <td>Mark</td>
                                     <td>A2</td>
                                     <td>A3</td>
-                                    <td>05/04/2022</td>
-                                    <td>A5</td>
-                                    
+                                    <td>-</td>
+                                    <td>3500</td>
+                                    <td>0</td>
+                                    <td>Pack-TH-20H</td>
+                                    <td>Pack-PR-30H</td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
+                                                                        
                                     </tr>
                                     <tr>
                                     <th scope="row">2</th>
+                                    <td>image_Ali</td>
                                     <td>Ali</td>
                                     <td>B6</td>
                                     <td>B7</td>
-                                    <td>15/04/2022</td>
-                                    <td>B9</td>
+                                    <td>-</td>
+                                    <td>5000</td>
+                                    <td>1500</td>
+                                    <td>Pack-TH-50H</td>
+                                    <td>Pack-PR-60H</td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
                                     
                                     </tr>
                                     <tr>
                                     <th scope="row">3</th>
+                                    <td>image_khalid</td>
                                     <td>khalid</td>
                                     <td>C10</td>
                                     <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
+                                    <td>-</td>
+                                    <td>3500</td>
+                                    <td>0</td>
+                                    <td>Pack-TH-20H</td>
+                                    <td>Pack-PR-30H</td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
                                     </tr>
 
                                     <tr>
                                     <th scope="row">4</th>
+                                    <td>image_Said</td>
                                     <td>Said</td>
                                     <td>C10</td>
                                     <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
+                                    <td>-</td>
+                                    <td>3500</td>
+                                    <td>0</td>
+                                    <td>Pack-TH-20H</td>
+                                    <td>Pack-PR-30H</td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
                                     </tr>
 
                                     <tr>
                                     <th scope="row">5</th>
+                                    <td>image_Yassine</td>
                                     <td>Yassine</td>
                                     <td>C10</td>
                                     <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
+                                    <td>-</td>
+                                    <td>3500</td>
+                                    <td>0</td>
+                                    <td>Pack-TH-20H</td>
+                                    <td>Pack-PR-30H</td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
                                     </tr>
-                                    <tr>
 
+                                    <tr>
                                     <th scope="row">6</th>
-                                    <td>Alami</td>
+                                    <td>image_Abdou</td>
+                                    <td>Abdou</td>
                                     <td>C10</td>
                                     <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
+                                    <td>-</td>
+                                    <td>3500</td>
+                                    <td>2500</td>
+                                    <td>Pack-TH-20H</td>
+                                    <td>Pack-PR-30H</td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
                                     </tr>
+
                                     <tr>
                                     <th scope="row">7</th>
-                                    <td>Mark</td>
-                                    <td>A2</td>
-                                    <td>A3</td>
-                                    <td>05/04/2022</td>
-                                    <td>A5</td>
-                                    
+                                    <td>image_Sarah</td>
+                                    <td>Sarah</td>
+                                    <td>C10</td>
+                                    <td>C11</td>
+                                    <td>-</td>
+                                    <td>3500</td>
+                                    <td>0</td>
+                                    <td>Pack-TH-20H</td>
+                                    <td>Pack-PR-30H</td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
                                     </tr>
+
                                     <tr>
                                     <th scope="row">8</th>
-                                    <td>Ali</td>
-                                    <td>B6</td>
-                                    <td>B7</td>
-                                    <td>15/04/2022</td>
-                                    <td>B9</td>
+                                    <td>image_Fatima</td>
+                                    <td>Fatima</td>
+                                    <td>C10</td>
+                                    <td>C11</td>
+                                    <td>-</td>
+                                    <td>3500</td>
+                                    <td>0</td>
+                                    <td>Pack-TH-20H</td>
+                                    <td>Pack-PR-30H</td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
+                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
+                                    </tr>
                                     
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">9</th>
-                                    <td>khalid</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
-                                    </tr>
-
-                                    <tr>
-                                    <th scope="row">10</th>
-                                    <td>Said</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
-                                    </tr>
-
-                                    <tr>
-                                    <th scope="row">11</th>
-                                    <td>Yassine</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
-                                    </tr>
-                                    <tr>
-
-                                    <th scope="row">12</th>
-                                    <td>Alami</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
-                                    </tr>
                                 </tbody>
                             </table>
                             </div>

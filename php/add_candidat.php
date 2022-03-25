@@ -9,9 +9,8 @@
         <title>Dashboard - Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-        <link href="styleDashBord.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <link href="styleDashBord.css" rel="stylesheet" />
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -112,9 +111,9 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Dashboard</h1>
+                        <h1 class="mt-4">Ajouter Candidat</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active">Gestion candidats</li>
                         </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
@@ -159,17 +158,130 @@
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
+                                        Informations Candidat
                                     </div>
+                                    <!-- Start Info Candidat -->
+                                    <div class="info_candidat">
+                                    <div class="container">
+                                    <form class="">
+                                        <div class="form-group test">
+                                            <label style=" margin-top: 15px">Nom</label>
+                                            <input type="text" class="form-control" placeholder="Nom Candidat">
+                                        </div>
+                                        <div class="form-group">
+                                            <label style=" margin-top: 15px">Prénom</label>
+                                            <input type="text" class="form-control" placeholder="Prénom Candidat">
+                                        </div>
+
+                                        <label style=" margin-top: 15px">Genre</label>
+                                        <div class="form-group form-control">     
+                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                                                <label class="form-check-label" for="exampleRadios1">Home</label>
+                                        </div>
+                                        <div class="form-group form-control">     
+                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option2">
+                                                <label class="form-check-label" for="exampleRadios1">Femme</label>
+                                        </div>
+                                                
+                                        <div class="form-group">
+                                            <label style=" margin-top: 15px">Numéro Telephone</label>
+                                            <input type="text" class="form-control" placeholder="Numéro Telephone Candidat">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label style=" margin-top: 15px">Num CIN</label>
+                                            <input type="text" class="form-control" placeholder="Num CIN Candidat">
+                                        </div>
+                                        <div class="form-group">
+                                            <label style=" margin-top: 15px">Email</label>
+                                            <input type="email" class="form-control" placeholder="Email Candidat">
+                                        </div>
+                                        <div class="form-group">
+                                            <label style=" margin-top: 15px">Mot de Passe</label>
+                                            <input type="text" class="form-control" placeholder="Mot de Passe temporaire">
+                                        </div>
+                                        <div class="form-group">
+                                            <label style=" margin-top: 15px">Validation Mot de Passe</label>
+                                            <input type="text" class="form-control" placeholder="Validation mot de passe temporaire">
+                                        </div>
+
+                                    </form>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                        <button type="button" class="btn btn-success" style=" margin-top: 15px">Enregistrer</button>
+                                        </div>
+                                        <div class="col-6">
+                                        <button type="button" class="btn btn-warning" style=" margin-top: 15px">Annuler</button>
+                                        </div>
+                                    </div>
+                            
+
+                                    </div> <!-- End Container -->
+                                    </div>
+                                    <!-- End Info Candidat -->
                                     <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                                 </div>
+                                
                             </div>
                             <div class="col-xl-6">
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
+                                        Dossier Candidat
                                     </div>
+                                    <!-- Start Dossier Candidat -->
+                                    <div class="info_candidat">
+                                    <div class="container">
+                                    <form class="">
+                                        <div class="form-group ">
+                                            <label style="margin-top: 15px">Catégorie Permis</label>
+                                            <select class="form-control" style="margin-top: 5px">
+                                                <option>A - Moto</option>
+                                                <option>B - Voiture</option>
+                                                <option>C - Camion</option>
+                                                <option>D - AutoBus</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <label style=" margin-top: 15px">Forfait Cours Théorique</label>
+                                            <select class="form-control" style="margin-top: 5px">
+                                                <option>20 Heurs</option>
+                                                <option>30 Heurs</option>
+                                                <option>40 Heurs</option>
+                                                <option>50 Heurs</option>
+                                            </select>
+                                        </div>
+                                     
+                                        <div class="form-group ">
+                                            <label style=" margin-top: 15px">Forfait Cours Pratique</label>
+                                            <select class="form-control" style="margin-top: 5px">
+                                                <option>20 Heurs</option>
+                                                <option>30 Heurs</option>
+                                                <option>40 Heurs</option>
+                                                <option>50 Heurs</option>
+                                            </select>
+                                        </div>
+                                        <form>
+                                            <div class="form-group" style=" margin-top: 15px">
+                                                <label for="exampleFormControlFile1">Photo Candidat</label> <br>
+                                                <input type="file" class="form-control-file" id="exampleFormControlFile1" accept="image/*">
+                                            </div>
+                                        </form>
+                                        <form>
+                                            <div class="form-group" style=" margin-top: 18px">
+                                                <label for="exampleFormControlFile1">Images CIN (Recto & Verso)</label> <br>
+                                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                            </div>
+                                        </form>
+
+                   
+                                    
+                                    </form>
+                                    </div> <!-- End Container -->
+                                    </div>
+                                    <!-- End Dossier Candidat -->
                                     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                                 </div>
                             </div>
