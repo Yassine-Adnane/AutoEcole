@@ -161,10 +161,11 @@
                                         Informations Candidat
                                     </div>
                                     <!-- Start Info Candidat -->
-                                
-                                    <?php require "AddCandidat.php"; ?>
+
+                                        <?php require "AddCandidat.php"; ?>
+
                                        <div class="container">
-                                       <form method="POST" action="AddCandidat.php">
+                                       <form method="POST">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Nom</label>
                                                 <input type="text" class="form-control"  name ="nom" placeholder="Enter Name">
@@ -177,8 +178,28 @@
                                                 <label for="exampleInputEmail1">CIN</label>
                                                 <input type="text" class="form-control" name ="cin" placeholder="Enter CIN">
                                             </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Genre</label>
+                                                <input type="text" class="form-control" name ="genre" placeholder="Genre">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Numero Telephone</label>
+                                                <input type="text" class="form-control"  name ="tele" maxlength="10" placeholder="Num telephone candidat">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Email</label>
+                                                <input type="email" class="form-control" name ="email" placeholder="Email Candidat">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Mot de Passe</label>
+                                                <input type="text" class="form-control" name ="psswd" placeholder="Mot de Passe temporaire">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Confirmation Mot de Passe</label>
+                                                <input type="text" class="form-control" name ="cpsswd" placeholder="Confirmation Mot de Passe temporaire">
+                                            </div>
                                             
-                                            <button type="submit" name ="save" class="btn btn-primary">Submit</button>
+                                            <button type="submit" name ="save" class="btn btn-success">Enregistrer</button>
                                         </form>
                                        </div> <!-- End Container -->
                                     <!-- End Info Candidat -->
@@ -251,131 +272,52 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                les Candidats qui ont examens prochainement :
+                                liste Candidats :
                             </div>
                             
-                            <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col">Prénom</th>
-                                    <th scope="col">CIN</th>
-                                    <th scope="col">Date Examen Théorie</th>
-                                    <th scope="col">Date Examen Pratique</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>A2</td>
-                                    <td>A3</td>
-                                    <td>05/04/2022</td>
-                                    <td>A5</td>
-                                    
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">2</th>
-                                    <td>Ali</td>
-                                    <td>B6</td>
-                                    <td>B7</td>
-                                    <td>15/04/2022</td>
-                                    <td>B9</td>
-                                    
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">3</th>
-                                    <td>khalid</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
-                                    </tr>
+                            <!-- **************************************************** -->
+                            
+                            <?php 
+                                        $con = mysqli_connect('localhost', 'root', '', 'db_autoecole');
+                                        $result = $con -> query("SELECT * FROM candidats") or die($mysqli->error);
+                            ?> 
 
-                                    <tr>
-                                    <th scope="row">4</th>
-                                    <td>Said</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
-                                    </tr>
+                            <div class="container">
+                            <div class="row justify-content-center">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nom</th>
+                                                        <th>Prenom</th>
+                                                        <th>CIN</th>
+                                                        <th>Genre</th>
+                                                        <th>Telephone</th>
+                                                        <th>Email</th>
+                                                    </tr>
+                                                </thead>
 
-                                    <tr>
-                                    <th scope="row">5</th>
-                                    <td>Yassine</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
-                                    </tr>
-                                    <tr>
+                                                <?php
+                                                while($row = $result->fetch_assoc()) : ?>
+                                                
 
-                                    <th scope="row">6</th>
-                                    <td>Alami</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">7</th>
-                                    <td>Mark</td>
-                                    <td>A2</td>
-                                    <td>A3</td>
-                                    <td>05/04/2022</td>
-                                    <td>A5</td>
-                                    
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">8</th>
-                                    <td>Ali</td>
-                                    <td>B6</td>
-                                    <td>B7</td>
-                                    <td>15/04/2022</td>
-                                    <td>B9</td>
-                                    
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">9</th>
-                                    <td>khalid</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
-                                    </tr>
+                                                <tr>
+                                                    <td> <?php echo $row['nom']; ?>  </td>
+                                                    <td> <?php echo $row['prenom']; ?>  </td>
+                                                    <td> <?php echo $row['cin']; ?>  </td>
+                                                    <td> <?php echo $row['genre']; ?>  </td>
+                                                    <td> <?php echo $row['tele']; ?>  </td>
+                                                    <td> <?php echo $row['email']; ?>  </td>
 
-                                    <tr>
-                                    <th scope="row">10</th>
-                                    <td>Said</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
-                                    </tr>
+                                                </tr>
+                                                    
+                                                <?php endwhile ?>
 
-                                    <tr>
-                                    <th scope="row">11</th>
-                                    <td>Yassine</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
-                                    </tr>
-                                    <tr>
 
-                                    <th scope="row">12</th>
-                                    <td>Alami</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>01/04/2022</td>
-                                    <td>C13</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            </table>
+                                        </div>
+
                             </div>
+                            <!-- **************************************************** -->
                         </div>
                     </div>
                 </main>
