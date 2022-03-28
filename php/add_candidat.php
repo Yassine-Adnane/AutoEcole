@@ -161,67 +161,29 @@
                                         Informations Candidat
                                     </div>
                                     <!-- Start Info Candidat -->
-                                    <div class="info_candidat">
-                                    <div class="container">
-                                    <form class="">
-                                        <div class="form-group test">
-                                            <label style=" margin-top: 15px">Nom</label>
-                                            <input type="text" class="form-control" placeholder="Nom Candidat">
-                                        </div>
-                                        <div class="form-group">
-                                            <label style=" margin-top: 15px">Prénom</label>
-                                            <input type="text" class="form-control" placeholder="Prénom Candidat">
-                                        </div>
-
-                                        <label style=" margin-top: 15px">Genre</label>
-                                        <div class="form-group form-control">     
-                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
-                                                <label class="form-check-label" for="exampleRadios1">Home</label>
-                                        </div>
-                                        <div class="form-group form-control">     
-                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option2">
-                                                <label class="form-check-label" for="exampleRadios1">Femme</label>
-                                        </div>
-                                                
-                                        <div class="form-group">
-                                            <label style=" margin-top: 15px">Numéro Telephone</label>
-                                            <input type="text" class="form-control" placeholder="Numéro Telephone Candidat">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label style=" margin-top: 15px">Num CIN</label>
-                                            <input type="text" class="form-control" placeholder="Num CIN Candidat">
-                                        </div>
-                                        <div class="form-group">
-                                            <label style=" margin-top: 15px">Email</label>
-                                            <input type="email" class="form-control" placeholder="Email Candidat">
-                                        </div>
-                                        <div class="form-group">
-                                            <label style=" margin-top: 15px">Mot de Passe</label>
-                                            <input type="text" class="form-control" placeholder="Mot de Passe temporaire">
-                                        </div>
-                                        <div class="form-group">
-                                            <label style=" margin-top: 15px">Validation Mot de Passe</label>
-                                            <input type="text" class="form-control" placeholder="Validation mot de passe temporaire">
-                                        </div>
-
-                                    </form>
-
-                                    <div class="row">
-                                        <div class="col-6">
-                                        <button type="button" class="btn btn-success" style=" margin-top: 15px">Enregistrer</button>
-                                        </div>
-                                        <div class="col-6">
-                                        <button type="button" class="btn btn-warning" style=" margin-top: 15px">Annuler</button>
-                                        </div>
-                                    </div>
-                            
-
-                                    </div> <!-- End Container -->
-                                    </div>
+                                
+                                    <?php require "AddCandidat.php"; ?>
+                                       <div class="container">
+                                       <form method="POST" action="AddCandidat.php">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Nom</label>
+                                                <input type="text" class="form-control"  name ="nom" placeholder="Enter Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Prénom</label>
+                                                <input type="text" class="form-control"  name ="prenom" placeholder="Enter Prénom">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">CIN</label>
+                                                <input type="text" class="form-control" name ="cin" placeholder="Enter CIN">
+                                            </div>
+                                            
+                                            <button type="submit" name ="save" class="btn btn-primary">Submit</button>
+                                        </form>
+                                       </div> <!-- End Container -->
                                     <!-- End Info Candidat -->
                                     <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
+                                 </div>
                                 
                             </div>
                             <div class="col-xl-6">
@@ -438,6 +400,7 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="js/datatables-simple-demo.js"></script>
     </body>
 </html>
