@@ -41,27 +41,29 @@ if(isset($_GET['delete']))
 
 if(isset($_GET['edit']))
 {
-     $resultdata = array();
+    // $resultdata = array();
 
     $id = $_GET['edit'];
     $resultdata = $con->query("SELECT * FROM candidats WHERE id=$id") or die($mysqli->error());
     
-
+    
+    //if(count($resultdata,1) == 1)
+    /*
+    
     $days = array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
     
     // Printing array size
     echo count($days);
+    */
 
-
-    /*
-    if(count($resultdata,1) == 1)
+    if(mysqli_num_rows($resultdata) == 1)
     {
         $row  =  $resultdata->fetch_array();
 
         $nameCandidat = $row['nom'];
         
     }
-    */
+    
 }
 
 

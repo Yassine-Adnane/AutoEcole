@@ -325,7 +325,7 @@
                                                     <td> <?php echo $row['tele']; ?>  </td>
                                                     <td> <?php echo $row['email']; ?>  </td>
                                                     <td>
-                                                        <a href="AddCandidat.php?edit=<?php echo $row['id']; ?>"
+                                                        <a href="?edit=<?php echo $row['id']; ?>"
                                                         class="btn btn-warning">Modifier</a>    
                                                         
                                                         <a href="AddCandidat.php?delete=<?php echo $row['id']; ?>"
