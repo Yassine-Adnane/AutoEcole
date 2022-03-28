@@ -3,6 +3,7 @@
 
 $con = mysqli_connect('localhost', 'root', '', 'db_autoecole');
 
+$nameCandidat = '';
 
 
 if(isset($_POST['save']))
@@ -37,5 +38,31 @@ if(isset($_GET['delete']))
     header("location:add_candidat.php");
 
 }
+
+if(isset($_GET['edit']))
+{
+     $resultdata = array();
+
+    $id = $_GET['edit'];
+    $resultdata = $con->query("SELECT * FROM candidats WHERE id=$id") or die($mysqli->error());
+    
+
+    $days = array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
+    
+    // Printing array size
+    echo count($days);
+
+
+    /*
+    if(count($resultdata,1) == 1)
+    {
+        $row  =  $resultdata->fetch_array();
+
+        $nameCandidat = $row['nom'];
+        
+    }
+    */
+}
+
 
 ?>

@@ -168,7 +168,7 @@
                                        <form method="POST">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Nom</label>
-                                                <input type="text" class="form-control"  name ="nom" placeholder="Enter Name">
+                                                <input type="text" class="form-control"  name ="nom" placeholder="Enter Name" value="<?php echo $nameCandidat; ?>">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Prénom</label>
@@ -285,15 +285,15 @@
                             <!-- Notification CRUD --> 
                             <?php if(isset($_SESSION['message_crud'])) : ?>
                             
-                            <div class="alert alert-<?$_SESSION['msg_type']?>">
+                            <div class="p-3 mb-2 bg-success text-white-<?$_SESSION['msg_type']?>">
                                     <?php
                                         echo $_SESSION['message_crud'];
                                         unset( $_SESSION['message_crud']);
                                     ?>
                             </div>
-                                
+                            
                             <?php endif ?>
-                             <!-- Notification CRUD --> 
+                             <!-- End Notification CRUD --> 
 
                             <div class="container">
                             <div class="row justify-content-center">
