@@ -3,7 +3,17 @@
 
 $con = mysqli_connect('localhost', 'root', '', 'db_autoecole');
 
-$nameCandidat = '';
+$nameCandidat       = '';
+$prenomCandidat     = '';
+$cinCandidat        = '';
+$genreCandidat      = '';
+$teleCandidat       = '';
+$emailCandidat      = '';
+$pswrdCandidat      = '';
+$updateCandidat     = false;
+$idUpd              = 0;
+
+
 
 
 if(isset($_POST['save']))
@@ -41,30 +51,51 @@ if(isset($_GET['delete']))
 
 if(isset($_GET['edit']))
 {
-    // $resultdata = array();
 
     $id = $_GET['edit'];
+    $updateCandidat = true;
+
     $resultdata = $con->query("SELECT * FROM candidats WHERE id=$id") or die($mysqli->error());
     
     
-    //if(count($resultdata,1) == 1)
-    /*
-    
-    $days = array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
-    
-    // Printing array size
-    echo count($days);
-    */
-
     if(mysqli_num_rows($resultdata) == 1)
     {
         $row  =  $resultdata->fetch_array();
 
+        $idUpd = $row['id'];
         $nameCandidat = $row['nom'];
+        $prenomCandidat = $row['prenom'];
+        $cinCandidat = $row['cin'];
+        $genreCandidat = $row['genre'];
+        $teleCandidat = $row['tele'];
+        $emailCandidat = $row['email'];
+        $pswrdCandidat = $row['psswd'];
         
     }
     
 }
 
+
+if(isset($_POST['update']))
+{
+ 
+    $NomUpdate     = $_POST['nom'];
+    $PrenomUpdate  = $_POST['prenom'];
+    $CINUpdate     = $_POST['cin'];
+    $GenreUpdate   = $_POST['genre'];
+    $EmailUpdate    = $_POST['email'];
+    $TeleUpdate    = $_POST['tele'];
+
+    $con -> query("UPDATE candidats SET 
+    nom='$NomUpdate',
+    prenom='$PrenomUpdate'
+    WHERE id=$idUpd") or die($mysqli->error());
+
+    $_SESSION['message_crud'] = "Candidat a bien Modifier";
+    $_SESSION['msg_type'] = "danger";
+    
+    
+    
+}
 
 ?>

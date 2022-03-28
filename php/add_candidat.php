@@ -167,39 +167,47 @@
                                        <div class="container">
                                        <form method="POST">
                                             <div class="form-group">
+                                                <!-- Champ Caché pour id de candidat -->
+                                                <input type="hidden" name="id" value="<?php echo $idUpd; ?>">
+                                            <!-- End Champ Caché ID -->
                                                 <label for="exampleInputEmail1">Nom</label>
                                                 <input type="text" class="form-control"  name ="nom" placeholder="Enter Name" value="<?php echo $nameCandidat; ?>">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Prénom</label>
-                                                <input type="text" class="form-control"  name ="prenom" placeholder="Enter Prénom">
+                                                <input type="text" class="form-control"  name ="prenom" placeholder="Enter Prénom" value="<?php echo $prenomCandidat; ?>">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">CIN</label>
-                                                <input type="text" class="form-control" name ="cin" placeholder="Enter CIN">
+                                                <input type="text" class="form-control" name ="cin" placeholder="Enter CIN" value="<?php echo $cinCandidat; ?>">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Genre</label>
-                                                <input type="text" class="form-control" name ="genre" placeholder="Genre">
+                                                <input type="text" class="form-control" name ="genre" placeholder="Genre" value="<?php echo $genreCandidat; ?>">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Numero Telephone</label>
-                                                <input type="text" class="form-control"  name ="tele" maxlength="10" placeholder="Num telephone candidat">
+                                                <input type="text" class="form-control"  name ="tele" maxlength="10" placeholder="Num telephone candidat" value="<?php echo $teleCandidat; ?>">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email</label>
-                                                <input type="email" class="form-control" name ="email" placeholder="Email Candidat">
+                                                <input type="email" class="form-control" name ="email" placeholder="Email Candidat" value="<?php echo $emailCandidat; ?>">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Mot de Passe</label>
-                                                <input type="text" class="form-control" name ="psswd" placeholder="Mot de Passe temporaire">
+                                                <input type="text" class="form-control" name ="psswd" placeholder="Mot de Passe temporaire" value="<?php echo $pswrdCandidat; ?>">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Confirmation Mot de Passe</label>
                                                 <input type="text" class="form-control" name ="cpsswd" placeholder="Confirmation Mot de Passe temporaire">
                                             </div>
-                                            
-                                            <button type="submit" name ="save" class="btn btn-success">Enregistrer</button>
+                                            <?php 
+                                                if($updateCandidat == true) :
+                                            ?>
+                                                <button type="submit" name ="update" class="btn btn-warning">Modifier</button>
+                                            <?php else:?>
+                                                 <button type="submit" name ="save" class="btn btn-success">Enregistrer</button>
+                                            <?php endif;?>
                                         </form>
                                        </div> <!-- End Container -->
                                     <!-- End Info Candidat -->
