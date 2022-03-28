@@ -282,17 +282,32 @@
                                         $result = $con -> query("SELECT * FROM candidats") or die($mysqli->error);
                             ?> 
 
+                            <!-- Notification CRUD --> 
+                            <?php if(isset($_SESSION['message_crud'])) : ?>
+                            
+                            <div class="alert alert-<?$_SESSION['msg_type']?>">
+                                    <?php
+                                        echo $_SESSION['message_crud'];
+                                        unset( $_SESSION['message_crud']);
+                                    ?>
+                            </div>
+                                
+                            <?php endif ?>
+                             <!-- Notification CRUD --> 
+
                             <div class="container">
                             <div class="row justify-content-center">
                                             <table class="table">
                                                 <thead>
                                                     <tr>
+                                                        <th>ID</th>
                                                         <th>Nom</th>
                                                         <th>Prenom</th>
                                                         <th>CIN</th>
                                                         <th>Genre</th>
                                                         <th>Telephone</th>
                                                         <th>Email</th>
+                                                        <th>Traitemet</th>
                                                     </tr>
                                                 </thead>
 
@@ -301,12 +316,22 @@
                                                 
 
                                                 <tr>
+
+                                                    <td> <?php echo $row['id']; ?>  </td>
                                                     <td> <?php echo $row['nom']; ?>  </td>
                                                     <td> <?php echo $row['prenom']; ?>  </td>
                                                     <td> <?php echo $row['cin']; ?>  </td>
                                                     <td> <?php echo $row['genre']; ?>  </td>
                                                     <td> <?php echo $row['tele']; ?>  </td>
                                                     <td> <?php echo $row['email']; ?>  </td>
+                                                    <td>
+                                                        <a href="AddCandidat.php?edit=<?php echo $row['id']; ?>"
+                                                        class="btn btn-warning">Modifier</a>    
+                                                        
+                                                        <a href="AddCandidat.php?delete=<?php echo $row['id']; ?>"
+                                                        class="btn btn-danger">Supprimer</a>    
+                                                        
+                                                    </td>
 
                                                 </tr>
                                                     
@@ -315,7 +340,6 @@
 
                                             </table>
                                         </div>
-
                             </div>
                             <!-- **************************************************** -->
                         </div>

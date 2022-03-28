@@ -1,6 +1,9 @@
 <?php
 
+
 $con = mysqli_connect('localhost', 'root', '', 'db_autoecole');
+
+
 
 if(isset($_POST['save']))
 {
@@ -16,6 +19,23 @@ if(isset($_POST['save']))
     $con ->query("INSERT INTO candidats (cin,nom,prenom,genre,tele,email,psswd,cpsswd) 
     VALUES ('$cin','$nom','$prenom','$genre','$tele','$email','$psswd','$cpsswd')") or
     die($con->error);
+
+    $_SESSION['message_crud'] = "Candidat a bien ajouter";
+    $_SESSION['msg_type'] = "success";
+
+}
+
+
+if(isset($_GET['delete']))
+{
+    $idCandidat = $_GET['delete'];
+    $con ->query("DELETE FROM candidats WHERE id=$idCandidat") or die ($mysqli->error());
+    
+    $_SESSION['message_crud'] = "Candidat a bien supprimer";
+    $_SESSION['msg_type'] = "danger";
+
+    header("location:add_candidat.php");
+
 }
 
 ?>
