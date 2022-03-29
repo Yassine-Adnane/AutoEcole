@@ -115,6 +115,7 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Gestion candidats</li>
                         </ol>
+                        
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
@@ -153,134 +154,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Informations Candidat
-                                    </div>
-                                    <!-- Start Info Candidat -->
 
-                                        <?php require "AddCandidat.php"; ?>
-
-                                       <div class="container">
-                                       <form method="POST">
-                                            <div class="form-group">
-                                                <!-- Champ Caché pour id de candidat -->
-                                                <input type="hidden" name="id" value="<?php echo $idUpd; ?>">
-                                            <!-- End Champ Caché ID -->
-                                                <label for="exampleInputEmail1">Nom</label>
-                                                <input type="text" class="form-control"  name ="nom" placeholder="Enter Name" value="<?php echo $nameCandidat; ?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Prénom</label>
-                                                <input type="text" class="form-control"  name ="prenom" placeholder="Enter Prénom" value="<?php echo $prenomCandidat; ?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">CIN</label>
-                                                <input type="text" class="form-control" name ="cin" placeholder="Enter CIN" value="<?php echo $cinCandidat; ?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Genre</label>
-                                                <input type="text" class="form-control" name ="genre" placeholder="Genre" value="<?php echo $genreCandidat; ?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Numero Telephone</label>
-                                                <input type="text" class="form-control"  name ="tele" maxlength="10" placeholder="Num telephone candidat" value="<?php echo $teleCandidat; ?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Email</label>
-                                                <input type="email" class="form-control" name ="email" placeholder="Email Candidat" value="<?php echo $emailCandidat; ?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Mot de Passe</label>
-                                                <input type="text" class="form-control" name ="psswd" placeholder="Mot de Passe temporaire" value="<?php echo $pswrdCandidat; ?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Confirmation Mot de Passe</label>
-                                                <input type="text" class="form-control" name ="cpsswd" placeholder="Confirmation Mot de Passe temporaire">
-                                            </div>
-                                            <?php 
-                                                if($updateCandidat == true) :
-                                            ?>
-                                                <button type="submit" name ="update" class="btn btn-warning">Modifier</button>
-                                            <?php else:?>
-                                                 <button type="submit" name ="save" class="btn btn-success">Enregistrer</button>
-                                            <?php endif;?>
-                                        </form>
-                                       </div> <!-- End Container -->
-                                    <!-- End Info Candidat -->
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                 </div>
-                                
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Dossier Candidat
-                                    </div>
-                                    <!-- Start Dossier Candidat -->
-                                    <div class="info_candidat">
-                                    <div class="container">
-                                    <form class="">
-                                        <div class="form-group ">
-                                            <label style="margin-top: 15px">Catégorie Permis</label>
-                                            <select class="form-control" style="margin-top: 5px">
-                                                <option>A - Moto</option>
-                                                <option>B - Voiture</option>
-                                                <option>C - Camion</option>
-                                                <option>D - AutoBus</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group ">
-                                            <label style=" margin-top: 15px">Forfait Cours Théorique</label>
-                                            <select class="form-control" style="margin-top: 5px">
-                                                <option>20 Heurs</option>
-                                                <option>30 Heurs</option>
-                                                <option>40 Heurs</option>
-                                                <option>50 Heurs</option>
-                                            </select>
-                                        </div>
-                                     
-                                        <div class="form-group ">
-                                            <label style=" margin-top: 15px">Forfait Cours Pratique</label>
-                                            <select class="form-control" style="margin-top: 5px">
-                                                <option>20 Heurs</option>
-                                                <option>30 Heurs</option>
-                                                <option>40 Heurs</option>
-                                                <option>50 Heurs</option>
-                                            </select>
-                                        </div>
-                                        <form>
-                                            <div class="form-group" style=" margin-top: 15px">
-                                                <label for="exampleFormControlFile1">Photo Candidat</label> <br>
-                                                <input type="file" class="form-control-file" id="exampleFormControlFile1" accept="image/*">
-                                            </div>
-                                        </form>
-                                        <form>
-                                            <div class="form-group" style=" margin-top: 18px">
-                                                <label for="exampleFormControlFile1">Images CIN (Recto & Verso)</label> <br>
-                                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                                            </div>
-                                        </form>
-
-                   
-                                    
-                                    </form>
-                                    </div> <!-- End Container -->
-                                    </div>
-                                    <!-- End Dossier Candidat -->
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                        </div>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, alias.
+                        
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
                                 liste Candidats :
+                                <form action="" method="GET">
+                                    <div class="input-group mb-3" >
+                                        <input type="text"  class="form-control" placeholder="CIN Candidat">
+                                        <button type="submit" name="Search" value="<?php if(isset($_GET['Search'])) {echo $_GET['Search'];} ?>" class="btn btn-primary" >Cherche Candidat</button>
+                                    </div>
+                                </form>
                             </div>
                             
                             <!-- **************************************************** -->
@@ -303,6 +189,63 @@
                             <?php endif ?>
                              <!-- End Notification CRUD --> 
 
+                             <!-- Start Search --> 
+                             <?php
+
+                               
+                                if(isset($_GET['Search']))
+                                {
+                                    $filtreCIN   = $_GET['Search'];
+
+                                    $con = mysqli_connect('localhost', 'root', '', 'db_autoecole');
+                                    $resultdata = $con->query("SELECT * FROM candidats WHERE cin='k44444'")or die ($mysqli->error());
+                                   
+                                    if(mysqli_num_rows($resultdata)>0)
+                                    {
+                                        foreach($resultdata as $items)
+                                        {
+                                            ?>
+                                                <td> 
+                                                    <?php $items['id']; ?>  </td>
+                                                    <td> <?php $items['nom']; ?>  </td>
+                                                    <td> <?php $items['prenom']; ?>  </td>
+                                                    <td> <?php $items['cin']; ?>  </td>
+                                                    <td> <?php $items['genre']; ?>  </td>
+                                                    <td> <?php $items['tele']; ?>  </td>
+                                                    <td> <?php $items['email']; ?>  </td>
+                                                    <td> <?php $items['categorie']; ?>  </td>
+                                                    <td>
+                                                        <a href="?edit=<?php $items['id']; ?>"
+                                                        class="btn btn-warning">Consulter !</a> 
+
+                                                        <a href="?edit=<?php $items['id']; ?>"
+                                                        class="btn btn-warning">Modifier</a>    
+                                                        
+                                                        <a href="AddCandidat.php?delete=<?php $items['id']; ?>"
+                                                        class="btn btn-danger">Supprimer</a>    
+                                                        
+                                                </td>
+
+
+                                            <?php
+                                        }
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <tr>
+                                        <td colspan="9" >Pas de Candidat</td>
+                                        </tr>
+                                        <?php
+                                    }
+
+
+                                }
+
+                            ?>
+
+                             <!-- End Search --> 
+
                             <div class="container">
                             <div class="row justify-content-center">
                                             <table class="table">
@@ -315,6 +258,7 @@
                                                         <th>Genre</th>
                                                         <th>Telephone</th>
                                                         <th>Email</th>
+                                                        <th>Catégorie</th>
                                                         <th>Traitemet</th>
                                                     </tr>
                                                 </thead>
@@ -332,7 +276,11 @@
                                                     <td> <?php echo $row['genre']; ?>  </td>
                                                     <td> <?php echo $row['tele']; ?>  </td>
                                                     <td> <?php echo $row['email']; ?>  </td>
+                                                    <td> <?php echo $row['categorie']; ?>  </td>
                                                     <td>
+                                                        <a href="?edit=<?php echo $row['id']; ?>"
+                                                        class="btn btn-warning">Consulter !</a> 
+
                                                         <a href="?edit=<?php echo $row['id']; ?>"
                                                         class="btn btn-warning">Modifier</a>    
                                                         

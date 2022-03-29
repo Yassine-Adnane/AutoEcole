@@ -26,14 +26,18 @@ if(isset($_POST['save']))
     $email  = $_POST['email'];
     $psswd  = $_POST['psswd'];
     $cpsswd = $_POST['cpsswd'];
+    $categorie = $_POST['categorieTest'];
+    echo $categorie;
+    //$categorie = 'Categorie B';
 
-    $con ->query("INSERT INTO candidats (cin,nom,prenom,genre,tele,email,psswd,cpsswd) 
-    VALUES ('$cin','$nom','$prenom','$genre','$tele','$email','$psswd','$cpsswd')") or
+    
+    $con ->query("INSERT INTO candidats (cin,nom,prenom,genre,tele,email,psswd,cpsswd,categorie) 
+    VALUES ('$cin','$nom','$prenom','$genre','$tele','$email','$psswd','$cpsswd','$categorie')") or
     die($con->error);
 
     $_SESSION['message_crud'] = "Candidat a bien ajouter";
     $_SESSION['msg_type'] = "success";
-
+    
 }
 
 

@@ -152,154 +152,100 @@
                                 <i class="fas fa-table me-1"></i>
                                 Listes des Candidats
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    
+                                    <!-- Start Search Candidat -->
+                                    <form action="" method="GET">
+                                            <div class="input-group mb-3" >
+                                                <input type="text" name="Search" value="<?php if(isset($_GET['Search'])) {echo $_GET['Search'];} ?>" class="form-control" placeholder="CIN Candidat">
+                                                <button type="submit" class="btn btn-primary" >Cherche Candidat</button>
+                                            </div>
+                                    </form>
+                                    <!-- End Search Candidat -->
                                     <a href="add_candidat.php">
-                                        <button class="btn btn-success  btn-sm" type="button">Ajouter Candidat</button>
+                                        <button class="btn btn-success" type="button">Ajouter Candidat</button>
                                     </a>
+
+                                    
                                 </div>
                             </div>
                             
-                            <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col">Prénom</th>
-                                    <th scope="col">CIN</th>
-                                    <th scope="col">Dossier</th>
-                                    <th scope="col">Frais DH</th>
-                                    <th scope="col">Reste DH</th>
-                                    <th scope="col">Forfait TH</th>
-                                    <th scope="col">Forfait PR</th>
-                                    <th scope="col">Consulter</th>
-                                    <th scope="col">Modifier</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                    <th scope="row">1</th>
-                                    <td>image_Mark</td>
-                                    <td>Mark</td>
-                                    <td>A2</td>
-                                    <td>A3</td>
-                                    <td>-</td>
-                                    <td>3500</td>
-                                    <td>0</td>
-                                    <td>Pack-TH-20H</td>
-                                    <td>Pack-PR-30H</td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
-                                                                        
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">2</th>
-                                    <td>image_Ali</td>
-                                    <td>Ali</td>
-                                    <td>B6</td>
-                                    <td>B7</td>
-                                    <td>-</td>
-                                    <td>5000</td>
-                                    <td>1500</td>
-                                    <td>Pack-TH-50H</td>
-                                    <td>Pack-PR-60H</td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
-                                    
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">3</th>
-                                    <td>image_khalid</td>
-                                    <td>khalid</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>-</td>
-                                    <td>3500</td>
-                                    <td>0</td>
-                                    <td>Pack-TH-20H</td>
-                                    <td>Pack-PR-30H</td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
-                                    </tr>
+                            <!-- Start Table Candidats -->                        
+                                                        <!-- **************************************************** -->
+                            
+                                                        <?php 
+                                        $con = mysqli_connect('localhost', 'root', '', 'db_autoecole');
+                                        $result = $con -> query("SELECT * FROM candidats") or die($mysqli->error);
+                            ?> 
 
-                                    <tr>
-                                    <th scope="row">4</th>
-                                    <td>image_Said</td>
-                                    <td>Said</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>-</td>
-                                    <td>3500</td>
-                                    <td>0</td>
-                                    <td>Pack-TH-20H</td>
-                                    <td>Pack-PR-30H</td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
-                                    </tr>
-
-                                    <tr>
-                                    <th scope="row">5</th>
-                                    <td>image_Yassine</td>
-                                    <td>Yassine</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>-</td>
-                                    <td>3500</td>
-                                    <td>0</td>
-                                    <td>Pack-TH-20H</td>
-                                    <td>Pack-PR-30H</td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
-                                    </tr>
-
-                                    <tr>
-                                    <th scope="row">6</th>
-                                    <td>image_Abdou</td>
-                                    <td>Abdou</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>-</td>
-                                    <td>3500</td>
-                                    <td>2500</td>
-                                    <td>Pack-TH-20H</td>
-                                    <td>Pack-PR-30H</td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
-                                    </tr>
-
-                                    <tr>
-                                    <th scope="row">7</th>
-                                    <td>image_Sarah</td>
-                                    <td>Sarah</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>-</td>
-                                    <td>3500</td>
-                                    <td>0</td>
-                                    <td>Pack-TH-20H</td>
-                                    <td>Pack-PR-30H</td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
-                                    </tr>
-
-                                    <tr>
-                                    <th scope="row">8</th>
-                                    <td>image_Fatima</td>
-                                    <td>Fatima</td>
-                                    <td>C10</td>
-                                    <td>C11</td>
-                                    <td>-</td>
-                                    <td>3500</td>
-                                    <td>0</td>
-                                    <td>Pack-TH-20H</td>
-                                    <td>Pack-PR-30H</td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Consulter</button></td>
-                                    <td><button type="button" class="btn btn-primary btn-sm">Modifier</button></td>
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
+                            <!-- Notification CRUD --> 
+                            <?php if(isset($_SESSION['message_crud'])) : ?>
+                            
+                            <div class="p-3 mb-2 bg-success text-white-<?$_SESSION['msg_type']?>">
+                                    <?php
+                                        echo $_SESSION['message_crud'];
+                                        unset( $_SESSION['message_crud']);
+                                    ?>
                             </div>
+                            
+                            <?php endif ?>
+                             <!-- End Notification CRUD --> 
+
+                            <div class="container">
+                            <div class="row">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Nom</th>
+                                                        <th>Prenom</th>
+                                                        <th>CIN</th>
+                                                        <th>Genre</th>
+                                                        <th>Telephone</th>
+                                                        <th>Email</th>
+                                                        <th>Catégorie</th>
+                                                        <th>Traitemet</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <?php
+                                                while($row = $result->fetch_assoc()) : ?>
+                                                
+
+                                                <tr>
+
+                                                    <td> <?php echo $row['id']; ?>  </td>
+                                                    <td> <?php echo $row['nom']; ?>  </td>
+                                                    <td> <?php echo $row['prenom']; ?>  </td>
+                                                    <td> <?php echo $row['cin']; ?>  </td>
+                                                    <td> <?php echo $row['genre']; ?>  </td>
+                                                    <td> <?php echo $row['tele']; ?>  </td>
+                                                    <td> <?php echo $row['email']; ?>  </td>
+                                                    <td> <?php echo $row['categorie']; ?>  </td>
+                                                    <td>
+                                                        <a href="?edit=<?php echo $row['id']; ?>"
+                                                        class="btn btn-warning"><i class="fa-solid fa-folder-open"> </i></a> 
+
+                                                        <a href="?edit=<?php echo $row['id']; ?>"
+                                                        class="btn btn-warning"><i class="fa-solid fa-edit"> </i></a>    
+                                                        
+                                                        <a href="AddCandidat.php?delete=<?php echo $row['id']; ?>"
+                                                        class="btn btn-danger"><i class="fa-solid fa-trash"> </i></a>    
+                                                        
+                                                        
+                                                    </td>
+
+                                                </tr>
+                                                    
+                                                <?php endwhile ?>
+
+
+                                            </table>
+                                        </div>
+                            </div>
+                            <!-- **************************************************** -->
+
+                            <!-- End Table Candidats -->
+
                         </div>
                     </div>
                 </main>
