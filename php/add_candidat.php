@@ -25,6 +25,7 @@
                     <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
+            
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
@@ -108,6 +109,7 @@
                     </div>
                 </nav>
             </div>
+
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
@@ -154,9 +156,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, alias.
-                        
+  
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -167,6 +167,7 @@
                                         <button type="submit" name="Search" value="<?php if(isset($_GET['Search'])) {echo $_GET['Search'];} ?>" class="btn btn-primary" >Cherche Candidat</button>
                                     </div>
                                 </form>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, alias.
                             </div>
                             
                             <!-- **************************************************** -->
