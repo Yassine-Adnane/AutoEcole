@@ -5,47 +5,52 @@ $email = "";
 $name = "";
 $errors = array();
 
-//if user signup button
-if(isset($_POST['signup'])){
-    $name = mysqli_real_escape_string($con, $_POST['name']);
-    $email = mysqli_real_escape_string($con, $_POST['email']);
-    $password = mysqli_real_escape_string($con, $_POST['password']);
-    $cpassword = mysqli_real_escape_string($con, $_POST['cpassword']);
-    if($password !== $cpassword){
-        $errors['password'] = "Confirm password not matched!";
-    }
-    $email_check = "SELECT * FROM subscribers WHERE email = '$email'";
-    $res = mysqli_query($con, $email_check);
-    if(mysqli_num_rows($res) > 0){
-        $errors['email'] = "Email that you have entered is already exist!";
-    }
-    if(count($errors) === 0){
-        $encpass = password_hash($password, PASSWORD_BCRYPT);
-        $code = rand(999999, 111111);
-        $status = "notverified";
-        $insert_data = "INSERT INTO subscribers (name, email, password, code, status)
-                        values('$name', '$email', '$encpass', '$code', '$status')";
-        $data_check = mysqli_query($con, $insert_data);
-        if($data_check){
-            $subject = "Email Verification Code";
-            $message = "Your verification code is $code";
-            $sender = "From:yassineadnane41@gmail.com";
-            if(mail($email, $subject, $message, $sender)){
-                $info = "We've sent a verification code to your email - $email";
-                $_SESSION['info'] = $info;
-                $_SESSION['email'] = $email;
-                $_SESSION['password'] = $password;
-                header('location: user-otp.php');
-                exit();
-            }else{
-                $errors['otp-error'] = "Failed while sending code!";
-            }
-        }else{
-            $errors['db-error'] = "Failed while inserting data into database!";
+    /*
+    //if user signup button
+    if(isset($_POST['signup']))
+    {
+        $name = mysqli_real_escape_string($con, $_POST['name']);
+        $email = mysqli_real_escape_string($con, $_POST['email']);
+        $password = mysqli_real_escape_string($con, $_POST['password']);
+        $cpassword = mysqli_real_escape_string($con, $_POST['cpassword']);
+        if($password !== $cpassword){
+            $errors['password'] = "Confirm password not matched!";
         }
-    }
+        $email_check = "SELECT * FROM subscribers WHERE email = '$email'";
+        $res = mysqli_query($con, $email_check);
+        if(mysqli_num_rows($res) > 0){
+            $errors['email'] = "Email that you have entered is already exist!";
+        }
+        if(count($errors) === 0){
+            $encpass = password_hash($password, PASSWORD_BCRYPT);
+            $code = rand(999999, 111111);
+            $status = "notverified";
+            $insert_data = "INSERT INTO subscribers (name, email, password, code, status)
+                            values('$name', '$email', '$encpass', '$code', '$status')";
+            $data_check = mysqli_query($con, $insert_data);
+            if($data_check){
+                $subject = "Email Verification Code";
+                $message = "Your verification code is $code";
+                $sender = "From:yassineadnane41@gmail.com";
+                if(mail($email, $subject, $message, $sender)){
+                    $info = "We've sent a verification code to your email - $email";
+                    $_SESSION['info'] = $info;
+                    $_SESSION['email'] = $email;
+                    $_SESSION['password'] = $password;
+                    header('location: user-otp.php');
+                    exit();
+                }else{
+                    $errors['otp-error'] = "Failed while sending code!";
+                }
+            }else{
+                $errors['db-error'] = "Failed while inserting data into database!";
+            }
+        }
 
-}
+    }
+    */
+    
+    /*
     //if user click verification code submit button
     if(isset($_POST['check'])){
         $_SESSION['info'] = "";
@@ -72,6 +77,7 @@ if(isset($_POST['signup'])){
             $errors['otp-error'] = "You've entered incorrect code!";
         }
     }
+    */
 
     //if user click login button
     if(isset($_POST['login'])){
@@ -152,7 +158,8 @@ if(isset($_POST['signup'])){
     }
 
     //if user click change password button
-    if(isset($_POST['change-password'])){
+    if(isset($_POST['change-password']))
+    {
         $_SESSION['info'] = "";
         $password = mysqli_real_escape_string($con, $_POST['password']);
         $cpassword = mysqli_real_escape_string($con, $_POST['cpassword']);
@@ -175,7 +182,8 @@ if(isset($_POST['signup'])){
     }
     
    //if login now button click
-    if(isset($_POST['login-now'])){
+    if(isset($_POST['login-now']))
+    {
         header('Location: login-user.php');
     }
 ?>
