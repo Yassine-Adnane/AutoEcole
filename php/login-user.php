@@ -7,13 +7,13 @@
     <meta charset="UTF-8">
     <title>Connexion</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css_php/style_login.css">
 </head>
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4 form login-form">
-                <form action="login-user.php" method="POST" autocomplete="">
+                <form action="../dashbord_php_pages/dashbord.php" method="POST" autocomplete="">
                     <h2 class="text-center">Connexion</h2>
                     <p class="text-center">Connectez-vous avec votre email et votre mot de passe.</p>
                     <?php
@@ -39,10 +39,6 @@
                     <div class="form-group">
                         <input class="form-control button" type="submit" name="login" value="Login">
                     </div>
-                    
-                    <!-- 
-                    <div class="link login-link text-center">Not yet a member? <a href="signup-user.php">Signup now</a></div>
-                    -->
 
                     <button type="button" class="btn btn-primary btn-block">
                          <a href="../index.html" style='color:#FFF;text-decoration: none;'>Retour au site</a>
