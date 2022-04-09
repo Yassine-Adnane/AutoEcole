@@ -14,8 +14,7 @@ if(isset($_POST['save']))
   $psswd       =  $_POST['psswd'];
   $genre       =  $_POST['genre'];
   $categorie   =  $_POST['categorie'];
-
-  /*$forfais     =  $_POST['forfais'];*/
+  $forfais     =  $_POST['forfais'];
 
   /*
   $candidatphoto =stripslashes($_POST['candidatphoto']);
@@ -26,13 +25,56 @@ if(isset($_POST['save']))
   move_uploaded_file($_FILES['candidatphoto']['tmp_name'], $target_file);
   */
 
-  $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,candidatphoto) 
-  VALUES ('$cin','$nom','$prenom','$tele','$adresse','$email','$psswd','$genre','$categorie','$candidatphoto')") or
-  die($con->error);
+  $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,candidatphoto,forfais) 
+  VALUES ('$cin','$nom','$prenom','$tele',
+          '$adresse','$email','$psswd',
+          '$genre','$categorie','$candidatphoto','$forfais')") 
+          or die($con->error);
 
   header("location:crud.php");
-  
 }
+
+/**************************************************************************************** */
+if(isset($_GET['delete']))
+{
+    $idCandidat = $_GET['delete'];
+    $con ->query("DELETE FROM candidats WHERE id=$idCandidat") or die ($mysqli->error());
+    
+    /*$_SESSION['message_crud'] = "Candidat a bien supprimer";
+    $_SESSION['msg_type'] = "danger";*/
+
+    header("location:crud.php");
+
+}
+/**************************************************************************************** */
+
+if(isset($_GET['edit']))
+{
+
+    $id = $_GET['edit'];
+    /*$updateCandidat = true;*/
+
+    $resultdata = $con->query("SELECT * FROM candidats WHERE id=$id") or die($mysqli->error());
+    
+    
+    if(mysqli_num_rows($resultdata) == 1)
+    {
+        $row  =  $resultdata->fetch_array();
+
+        $idUpd = $row['id'];
+        $nameCandidat = $row['nom'];
+        $prenomCandidat = $row['prenom'];
+        $cinCandidat = $row['cin'];
+        $genreCandidat = $row['genre'];
+        $teleCandidat = $row['tele'];
+        $emailCandidat = $row['email'];
+        $pswrdCandidat = $row['psswd'];
+        
+    }
+    
+}
+
+/**************************************************************************************** */
 
 ?>
 
@@ -65,9 +107,9 @@ if(isset($_POST['save']))
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
-  <!-- CDN font-awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
+  <!-- font-awesome -->
+  <script src="https://kit.fontawesome.com/f7f97a992e.js" crossorigin="anonymous"></script>
+
   <!-- Bootstrap CSS -->
   <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -695,8 +737,6 @@ if(isset($_POST['save']))
                   require "../php/connection.php";
                   $resultdata = $con->query("SELECT * FROM candidats")or die ($mysqli->error());
               ?>
-
-              Lorem ipsum dolor sit amet.
                 <table class="table">
                   <thead>
                     <tr>
@@ -717,14 +757,14 @@ if(isset($_POST['save']))
 
                         <tr>
                           
-                          <td> <img src="https://via.placeholder.com/70" alt="">  </td>
+                          <td> <img src="https://via.placeholder.com/50" alt="">  </td>
                           <td> <?php echo $row['cin']; ?>  </td>
                           <td> <?php echo $row['nom']; ?>  </td>
                           <td> <?php echo $row['prenom']; ?>  </td>
                           <td> <?php echo $row['genre']; ?>  </td>
                           <td> <?php echo $row['tele']; ?>  </td>
                           <td> <?php echo $row['categorie']; ?>  </td>
-                          <td> <?php echo $row['candidatphoto']; ?>  </td>
+                          <td> <?php echo $row['forfais']; ?>  </td>
                           <td>
                               <a href="?edit=<?php echo $row['id']; ?>"
                               class="btn btn-warning">Consulter !</a> 
@@ -732,13 +772,9 @@ if(isset($_POST['save']))
                               <a href="?edit=<?php echo $row['id']; ?>"
                               class="btn btn-warning">Modifier</a>    
                                  
-                              <!-- 
-                              <a href="AddCandidat.php?delete=<?php echo $row['id']; ?>"
-                              class="btn btn-danger">Supprimer</a>    
-                              -->
-
-                              <a href=""> <i class="fa-solid fa-trash"></i> </a>
-                          
+                              <a href="crud.php?delete=<?php echo $row['id']; ?>"
+                              class="btn btn-danger">Supprimer</a>
+                              
                           </td>
                          
                         </tr>
@@ -805,7 +841,8 @@ if(isset($_POST['save']))
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
-
+    
+    
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
