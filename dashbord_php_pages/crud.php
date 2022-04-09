@@ -5,16 +5,29 @@
 if(isset($_POST['save']))
 {
 
-  $cin     =  $_POST['cin'];
-  $nom     =  $_POST['nom'];
-  $prenom  =  $_POST['prenom'];
-  $tele    =  $_POST['tele'];
-  $adresse =  $_POST['adresse'];
-  $email   =  $_POST['email'];
-  $psswd   =  $_POST['psswd'];
+  $cin         =  $_POST['cin'];
+  $nom         =  $_POST['nom'];
+  $prenom      =  $_POST['prenom'];
+  $tele        =  $_POST['tele'];
+  $adresse     =  $_POST['adresse'];
+  $email       =  $_POST['email'];
+  $psswd       =  $_POST['psswd'];
+  $genre       =  $_POST['genre'];
+  $categorie   =  $_POST['categorie'];
 
-  $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd) 
-  VALUES ('$cin','$nom','$prenom','$tele','$adresse','$email','$psswd')") or
+  /*$forfais     =  $_POST['forfais'];*/
+
+  /*
+  $candidatphoto =stripslashes($_POST['candidatphoto']);
+  $image = time() . '-' . $_FILES['image']['name'];
+
+  $target_dir="images_candidats/";
+  $target_file=$target_dir . basename($image);
+  move_uploaded_file($_FILES['candidatphoto']['tmp_name'], $target_file);
+  */
+
+  $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,candidatphoto) 
+  VALUES ('$cin','$nom','$prenom','$tele','$adresse','$email','$psswd','$genre','$categorie','$candidatphoto')") or
   die($con->error);
 
   header("location:crud.php");
@@ -52,6 +65,9 @@ if(isset($_POST['save']))
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
+  <!-- CDN font-awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
   <!-- Bootstrap CSS -->
   <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -570,7 +586,7 @@ if(isset($_POST['save']))
                       <div class="modal-body">
 
                       <!-- Start Form Create Candidat -->
-                      <form action="crud.php" method="POST" >
+                      <form action="crud.php" method="POST" enctype="multipart/form-data" >
                         <div class="row">
                                 <div class="col">
                                 <!--Start Col 1-->
@@ -592,10 +608,10 @@ if(isset($_POST['save']))
 
                                 <div class="form-group">
                                     <label style="margin-top:10px">Genre</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                      <option></option>
-                                      <option>Homme</option>
-                                      <option>Femme</option>
+                                    <select class="form-control" name="genre">
+                                      <option value="">------</option>
+                                      <option value="Homme">Homme</option>
+                                      <option value="Femme">Femme</option>
                                     </select>
                                 </div>
 
@@ -626,34 +642,34 @@ if(isset($_POST['save']))
 
 
                                 <div class="form-group">
-                                    <label style="margin-top:10px">Type Permis</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                      <option></option>
-                                      <option>A - Moto</option>
-                                      <option>B - Voiture</option>
-                                      <option>C - Camion</option>
-                                      <option>D - AutoBus</option>
+                                    <label style="margin-top:10px">Catégorie Permis</label>
+                                    <select class="form-control" name="categorie">
+                                      <option value="">------</option>
+                                      <option value="A - Moto">A - Moto</option>
+                                      <option value="B - Voiture">B - Voiture</option>
+                                      <option value="C - Camion">C - Camion</option>
+                                      <option value="D - AutoBus">D - AutoBus</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1" style="margin-top:10px">Forfais Permis</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                      <option></option>
-                                      <option>20 Heurs</option>
-                                      <option>30 Heurs</option>
-                                      <option>40 Heurs</option>
+                                    <select class="form-control" name="forfais">
+                                      <option value="">------</option>
+                                      <option value="20 Heurs">20 Heurs</option>
+                                      <option value="30 Heurs">30 Heurs</option>
+                                      <option value="40 Heurs">40 Heurs</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                   <label style="margin-top:10px">Photo CIN</label>
-                                  <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                  <input type="file" class="form-control-file">
                                 </div>
 
                                 <div class="form-group">
                                   <label style="margin-top:20px" style="margin-top:10px">Photo Candidat</label>
-                                  <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                  <input type="file" class="form-control-file" name="candidatphoto">
                                 </div>
 
                                 <!--End Col 2-->
@@ -688,7 +704,11 @@ if(isset($_POST['save']))
                       <th scope="col">CIN</th>
                       <th scope="col">Nom</th>
                       <th scope="col">Prenom</th>
-                      <th scope="col">tele</th>
+                      <th scope="col">Genre</th>
+                      <th scope="col">Télephone</th>
+                      <th scope="col">Catégorie</th>
+                      <th scope="col">Type Forfais</th>
+                      <th scope="col">Opérations</th>
                     </tr>
                   </thead>
                   
@@ -697,11 +717,29 @@ if(isset($_POST['save']))
 
                         <tr>
                           
-                          <td> <?php echo $row['candidatphoto']; ?>  </td>
+                          <td> <img src="https://via.placeholder.com/70" alt="">  </td>
                           <td> <?php echo $row['cin']; ?>  </td>
                           <td> <?php echo $row['nom']; ?>  </td>
                           <td> <?php echo $row['prenom']; ?>  </td>
+                          <td> <?php echo $row['genre']; ?>  </td>
                           <td> <?php echo $row['tele']; ?>  </td>
+                          <td> <?php echo $row['categorie']; ?>  </td>
+                          <td> <?php echo $row['candidatphoto']; ?>  </td>
+                          <td>
+                              <a href="?edit=<?php echo $row['id']; ?>"
+                              class="btn btn-warning">Consulter !</a> 
+
+                              <a href="?edit=<?php echo $row['id']; ?>"
+                              class="btn btn-warning">Modifier</a>    
+                                 
+                              <!-- 
+                              <a href="AddCandidat.php?delete=<?php echo $row['id']; ?>"
+                              class="btn btn-danger">Supprimer</a>    
+                              -->
+
+                              <a href=""> <i class="fa-solid fa-trash"></i> </a>
+                          
+                          </td>
                          
                         </tr>
                                                     
