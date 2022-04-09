@@ -1,3 +1,29 @@
+<?php
+
+  require "../php/connection.php";
+
+if(isset($_POST['save']))
+{
+
+  $cin     =  $_POST['cin'];
+  $nom     =  $_POST['nom'];
+  $prenom  =  $_POST['prenom'];
+  $tele    =  $_POST['tele'];
+  $adresse =  $_POST['adresse'];
+  $email   =  $_POST['email'];
+  $psswd   =  $_POST['psswd'];
+
+  $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd) 
+  VALUES ('$cin','$nom','$prenom','$tele','$adresse','$email','$psswd')") or
+  die($con->error);
+
+  header("location:crud.php");
+  
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,6 +51,14 @@
   <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -518,8 +552,166 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Example Card</h5>
-              <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
+              <h5 class="card-title"></h5>
+              <!-- Start Model -->
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Ajouter Candidat
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content" style="width:150%">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter Candidat</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+
+                      <!-- Start Form Create Candidat -->
+                      <form action="crud.php" method="POST" >
+                        <div class="row">
+                                <div class="col">
+                                <!--Start Col 1-->
+
+                                <div class="form-group">
+                                    <label>Nom :</label>
+                                    <input type="text" class="form-control" name="nom" placeholder="Nom Candidat">
+                                </div>
+
+                                <div class="form-group">
+                                  <label style="margin-top:10px">Prénom :</label>
+                                  <input type="text" class="form-control" name="prenom" placeholder="Prénom Candidat">
+                                </div>
+
+                                <div class="form-group">
+                                  <label style="margin-top:10px">CIN :</label>
+                                  <input type="text" class="form-control" name="cin" placeholder="CIN Candidat">
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="margin-top:10px">Genre</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                      <option></option>
+                                      <option>Homme</option>
+                                      <option>Femme</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                  <label  style="margin-top:10px">Num télé :</label>
+                                  <input type="text" class="form-control" name="tele" placeholder="Téléphone Candidat">
+                                </div>
+
+                                <div class="form-group">
+                                  <label style="margin-top:10px">Adresse</label>
+                                  <input type="text" class="form-control" name="adresse" placeholder="Adresse Candidat">
+                                </div>
+
+                                <!--End Col 1-->
+                                </div>
+                                <div class="col">
+                                <!--Start Col 2-->
+
+                                <div class="form-group">
+                                  <label>Email</label>
+                                  <input type="Email" class="form-control" name="email" placeholder="Email Candidat">
+                                </div>
+
+                                <div class="form-group">
+                                  <label style="margin-top:10px">Mot de passe</label>
+                                  <input type="text" class="form-control" name="psswd" placeholder="Mot de passe Candidat">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label style="margin-top:10px">Type Permis</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                      <option></option>
+                                      <option>A - Moto</option>
+                                      <option>B - Voiture</option>
+                                      <option>C - Camion</option>
+                                      <option>D - AutoBus</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1" style="margin-top:10px">Forfais Permis</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                      <option></option>
+                                      <option>20 Heurs</option>
+                                      <option>30 Heurs</option>
+                                      <option>40 Heurs</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                  <label style="margin-top:10px">Photo CIN</label>
+                                  <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                </div>
+
+                                <div class="form-group">
+                                  <label style="margin-top:20px" style="margin-top:10px">Photo Candidat</label>
+                                  <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                </div>
+
+                                <!--End Col 2-->
+                                </div>
+                          </div> <!-- End row -->
+
+                          <div class="modal-footer">
+                              <button type="submit" class="btn btn-primary" name="save">Enregistrer</button>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quitter</button>
+                          </div>
+
+                      </form>
+                      <!-- End Form Create Candidat -->
+                      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <!-- End Model -->
+              <br> <br>
+               <!-- Start Table -->
+               <?php
+                  require "../php/connection.php";
+                  $resultdata = $con->query("SELECT * FROM candidats")or die ($mysqli->error());
+              ?>
+
+              Lorem ipsum dolor sit amet.
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Photo</th>
+                      <th scope="col">CIN</th>
+                      <th scope="col">Nom</th>
+                      <th scope="col">Prenom</th>
+                      <th scope="col">tele</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+                      <?php while($row = $resultdata->fetch_assoc()) : ?>
+
+                        <tr>
+                          
+                          <td> <?php echo $row['candidatphoto']; ?>  </td>
+                          <td> <?php echo $row['cin']; ?>  </td>
+                          <td> <?php echo $row['nom']; ?>  </td>
+                          <td> <?php echo $row['prenom']; ?>  </td>
+                          <td> <?php echo $row['tele']; ?>  </td>
+                         
+                        </tr>
+                                                    
+                      <?php endwhile ?>
+
+                  </tbody>
+
+                </table>
+              <!-- End Table -->
+             
             </div>
           </div>
 
@@ -568,6 +760,13 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Bootsrap -->
+  <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
