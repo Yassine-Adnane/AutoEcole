@@ -592,11 +592,12 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Listes des Candidats qui ont l'examen théorique proche.</h5>
+                  <h5 class="card-title" style="color:red;">Listes des Candidats qui ont l'examen théorique proche.</h5>
                   <!-- Start Table -->
                   <?php
                   require "../php/connection.php";
                   $resultdata_th = $con->query("SELECT * FROM examen_th")or die ($mysqli->error());
+                  $resultdata_pr = $con->query("SELECT * FROM examen_pratique")or die ($mysqli->error());
                   ?>
 
                   <table class="table">
@@ -607,6 +608,7 @@
                         <th scope="col">Prénom</th>
                         <th scope="col">Date examen Théorique</th>
                         <th scope="col">Date Rattrapage Théorique</th>
+                        <th scope="col"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -617,6 +619,7 @@
                           <td> ------ </td>
                           <td> <?php echo $row['date_exman_th']; ?>  </td>
                           <td> ------ </td>
+                          <td>*</td>
                         <tr>
 
                         </tr>
@@ -637,35 +640,33 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Listes des Candidats qui ont l'examen Pratique proche.</h5>
+                  <h5 class="card-title" style="color:red;">Listes des Candidats qui ont l'examen Pratique proche.</h5>
                   <!-- Start Table -->
                   <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">CIN</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Date examen Pratique</th>
+                        <th scope="col">Date Rattrapage Pratique</th>
+                        <th scope="col"></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
+                      <?php while($row = $resultdata_pr->fetch_assoc()) : ?>
+                            <td> <?php echo $row['cin_candidat']; ?>  </td>
+                            <td> ------ </td>
+                            <td> ------ </td>
+                            <td> ** Déja Passé ** </td>
+                            <td> <?php echo $row['date_ratt_exman_pratique']; ?>  </td>
+                            <td> * </td>
+                            
+                          <tr>
+
+                          </tr>
+
+                          <?php endwhile ?>
                     </tbody>
                   </table>
                   <!-- End Table-->
@@ -781,55 +782,89 @@
             </div>
 
             <div class="card-body">
-              <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+              <h5 class="card-title">Listes Cours Théoriques</h5>
 
               <div class="activity">
 
                 <div class="activity-item d-flex">
-                  <div class="activite-label">32 min</div>
+                  <div class="activite-label">Coure 1</div>
                   <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
                   <div class="activity-content">
-                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
+                    Définition Code de La route.
                   </div>
                 </div><!-- End activity item-->
 
                 <div class="activity-item d-flex">
-                  <div class="activite-label">56 min</div>
+                  <div class="activite-label">Coure 2</div>
                   <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
                   <div class="activity-content">
-                    Voluptatem blanditiis blanditiis eveniet
+                    Lorem ipsum dolor sit Coure 2.
                   </div>
                 </div><!-- End activity item-->
 
                 <div class="activity-item d-flex">
-                  <div class="activite-label">2 hrs</div>
+                  <div class="activite-label">Coure 3</div>
                   <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
                   <div class="activity-content">
-                    Voluptates corrupti molestias voluptatem
+                    Lorem ipsum dolor sit Coure 3.
                   </div>
                 </div><!-- End activity item-->
 
                 <div class="activity-item d-flex">
-                  <div class="activite-label">1 day</div>
+                  <div class="activite-label">Coure 4</div>
                   <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
                   <div class="activity-content">
-                    Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
+                      Lorem ipsum dolor sit Coure 4.
                   </div>
                 </div><!-- End activity item-->
 
                 <div class="activity-item d-flex">
-                  <div class="activite-label">2 days</div>
+                  <div class="activite-label">Coure 5</div>
                   <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
                   <div class="activity-content">
-                    Est sit eum reiciendis exercitationem
+                    Lorem ipsum dolor sit Coure 5.
+                  </div>
+                </div><!-- End activity item-->
+
+               
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">Coure 6</div>
+                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
+                  <div class="activity-content">
+                      Lorem ipsum dolor sit Coure 6.
                   </div>
                 </div><!-- End activity item-->
 
                 <div class="activity-item d-flex">
-                  <div class="activite-label">4 weeks</div>
+                  <div class="activite-label">Coure 7</div>
                   <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
                   <div class="activity-content">
-                    Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
+                    Lorem ipsum dolor sit Coure 7.
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">Coure 8</div>
+                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
+                  <div class="activity-content">
+                     Lorem ipsum dolor sit Coure 8.
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">Coure 9</div>
+                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
+                  <div class="activity-content">
+                     Lorem ipsum dolor sit Coure 9.
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">Coure 10</div>
+                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
+                  <div class="activity-content">
+                    Lorem ipsum dolor sit Coure 10.
                   </div>
                 </div><!-- End activity item-->
 
@@ -854,61 +889,56 @@
             </div>
 
             <div class="card-body pb-0">
-              <h5 class="card-title">Budget Report <span>| This Month</span></h5>
+              <h5 class="card-title">Listes Cours Pratiques</h5>
+              <!-- Start Coure Pratiques -->
 
-              <div id="budgetChart" style="min-height: 400px;" class="echart"></div>
+              <!-- ****************************************** -->
+              <div class="activity">
 
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  var budgetChart = echarts.init(document.querySelector("#budgetChart")).setOption({
-                    legend: {
-                      data: ['Allocated Budget', 'Actual Spending']
-                    },
-                    radar: {
-                      // shape: 'circle',
-                      indicator: [{
-                          name: 'Sales',
-                          max: 6500
-                        },
-                        {
-                          name: 'Administration',
-                          max: 16000
-                        },
-                        {
-                          name: 'Information Technology',
-                          max: 30000
-                        },
-                        {
-                          name: 'Customer Support',
-                          max: 38000
-                        },
-                        {
-                          name: 'Development',
-                          max: 52000
-                        },
-                        {
-                          name: 'Marketing',
-                          max: 25000
-                        }
-                      ]
-                    },
-                    series: [{
-                      name: 'Budget vs spending',
-                      type: 'radar',
-                      data: [{
-                          value: [4200, 3000, 20000, 35000, 50000, 18000],
-                          name: 'Allocated Budget'
-                        },
-                        {
-                          value: [5000, 14000, 28000, 26000, 42000, 21000],
-                          name: 'Actual Spending'
-                        }
-                      ]
-                    }]
-                  });
-                });
-              </script>
+                <div class="activity-item d-flex">
+                  <div class="activite-label">Coure 1</div>
+                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                  <div class="activity-content">
+                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
+                  </div>
+                </div><!-- End activity item-->
+                
+                <div class="activity-item d-flex">
+                  <div class="activite-label">Coure 2</div>
+                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                  <div class="activity-content">
+                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
+                  </div>
+                  
+                </div><!-- End activity item-->
+                <div class="activity-item d-flex">
+                  <div class="activite-label">Coure 3</div>
+                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                  <div class="activity-content">
+                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
+                  </div>
+                </div><!-- End activity item-->
 
+                <div class="activity-item d-flex">
+                  <div class="activite-label">Coure 4</div>
+                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                  <div class="activity-content">
+                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
+                  </div>
+
+                </div><!-- End activity item-->
+                <div class="activity-item d-flex">
+                  <div class="activite-label">Coure 5</div>
+                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                  <div class="activity-content">
+                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
+                  </div>
+                </div><!-- End activity item-->
+
+                </div>
+                
+                <!-- ****************************************** -->
+              <!-- End Coure Pratiques -->
             </div>
           </div><!-- End Budget Report -->
 
