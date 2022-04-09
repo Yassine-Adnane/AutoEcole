@@ -592,12 +592,25 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title" style="color:red;">Listes des Candidats qui ont l'examen théorique proche.</h5>
+                  <h5 class="card-title" style="color:red;">Listes des Candidats qui ont l'examen théorique proche.(Moin de 20Jrs)</h5>
                   <!-- Start Table -->
                   <?php
                   require "../php/connection.php";
-                  $resultdata_th = $con->query("SELECT * FROM examen_th")or die ($mysqli->error());
-                  $resultdata_pr = $con->query("SELECT * FROM examen_pratique")or die ($mysqli->error());
+                  /*$resultdata_th = $con->query("SELECT * FROM examen_th")or die ($mysqli->error());*/
+                  $resultdata_th = $con->query("SELECT * FROM examen_th
+                  WHERE (date_exman_th > CURDATE() OR (date_ratt_exman_th > CURDATE()))
+                  AND (date_exman_th < DATE_ADD(CURDATE(), INTERVAL 20 DAY))
+                  ORDER BY date_exman_th,date_ratt_exman_th
+                  ")
+                  or die ($mysqli->error());
+
+
+                  $resultdata_pr = $con->query("SELECT * FROM examen_pratique
+                  WHERE (date_exman_pratique > CURDATE() OR (date_ratt_exman_pratique > CURDATE()))
+                  AND (date_exman_pratique < DATE_ADD(CURDATE(), INTERVAL 20 DAY))
+                  ORDER BY date_exman_pratique,date_ratt_exman_pratique") 
+                  or die ($mysqli->error());
+
                   ?>
 
                   <table class="table">
@@ -617,16 +630,44 @@
                           <td> <?php echo $row['cin_candidat']; ?>  </td>
                           <td> ------ </td>
                           <td> ------ </td>
-                          <td> <?php echo $row['date_exman_th']; ?>  </td>
-                          <td> ------ </td>
-                          <td>*</td>
+                          <td> 
+                            <?php 
+                              if (str_contains($row['date_exman_th'], '0000-00-00')) 
+                              {
+                                echo '---------'; 
+                              } 
+                              elseif ((date("Y-m-d") < $row['date_exman_th'])) 
+                              {
+                                  echo $row['date_exman_th'];
+
+                              } else {
+                                  echo $row['date_exman_th'] . ' (' ."Passé" . ')';
+                              }
+                            ?> 
+                          </td>
+                          
+                          <td>
+                            <?php 
+                                
+                                if (str_contains($row['date_ratt_exman_th'], '0000-00-00')) 
+                                {
+                                  echo '---------'; 
+                                } 
+                                elseif ((date("Y-m-d") < $row['date_ratt_exman_th'])) 
+                                {
+                                    echo $row['date_ratt_exman_th'];
+  
+                                } else {
+                                    echo  date("Y-m-d") . ' (' ."Passé" . ')';
+                                }
+                            ?>
+                        
+                          </td>
                         <tr>
 
                         </tr>
 
                         <?php endwhile ?>
-                        
-
                       
                     </tbody>
                   </table>
@@ -640,7 +681,7 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title" style="color:red;">Listes des Candidats qui ont l'examen Pratique proche.</h5>
+                  <h5 class="card-title" style="color:red;">Listes des Candidats qui ont l'examen Pratique proche.(Moin de 20Jrs)</h5>
                   <!-- Start Table -->
                   <table class="table">
                     <thead>
@@ -658,9 +699,41 @@
                             <td> <?php echo $row['cin_candidat']; ?>  </td>
                             <td> ------ </td>
                             <td> ------ </td>
-                            <td> ** Déja Passé ** </td>
-                            <td> <?php echo $row['date_ratt_exman_pratique']; ?>  </td>
-                            <td> * </td>
+                            <!-- -->
+                            <td> 
+                            <?php 
+                              if (str_contains($row['date_exman_pratique'], '0000-00-00')) 
+                              {
+                                echo '---------'; 
+                              } 
+                              elseif ((date("Y-m-d") < $row['date_exman_pratique'])) 
+                              {
+                                  echo $row['date_exman_pratique'];
+
+                              } else {
+                                  echo $row['date_exman_pratique'] . ' (' ."Passé" . ')';
+                              }
+                            ?> 
+                          </td>
+                          
+                          <td>
+                            <?php 
+                                
+                                if (str_contains($row['date_ratt_exman_pratique'], '0000-00-00')) 
+                                {
+                                  echo '---------'; 
+                                } 
+                                elseif ((date("Y-m-d") < $row['date_ratt_exman_pratique'])) 
+                                {
+                                    echo $row['date_ratt_exman_pratique'];
+  
+                                } else {
+                                    echo  date("Y-m-d") . ' (' ."Passé" . ')';
+                                }
+                            ?>
+                        
+                          </td>
+                            <!-- -->
                             
                           <tr>
 
