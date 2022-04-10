@@ -118,6 +118,12 @@ if(isset($_GET['edit']))
       crossorigin="anonymous"
     />
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  
+
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
@@ -731,6 +737,34 @@ if(isset($_GET['edit']))
                   </div>
                 </div>
               <!-- End Model -->
+              <!-- Start Model Consulter-->
+              <!-- The Modal -->
+              <div class="modal fade" id="IDModelConsulter">
+                <div class="modal-dialog modal-xl">
+                  <div class="modal-content">
+                  
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Infos Candidat</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <input type="text" id="idUser">
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+
+              <!-- End Model Consulter -->
               <br> <br>
                <!-- Start Table -->
                <?php
@@ -766,15 +800,23 @@ if(isset($_GET['edit']))
                           <td> <?php echo $row['categorie']; ?>  </td>
                           <td> <?php echo $row['forfais']; ?>  </td>
                           <td>
-                              <a href="?edit=<?php echo $row['id']; ?>"
-                              class="btn btn-warning">Consulter !</a> 
 
-                              <a href="?edit=<?php echo $row['id']; ?>"
-                              class="btn btn-warning">Modifier</a>    
-                                 
-                              <a href="crud.php?delete=<?php echo $row['id']; ?>"
-                              class="btn btn-danger">Supprimer</a>
+                              <!-- Button to Open the Modal -->
                               
+                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#IDModelConsulter">
+                                Open modal
+                              </button>
+                              
+                              <a href="?edit=<?php echo $row['id']; ?>"
+                              class="btn btn-warning btn-sm">Consulter !</a> 
+                              
+                              <a href="?edit=<?php echo $row['id']; ?>"
+                              class="btn btn-warning btn-sm">Modifier</a>    
+                                 
+                            
+                            <a href="crud.php?delete=<?php echo $row['id']; ?>"
+                              class="btn btn-danger btn-sm">Supprimer</a>
+  
                           </td>
                          
                         </tr>
@@ -841,7 +883,6 @@ if(isset($_GET['edit']))
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
-    
     
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>

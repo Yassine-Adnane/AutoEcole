@@ -538,7 +538,18 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>145</h6>
+                      <?php
+                      require "../php/connection.php";
+                      $DataCandidats = $con->query("SELECT COUNT(*) AS count FROM candidats") or die ($mysqli->error());
+                      
+                      while($row = mysqli_fetch_assoc($DataCandidats))
+                      {
+                        $count = $row['count'];
+                      }
+                      ?>
+                      
+                      <h6> <?php echo $count ?></h6>
+                      <span class="text-success small pt-1 fw-bold">Nb Candidats</span>
                     </div>
                   </div>
                 </div>
