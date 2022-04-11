@@ -371,7 +371,21 @@ if(isset($_GET['delete']))
                <!-- Start Table -->
                <?php
                   require "../php/connection.php";
-                  $resultdata = $con->query("SELECT * FROM `candidats` ORDER BY `id` DESC;")or die ($mysqli->error());
+                  $resultdata = $con->query("SELECT  
+                  cand.id,
+                  image_cin,
+                  cand.cin,
+                  cand.nom,
+                  cand.prenom,
+                  cand.genre,
+                  cand.tele,
+                  cand.categorie,
+                  cand.forfais
+            FROM candidats cand
+            INNER JOIN images_cin imgc
+            ON cand.cin = imgc.cin")
+            
+            or die ($mysqli->error());
               ?>
                 <table class="table">
                   <thead>
@@ -393,7 +407,8 @@ if(isset($_GET['delete']))
 
                         <tr>
                           
-                          <td> <img src="https://via.placeholder.com/50" alt="">  </td>
+                          <!-- <td> <img src="https://via.placeholder.com/50" alt="">  </td> -->
+                          <td> <img src="cin_candidats/<?php echo $row['image_cin'];?>" style="height:70px;width:50px" ></td>  
                           <td> <?php echo $row['cin']; ?>  </td>
                           <td> <?php echo $row['nom']; ?>  </td>
                           <td> <?php echo $row['prenom']; ?>  </td>
@@ -413,7 +428,7 @@ if(isset($_GET['delete']))
                               </a> 
                              
 
-                              <a href="update_candidat.php?delete=<?php echo $row['id']; ?>">
+                              <a href="?delete=<?php echo $row['id']; ?>">
                                   <i class="fa-solid fa-trash-can fa-2xl" style="color:#FF6B6B"></i>
                               </a> 
                               

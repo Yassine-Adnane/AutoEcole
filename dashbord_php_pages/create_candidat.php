@@ -2,6 +2,7 @@
 
   require "../php/connection.php";
 
+
 if(isset($_POST['save']))
 {
 
@@ -16,15 +17,41 @@ if(isset($_POST['save']))
   $genre       =  $_POST['genre'];
   $categorie   =  $_POST['categorie'];
   $forfais     =  $_POST['forfais'];
-
  
-  $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,candidatphoto,forfais) 
+  if(isset($_FILES['photo_cin']['name']))
+  {
+    $image_name = $_FILES['photo_cin']['name'];
+
+    $ext = end(explode('.',$image_name));
+
+    $image_name = "image_cin_". $cin.'.'.$ext;
+
+    $source_path = $_FILES['photo_cin']['tmp_name'];
+
+    $destination_path = "cin_candidats/".$image_name;
+
+    $upload = move_uploaded_file($source_path,$destination_path);
+  
+  }
+  else
+  {
+    $image_name = "";
+  }
+
+
+  $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,forfais) 
   VALUES ('$cin','$nom','$prenom','$tele',
           '$adresse','$email','$psswd',
-          '$genre','$categorie','$candidatphoto','$forfais')") 
+          '$genre','$categorie','$forfais')") 
           or die($con->error);
 
+  $con ->query("INSERT INTO images_cin (cin,image_cin) 
+  VALUES ('$cin','$image_name')") 
+  or die($con->error);
+  
+
   header("location:crud.php");
+
 }
 
 ?>
@@ -318,8 +345,8 @@ if(isset($_POST['save']))
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Infos Candidat</h5>
-              <!-- Start Form Create Candidat -->
-              <form action="crud.php" method="POST" enctype="multipart/form-data" >
+              <!-- Start Form Create Candidat crud.php -->
+              <form action="" method="POST" enctype="multipart/form-data" >
                 <!-- -->
                 <div class="form-group">
                     <label>Nom :</label>
@@ -403,13 +430,14 @@ if(isset($_POST['save']))
 
                <div class="form-group">
                  <label style="margin-top:30px">Photo CIN &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
-                 <input type="file" class="form-control-file">
+                 <input type="file" class="form-control-file"  name="photo_cin">
                </div>
 
                <div class="form-group">
                  <label style="margin-top:30px">Photo Candidat</label>
                  <input type="file" class="form-control-file" name="candidatphoto">
                </div>
+
 
                <div class="modal-footer" style="margin-top:30px">
                     <button type="submit" class="btn btn-primary" name="save">Enregistrer</button>
@@ -418,6 +446,10 @@ if(isset($_POST['save']))
               <!-- -->
               </form>
               <!-- End Form Create Candidat -->
+
+              
+              
+
             </div>
           </div>
 
