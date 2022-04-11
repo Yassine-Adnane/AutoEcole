@@ -14,15 +14,22 @@
 
   <li class="nav-item">
     <a class="nav-link collapsed" href="crud.php">
-      <i class="bi bi-file-earmark"></i>
+      <i class="bi bi-card-checklist"></i>
       <span>Gestion Candidats</span>
     </a>
   </li><!-- Gestion Candidats -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="crud_candidat.php">
+    <a class="nav-link collapsed" href="create_candidat.php">
       <i class="bi bi-file-earmark"></i>
-      <span>Test</span>
+      <span>Ajouter Candidat</span>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="update_candidat.php">
+      <i class="bi bi-file-earmark"></i>
+      <span>Modifier Candidat</span>
     </a>
   </li>
 

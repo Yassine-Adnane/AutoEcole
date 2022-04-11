@@ -1,34 +1,3 @@
-<?php
-
-  require "../php/connection.php";
-
-if(isset($_POST['save']))
-{
-
-  $cin         =  $_POST['cin'];
-  $nom         =  $_POST['nom'];
-
-  $prenom      =  $_POST['prenom'];
-  $tele        =  $_POST['tele'];
-  $adresse     =  $_POST['adresse'];
-  $email       =  $_POST['email'];
-  $psswd       =  $_POST['psswd'];
-  $genre       =  $_POST['genre'];
-  $categorie   =  $_POST['categorie'];
-  $forfais     =  $_POST['forfais'];
-
- 
-  $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,candidatphoto,forfais) 
-  VALUES ('$cin','$nom','$prenom','$tele',
-          '$adresse','$email','$psswd',
-          '$genre','$categorie','$candidatphoto','$forfais')") 
-          or die($con->error);
-
-  header("location:crud.php");
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,6 +28,7 @@ if(isset($_POST['save']))
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -317,20 +287,28 @@ if(isset($_POST['save']))
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Infos Candidat</h5>
-              <!-- Start Form Create Candidat -->
-              <form action="crud.php" method="POST" enctype="multipart/form-data" >
-                <!-- -->
-                <div class="form-group">
-                    <label>Nom :</label>
-                    <input type="text" class="form-control" name="nom" placeholder="Nom Candidat">
-                </div>
-               <div class="form-group">
-                 <label style="margin-top:10px">Prénom :</label>
-                 <input type="text" class="form-control" name="prenom" placeholder="Prénom Candidat">
-                 </div>
+              <h5 class="card-title">Modifier Infos Candidat</h5>
 
-                 <div class="form-group">
+              <div class="d-flex justify-content-center">
+                  <div class="photoCandidats" style="height:200px;width:200px;background-color:#006778;color:#FFF" >
+                    <h6 class= "">Photo Candidat</h6>
+                  </div>
+                </div>
+      
+                <br>
+              <!-- Start Form Create Candidat -->
+                <form action="crud.php" method="POST" enctype="multipart/form-data" >
+                  <!-- -->
+                  <div class="form-group">
+                      <label>Nom :</label>
+                      <input type="text" class="form-control" name="nom" placeholder="Nom Candidat">
+                  </div>
+                  <div class="form-group">
+                    <label style="margin-top:10px">Prénom :</label>
+                    <input type="text" class="form-control" name="prenom" placeholder="Prénom Candidat">
+                  </div>
+                    
+                  <div class="form-group">
                     <label style="margin-top:10px">CIN :</label>
                     <input type="text" class="form-control" name="cin" placeholder="CIN Candidat">
                   </div>
@@ -358,7 +336,9 @@ if(isset($_POST['save']))
                     <label style="margin-top:10px">Maps</label>
                     <input type="text" class="form-control" name="adressemMaps" placeholder="Localisation Maps">
                   </div>
-                <!-- -->
+
+
+                  <!-- -->
             </div>
           </div>
 
@@ -368,7 +348,7 @@ if(isset($_POST['save']))
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Dossier Candidat</h5>
+              <h5 class="card-title">Modifier Dossier Candidat</h5>
               <!-- -->
               <div class="form-group">
                   <label>Email</label>
@@ -376,48 +356,28 @@ if(isset($_POST['save']))
                 </div>
 
                 <div class="form-group">
-                  <label style="margin-top:10px">Mot de passe</label>
-                  <input type="text" class="form-control" name="psswd" placeholder="Mot de passe Candidat">
+                  <label style="margin-top:20px">Mot de passe (Par défeaut) </label>
+                  <input type="text" class="form-control" name="psswd" placeholder="Mot de passe Candidat par défeaut ">
                 </div>
 
-                <div class="form-group">
-                   <label style="margin-top:10px">Catégorie Permis</label>
-                   <select class="form-control" name="categorie">
-                     <option value="">------</option>
-                     <option value="A - Moto">A - Moto</option>
-                     <option value="B - Voiture">B - Voiture</option>
-                     <option value="C - Camion">C - Camion</option>
-                     <option value="D - AutoBus">D - AutoBus</option>
-                   </select>
-               </div>
-
                <div class="form-group">
-                   <label for="exampleFormControlSelect1" style="margin-top:10px">Forfais Permis</label>
-                   <select class="form-control" name="forfais">
-                     <option value="">------</option>
-                     <option value="20 Heurs">20 Heurs</option>
-                     <option value="30 Heurs">30 Heurs</option>
-                     <option value="40 Heurs">40 Heurs</option>
-                   </select>
-               </div>
-
-               <div class="form-group">
-                 <label style="margin-top:10px">Photo CIN</label>
+                 <label style="margin-top:30px">Modifier Photo CIN &nbsp; &nbsp; &nbsp; &nbsp;</label>
                  <input type="file" class="form-control-file">
                </div>
 
                <div class="form-group">
-                 <label style="margin-top:20px" style="margin-top:10px">Photo Candidat</label>
+                 <label style="margin-top:30px">Modifier Photo Candidat</label>
                  <input type="file" class="form-control-file" name="candidatphoto">
                </div>
 
-               <div class="modal-footer">
+               <div class="modal-footer" style="margin-top:30px">
                     <button type="submit" class="btn btn-primary" name="save">Enregistrer</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quitter</button>
                 </div>
               <!-- -->
               </form>
               <!-- End Form Create Candidat -->
+              <!-- -->
             </div>
           </div>
 
