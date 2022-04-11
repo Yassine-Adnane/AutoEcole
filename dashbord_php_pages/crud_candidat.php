@@ -7,6 +7,7 @@ if(isset($_POST['save']))
 
   $cin         =  $_POST['cin'];
   $nom         =  $_POST['nom'];
+
   $prenom      =  $_POST['prenom'];
   $tele        =  $_POST['tele'];
   $adresse     =  $_POST['adresse'];
@@ -16,15 +17,7 @@ if(isset($_POST['save']))
   $categorie   =  $_POST['categorie'];
   $forfais     =  $_POST['forfais'];
 
-  /*
-  $candidatphoto =stripslashes($_POST['candidatphoto']);
-  $image = time() . '-' . $_FILES['image']['name'];
-
-  $target_dir="images_candidats/";
-  $target_file=$target_dir . basename($image);
-  move_uploaded_file($_FILES['candidatphoto']['tmp_name'], $target_file);
-  */
-
+ 
   $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,candidatphoto,forfais) 
   VALUES ('$cin','$nom','$prenom','$tele',
           '$adresse','$email','$psswd',
@@ -34,50 +27,7 @@ if(isset($_POST['save']))
   header("location:crud.php");
 }
 
-/**************************************************************************************** */
-if(isset($_GET['delete']))
-{
-    $idCandidat = $_GET['delete'];
-    $con ->query("DELETE FROM candidats WHERE id=$idCandidat") or die ($mysqli->error());
-    
-    /*$_SESSION['message_crud'] = "Candidat a bien supprimer";
-    $_SESSION['msg_type'] = "danger";*/
-
-    header("location:crud.php");
-
-}
-/**************************************************************************************** */
-
-if(isset($_GET['edit']))
-{
-
-    $id = $_GET['edit'];
-    /*$updateCandidat = true;*/
-
-    $resultdata = $con->query("SELECT * FROM candidats WHERE id=$id") or die($mysqli->error());
-    
-    
-    if(mysqli_num_rows($resultdata) == 1)
-    {
-        $row  =  $resultdata->fetch_array();
-
-        $idUpd = $row['id'];
-        $nameCandidat = $row['nom'];
-        $prenomCandidat = $row['prenom'];
-        $cinCandidat = $row['cin'];
-        $genreCandidat = $row['genre'];
-        $teleCandidat = $row['tele'];
-        $emailCandidat = $row['email'];
-        $pswrdCandidat = $row['psswd'];
-        
-    }
-    
-}
-
-/**************************************************************************************** */
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -107,26 +57,8 @@ if(isset($_GET['edit']))
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
-  <!-- font-awesome -->
-  <script src="https://kit.fontawesome.com/f7f97a992e.js" crossorigin="anonymous"></script>
-
-  <!-- Bootstrap CSS -->
-  <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-  
-
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -360,7 +292,6 @@ if(isset($_GET['edit']))
 
   </header><!-- End Header -->
 
-
   <!-- ======= Start Sidebar ======= -->
   <?php 
         require "menu.php";
@@ -370,7 +301,7 @@ if(isset($_GET['edit']))
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Gestion Candidats</h1>
+      <h1>Blank Page</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -382,123 +313,115 @@ if(isset($_GET['edit']))
 
     <section class="section">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title"></h5>
-              
-              <a href="crud_candidat.php">
-                  <button type="button" class="btn btn-success">Ajouter Candidat</button>
-              </a>
-              <!-- Start Model Consulter-->
-              <!-- The Modal -->
-              <div class="modal fade" id="IDModelConsulter">
-                <div class="modal-dialog modal-xl">
-                  <div class="modal-content">
-                  
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                      <h4 class="modal-title">Infos Candidat</h4>
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    
-                    
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <input type="text" id="idUser">
-                    </div>
-                    
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                    
-                  </div>
+              <h5 class="card-title">Infos Candidat</h5>
+              <!-- Start Form Create Candidat -->
+              <form action="crud.php" method="POST" enctype="multipart/form-data" >
+                <!-- -->
+                <div class="form-group">
+                    <label>Nom :</label>
+                    <input type="text" class="form-control" name="nom" placeholder="Nom Candidat">
                 </div>
-              </div>
+               <div class="form-group">
+                 <label style="margin-top:10px">Prénom :</label>
+                 <input type="text" class="form-control" name="prenom" placeholder="Prénom Candidat">
+                 </div>
 
-              <!-- End Model Consulter -->
-              <br> <br>
-               <!-- Start Table -->
-               <?php
-                  require "../php/connection.php";
-                  $resultdata = $con->query("SELECT * FROM `candidats` ORDER BY `id` DESC;")or die ($mysqli->error());
-              ?>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Photo</th>
-                      <th scope="col">CIN</th>
-                      <th scope="col">Nom</th>
-                      <th scope="col">Prenom</th>
-                      <th scope="col">Genre</th>
-                      <th scope="col">Télephone</th>
-                      <th scope="col">Catégorie</th>
-                      <th scope="col">Type Forfais</th>
-                      <th scope="col">Opérations</th>
-                    </tr>
-                  </thead>
-                  
-                  <tbody>
-                      <?php while($row = $resultdata->fetch_assoc()) : ?>
+                 <div class="form-group">
+                    <label style="margin-top:10px">CIN :</label>
+                    <input type="text" class="form-control" name="cin" placeholder="CIN Candidat">
+                  </div>
 
-                        <tr>
-                          
-                          <td> <img src="https://via.placeholder.com/50" alt="">  </td>
-                          <td> <?php echo $row['cin']; ?>  </td>
-                          <td> <?php echo $row['nom']; ?>  </td>
-                          <td> <?php echo $row['prenom']; ?>  </td>
-                          <td> <?php echo $row['genre']; ?>  </td>
-                          <td> <?php echo $row['tele']; ?>  </td>
-                          <td> <?php echo $row['categorie']; ?>  </td>
-                          <td> <?php echo $row['forfais']; ?>  </td>
-                          <td>
-                              
+                  <div class="form-group">
+                      <label style="margin-top:10px">Genre</label>
+                      <select class="form-control" name="genre">
+                        <option value="">------</option>
+                        <option value="Homme">Homme</option>
+                        <option value="Femme">Femme</option>
+                      </select>
+                  </div>
 
-                              <a href="?edit=<?php echo $row['id']; ?>">
-                                  <i class="fa-solid fa-folder-open fa-2xl" style="color:#FFD93D"></i>
-                              </a>
+                  <div class="form-group">
+                    <label  style="margin-top:10px">Num télé :</label>
+                    <input type="text" class="form-control" name="tele" placeholder="Téléphone Candidat">
+                  </div>
 
-                              <a href="?edit=<?php echo $row['id']; ?>">
-                                  <i class="fa-solid fa-pen-to-square fa-2xl" style="color:#6BCB77"></i>
-                              </a> 
-                             
+                  <div class="form-group">
+                    <label style="margin-top:10px">Adresse</label>
+                    <input type="text" class="form-control" name="adresse" placeholder="Adresse Candidat">
+                  </div>
 
-                              <a href="crud.php?delete=<?php echo $row['id']; ?>">
-                                  <i class="fa-solid fa-trash-can fa-2xl" style="color:#FF6B6B"></i>
-                              </a> 
-                              
-  
-                          </td>
-                         
-                        </tr>
-                                                    
-                      <?php endwhile ?>
-
-                  </tbody>
-
-                </table>
-              <!-- End Table -->
-             
+                  <div class="form-group">
+                    <label style="margin-top:10px">Maps</label>
+                    <input type="text" class="form-control" name="adressemMaps" placeholder="Localisation Maps">
+                  </div>
+                <!-- -->
             </div>
           </div>
 
         </div>
 
-        <!-- Start div 2 -->
-        <!--
         <div class="col-lg-6">
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Example Card</h5>
-              <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
+              <h5 class="card-title">Dossier Candidat</h5>
+              <!-- -->
+              <div class="form-group">
+                  <label>Email</label>
+                  <input type="Email" class="form-control" name="email" placeholder="Email Candidat">
+                </div>
+
+                <div class="form-group">
+                  <label style="margin-top:10px">Mot de passe</label>
+                  <input type="text" class="form-control" name="psswd" placeholder="Mot de passe Candidat">
+                </div>
+
+                <div class="form-group">
+                   <label style="margin-top:10px">Catégorie Permis</label>
+                   <select class="form-control" name="categorie">
+                     <option value="">------</option>
+                     <option value="A - Moto">A - Moto</option>
+                     <option value="B - Voiture">B - Voiture</option>
+                     <option value="C - Camion">C - Camion</option>
+                     <option value="D - AutoBus">D - AutoBus</option>
+                   </select>
+               </div>
+
+               <div class="form-group">
+                   <label for="exampleFormControlSelect1" style="margin-top:10px">Forfais Permis</label>
+                   <select class="form-control" name="forfais">
+                     <option value="">------</option>
+                     <option value="20 Heurs">20 Heurs</option>
+                     <option value="30 Heurs">30 Heurs</option>
+                     <option value="40 Heurs">40 Heurs</option>
+                   </select>
+               </div>
+
+               <div class="form-group">
+                 <label style="margin-top:10px">Photo CIN</label>
+                 <input type="file" class="form-control-file">
+               </div>
+
+               <div class="form-group">
+                 <label style="margin-top:20px" style="margin-top:10px">Photo Candidat</label>
+                 <input type="file" class="form-control-file" name="candidatphoto">
+               </div>
+
+               <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" name="save">Enregistrer</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quitter</button>
+                </div>
+              <!-- -->
+              </form>
+              <!-- End Form Create Candidat -->
             </div>
           </div>
 
-        </div> --> <!-- End div 2 -->
-
+        </div>
       </div>
     </section>
 
@@ -530,13 +453,6 @@ if(isset($_GET['edit']))
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Bootsrap -->
-  <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
-    
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
