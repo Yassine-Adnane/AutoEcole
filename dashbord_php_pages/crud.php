@@ -407,7 +407,6 @@ if(isset($_GET['delete']))
 
                         <tr>
                           
-                          <!-- <td> <img src="https://via.placeholder.com/50" alt="">  </td> -->
                           <td> <img src="cin_candidats/<?php echo $row['image_cin'];?>" style="height:70px;width:50px" ></td>  
                           <td> <?php echo $row['cin']; ?>  </td>
                           <td> <?php echo $row['nom']; ?>  </td>
