@@ -397,7 +397,7 @@ if(isset($_GET['edit']))
 
                   
 
-                  <div class="modal-footer" style="margin-top:30px">
+                  <div class="modal-footer" style="margin-top:80px">
                         <button type="submit" class="btn btn-primary" name="update">Modifier</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quitter</button>
                     </div>
@@ -448,49 +448,50 @@ if(isset($_GET['edit']))
               <!-- -->
             </div>
           </div>
-        </div>
-        <!-- -------------------------------------------------->
-        <div class="col-lg-6">
-          
-        </div>
-        <div class="col-lg-6">
+        <!-- -->
+          <!--Test-->   
+          <div class="test">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">CIN Candidat</h5>
+              
+                <!-- -->
+                <!-- Start Image Candidat -->
+                <div class="d-flex justify-content-center" >
+                    <div class="photoCandidats">
+                    <!-- Test -->
+                    <?php
+                    require "../php/connection.php";
+                    $resultphoto = $con->query("SELECT * FROM photos_candidats WHERE cin LIKE '$cin' ") or die ($mysqli->error())
+                    ?>
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">CIN Candidat</h5>
-             
-              <!-- -->
-               <!-- Start Image Candidat -->
-               <div class="d-flex justify-content-center" >
-                  <div class="photoCandidats">
-                  <!-- Test -->
-                  <?php
-                  require "../php/connection.php";
-                  $resultphoto = $con->query("SELECT * FROM photos_candidats WHERE cin LIKE '$cin' ") or die ($mysqli->error())
-                  ?>
+                    <?php while($row = $resultphoto->fetch_assoc()) : ?>
 
-                  <?php while($row = $resultphoto->fetch_assoc()) : ?>
-
-                  <img src="photos_candidats/<?php echo $row['candidats_photo'];?>" style="height: 284px;width: 230px; border-style: solid;" >
-                 
-                  <?php endwhile ?>
-                    
-
-                  </div>
+                    <img src="photos_candidats/<?php echo $row['candidats_photo'];?>" style="height: 284px;width: 230px; border-style: solid;" >
                   
-                </div>
-      
-                 <!-- End Image Candidat -->
-                
-                 <div class="form-group">
-                    <label style="margin-top:30px;margin-left:150px"></label>
-                    <input type="file" class="form-control-file" name="candidatphoto">
+                    <?php endwhile ?>
+                      
+
+                    </div>
+                    
                   </div>
-                 
-              <!-- -->
+
+                  <!-- End Image Candidat -->
+                  
+                  <div class="form-group">
+                      <label style="margin-top:30px;margin-left:150px"></label>
+                      <input type="file" class="form-control-file" name="candidatphoto">
+                    </div>
+                  
+                <!-- -->
+              </div>
             </div>
-          </div>
-        </div>
+            </div> <!--End Div Tree (CIN Image) -->
+          <!--Test-->
+        </div> <!--End Div two -->
+        <!-- -------------------------------------------------->
+        
+      
         <!-- -------------------------------------------------->
         
       </div>
