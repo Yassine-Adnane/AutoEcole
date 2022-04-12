@@ -37,8 +37,8 @@ if(isset($_POST['save']))
 /**************************************************************************************** */
 if(isset($_GET['delete']))
 {
-    $idCandidat = $_GET['delete'];
-    $con ->query("DELETE FROM candidats WHERE id=$idCandidat") or die ($mysqli->error());
+    $cinCandidat = $_GET['delete'];
+    $con ->query("DELETE FROM candidats WHERE cin=$cinCandidat") or die ($mysqli->error());
     
     /*$_SESSION['message_crud'] = "Candidat a bien supprimer";
     $_SESSION['msg_type'] = "danger";*/
@@ -371,11 +371,9 @@ if(isset($_GET['delete']))
                <!-- Start Table -->
                <?php
                   require "../php/connection.php";
-                  $resultdata = $con->query("SELECT  
-                  cand.id,
-                  image_cin,
+                  $resultdata = $con->query("SELECT imgc.image_cin,
                   cand.cin,
-                  cand.nom,
+                  cand. nom,
                   cand.prenom,
                   cand.genre,
                   cand.tele,
@@ -418,16 +416,16 @@ if(isset($_GET['delete']))
                           <td>
                               
 
-                              <a href="?consult=<?php echo $row['id']; ?>">
+                              <a href="?consult=<?php echo $row['cin']; ?>">
                                   <i class="fa-solid fa-folder-open fa-2xl" style="color:#FFD93D"></i>
                               </a>
 
-                              <a href="update_candidat.php?edit=<?php echo $row['id']; ?>">
+                              <a href="update_candidat.php?edit=<?php echo $row['cin']; ?>">
                                   <i class="fa-solid fa-pen-to-square fa-2xl" style="color:#6BCB77"></i>
                               </a> 
                              
 
-                              <a href="?delete=<?php echo $row['id']; ?>">
+                              <a href="?delete=<?php echo $row['cin']; ?>">
                                   <i class="fa-solid fa-trash-can fa-2xl" style="color:#FF6B6B"></i>
                               </a> 
                               

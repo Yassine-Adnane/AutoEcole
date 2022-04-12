@@ -39,6 +39,7 @@ if(isset($_POST['save']))
   }
 
 
+
   $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,forfais) 
   VALUES ('$cin','$nom','$prenom','$tele',
           '$adresse','$email','$psswd',
@@ -51,7 +52,7 @@ if(isset($_POST['save']))
   
 
   header("location:crud.php");
-
+  
 }
 
 ?>
@@ -346,44 +347,45 @@ if(isset($_POST['save']))
             <div class="card-body">
               <h5 class="card-title">Infos Candidat</h5>
               <!-- Start Form Create Candidat crud.php -->
-              <form action="" method="POST" enctype="multipart/form-data" >
+              <form action="crud.php" method="POST" enctype="multipart/form-data" >
                 <!-- -->
                 <div class="form-group">
                     <label>Nom :</label>
-                    <input type="text" class="form-control" name="nom" placeholder="Nom Candidat">
+                    <input type="text" class="form-control" name="nom" placeholder="Nom Candidat" require >
                 </div>
                <div class="form-group">
                  <label style="margin-top:10px">Prénom :</label>
-                 <input type="text" class="form-control" name="prenom" placeholder="Prénom Candidat">
+                 <input type="text" class="form-control" name="prenom" placeholder="Prénom Candidat" >
                  </div>
 
                  <div class="form-group">
                     <label style="margin-top:10px">CIN :</label>
-                    <input type="text" class="form-control" name="cin" placeholder="CIN Candidat">
+                    <input type="text" class="form-control" name="cin" placeholder="CIN Candidat" >
                   </div>
 
                   <div class="form-group">
                       <label style="margin-top:10px">Genre</label>
                       <select class="form-control" name="genre">
-                        <option value="">------</option>
+                        <!-- <option value="---">------</option> -->
                         <option value="Homme">Homme</option>
                         <option value="Femme">Femme</option>
                       </select>
+                      
                   </div>
 
                   <div class="form-group">
                     <label  style="margin-top:10px">Num télé :</label>
-                    <input type="text" class="form-control" name="tele" placeholder="Téléphone Candidat">
+                    <input type="text" class="form-control" name="tele" placeholder="Téléphone Candidat"  maxlength="15">
                   </div>
 
                   <div class="form-group">
                     <label style="margin-top:10px">Adresse</label>
-                    <input type="text" class="form-control" name="adresse" placeholder="Adresse Candidat">
+                    <input type="text" class="form-control" name="adresse" placeholder="Adresse Candidat" >
                   </div>
 
                   <div class="form-group">
                     <label style="margin-top:10px">Maps</label>
-                    <input type="text" class="form-control" name="adressemMaps" placeholder="Localisation Maps">
+                    <input type="text" class="form-control" name="adressemMaps" placeholder="Localisation Maps" >
                   </div>
                 <!-- -->
             </div>
@@ -399,18 +401,18 @@ if(isset($_POST['save']))
               <!-- -->
               <div class="form-group">
                   <label>Email</label>
-                  <input type="Email" class="form-control" name="email" placeholder="Email Candidat">
+                  <input type="Email" class="form-control" name="email" placeholder="Email Candidat" >
                 </div>
 
                 <div class="form-group">
                   <label style="margin-top:10px">Mot de passe (Par défeaut) </label>
-                  <input type="text" class="form-control" name="psswd" placeholder="Mot de passe Candidat par défeaut ">
+                  <input type="text" class="form-control" name="psswd" placeholder="Mot de passe Candidat par défeaut " >
                 </div>
 
                 <div class="form-group">
                    <label style="margin-top:10px">Catégorie Permis</label>
                    <select class="form-control" name="categorie">
-                     <option value="">------</option>
+                     <!-- <option value="">------</option> -->
                      <option value="A - Moto">A - Moto</option>
                      <option value="B - Voiture">B - Voiture</option>
                      <option value="C - Camion">C - Camion</option>
@@ -421,7 +423,7 @@ if(isset($_POST['save']))
                <div class="form-group">
                    <label for="exampleFormControlSelect1" style="margin-top:10px">Forfais Permis</label>
                    <select class="form-control" name="forfais">
-                     <option value="">------</option>
+                     <!-- <option value="">------</option> -->
                      <option value="20 Heurs">20 Heurs</option>
                      <option value="30 Heurs">30 Heurs</option>
                      <option value="40 Heurs">40 Heurs</option>
@@ -430,19 +432,21 @@ if(isset($_POST['save']))
 
                <div class="form-group">
                  <label style="margin-top:30px">Photo CIN &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
-                 <input type="file" class="form-control-file"  name="photo_cin">
+                 <input type="file" class="form-control-file"  name="photo_cin" >
                </div>
 
                <div class="form-group">
                  <label style="margin-top:30px">Photo Candidat</label>
-                 <input type="file" class="form-control-file" name="candidatphoto">
+                 <input type="file" class="form-control-file" name="candidatphoto" >
                </div>
 
-
+               
                <div class="modal-footer" style="margin-top:30px">
                     <button type="submit" class="btn btn-primary" name="save">Enregistrer</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quitter</button>
                 </div>
+
+                
               <!-- -->
               </form>
               <!-- End Form Create Candidat -->
