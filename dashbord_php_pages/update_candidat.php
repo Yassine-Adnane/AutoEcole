@@ -32,11 +32,58 @@ if(isset($_GET['edit']))
 
         $PhotoCandidat = $row['candidats_photo'];
         
-    }
-    
+    }    
 }
 
+    if(isset($_POST['modifier_candidat']))
+    {
 
+      $nom            =  $_POST['nom'];
+      $prenom         =  $_POST['prenom'];
+      $genre          =  $_POST['genre'];
+      $tele           =  $_POST['tele'];
+      $email          =  $_POST['email'];
+      $adresse        =  $_POST['adresse'];
+      /*$adressemMaps   =  $_POST['adressemMaps'];*/
+
+      
+
+      /* Update Photo Candidat */
+      if(isset($_FILES['candidatphoto']['name']))
+      {
+        /* Repare PhotoName */
+        $photos_name = $_FILES['candidatphoto']['name'];
+    
+        $extPhoto = end(explode('.',$photos_name));
+    
+        $photos_name = "candidat_cin_". $cin.'.'.$extPhoto;
+        /* End Repare PhotoName */
+    
+        /*
+        $source_path_photos = $_FILES['candidatphoto']['tmp_name'];
+    
+        $destination_path_photos = "photos_candidats/".$photos_name;
+    
+        $upload = move_uploaded_file($source_path_photos,$destination_path_photos);
+
+        */
+      
+      }
+
+      $con ->query("UPDATE candidats 
+                    SET nom='$nom',
+                    prenom = '$prenom',
+                    genre = '$genre',
+                    tele = '$tele',
+                    email = '$email',
+                    adresse = '$adresse'
+                    WHERE cin LIKE '$cin'")
+      or die($con->error);
+
+      /* End Update Photo Candidat */
+      header("location:crud.php");
+
+    }
 ?>
 
 
@@ -332,8 +379,13 @@ if(isset($_GET['edit']))
               <h5 class="card-title">Modifier Infos Candidat</h5>
                
               <!-- Start Form Create Candidat -->
-                <form action="crud.php" method="POST" enctype="multipart/form-data" >
+                <form action="" method="POST" enctype="multipart/form-data" >
                   <!-- -->
+                  <div class="form-group">
+                    <label style="margin-top:10px">CIN :</label>
+                    <input type="text" class="form-control" name="cin" placeholder="CIN Candidat" value = "<?php echo $cin ?>" disabled>
+                  </div>
+
                   <div class="form-group">
                       <label>Nom :</label>
                       <input type="text" class="form-control" name="nom" placeholder="Nom Candidat" value = "<?php echo $nameCandidat ?>">
@@ -342,12 +394,7 @@ if(isset($_GET['edit']))
                     <label style="margin-top:10px">Prénom :</label>
                     <input type="text" class="form-control" name="prenom" placeholder="Prénom Candidat" value = "<?php echo $prenomCandidat ?>">
                   </div>
-                    
-                  <div class="form-group">
-                    <label style="margin-top:10px">CIN :</label>
-                    <input type="text" class="form-control" name="cin" placeholder="CIN Candidat" value = "<?php echo $cin ?>" disabled>
-                  </div>
-
+                 
                   <div class="form-group">
                       <label style="margin-top:10px">Genre</label>
                       <select class="form-control" name="genre">
@@ -375,6 +422,11 @@ if(isset($_GET['edit']))
                   </div>
 
                   <div class="form-group">
+                      <label style="margin-top:10px">Email</label>
+                      <input type="Email" class="form-control" name="email" placeholder="Email Candidat" value = "<?php echo $emailCandidat ?>">
+                    </div>  
+
+                  <div class="form-group">
                     <label style="margin-top:10px">Adresse</label>
                     <input type="text" class="form-control" name="adresse" placeholder="Adresse Candidat" value = "<?php echo $adresseCandidat ?>">
                   </div>
@@ -385,26 +437,17 @@ if(isset($_GET['edit']))
                   </div>
 
                    <!-- -->
-                  <div class="form-group">
-                      <label>Email</label>
-                      <input type="Email" class="form-control" name="email" placeholder="Email Candidat" value = "<?php echo $emailCandidat ?>">
-                    </div>              
-
-                    <div class="form-group">
-                    <label style="margin-top:30px">Modifier Photo CIN &nbsp; &nbsp; &nbsp; &nbsp;</label>
-                    <input type="file" class="form-control-file">
-                  </div>
-
-                  
-
-                  <div class="modal-footer" style="margin-top:80px">
-                        <button type="submit" class="btn btn-primary" name="update">Modifier</button>
+                        
+                  <div class="modal-footer" style="margin-top:150px">
+                        <button type="submit" class="btn btn-primary" name="modifier_candidat">Modifier</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quitter</button>
                     </div>
                   <!-- -->
-                  </form>
+                  
                   <!-- End Form Create Candidat -->
+                  </form> <!-- End Form -->
 
+                  
                   <!-- -->
             </div>
           </div>
@@ -432,8 +475,7 @@ if(isset($_GET['edit']))
                   <img src="photos_candidats/<?php echo $row['candidats_photo'];?>" style="height: 284px;width: 230px; border-style: solid;" >
                  
                   <?php endwhile ?>
-                    
-
+                  
                   </div>
                   
                 </div>
@@ -457,32 +499,31 @@ if(isset($_GET['edit']))
               
                 <!-- -->
                 <!-- Start Image Candidat -->
-                <div class="d-flex justify-content-center" >
+                <div class="d-flex justify-content-center" style="border-style: solid;" >
                     <div class="photoCandidats">
                     <!-- Test -->
                     <?php
                     require "../php/connection.php";
-                    $resultphoto = $con->query("SELECT * FROM photos_candidats WHERE cin LIKE '$cin' ") or die ($mysqli->error())
+                    $resultphoto = $con->query("SELECT * FROM images_cin WHERE cin LIKE '$cin' ") or die ($mysqli->error())
                     ?>
 
                     <?php while($row = $resultphoto->fetch_assoc()) : ?>
 
-                    <img src="photos_candidats/<?php echo $row['candidats_photo'];?>" style="height: 284px;width: 230px; border-style: solid;" >
+                    <img src="cin_candidats/<?php echo $row['image_cin'];?>" style="height: 284px;width:500px;" >
                   
                     <?php endwhile ?>
                       
-
-                    </div>
+                    </div>                    
                     
                   </div>
 
-                  <!-- End Image Candidat -->
-                  
-                  <div class="form-group">
-                      <label style="margin-top:30px;margin-left:150px"></label>
-                      <input type="file" class="form-control-file" name="candidatphoto">
+                  <!-- End CIN Candidat -->
+                
+                    <div class="form-group">
+                      <label style="margin-top:30px">Modifier Photo CIN &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                      <input type="file" class="form-control-file">
                     </div>
-                  
+
                 <!-- -->
               </div>
             </div>

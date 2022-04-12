@@ -71,7 +71,7 @@ if(isset($_POST['save']))
   VALUES ('$cin','$image_name')") 
   or die($con->error);
   
-  $con ->query("INSERT INTO photos_candidats (cin,photos_candidats) 
+  $con ->query("INSERT INTO photos_candidats (cin,candidats_photo) 
   VALUES ('$cin','$photos_name')") 
   or die($con->error);
   
