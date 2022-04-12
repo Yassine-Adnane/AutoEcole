@@ -33,6 +33,13 @@
     </a>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="consult_candidat.php">
+      <i class="bi bi-file-earmark"></i>
+      <span>Consulter Candidat</span>
+    </a>
+  </li>
+
   <!-- 
 
   <li class="nav-item">

@@ -2,6 +2,14 @@
 
 require "../php/connection.php";
 
+$cin         = '';
+$nameCandidat = '';
+$prenomCandidat = '';
+$genreCandidat = '';
+$teleCandidat = '';
+$emailCandidat = '';
+$adresseCandidat = '';
+
 if(isset($_GET['edit']))
 {
 
@@ -360,7 +368,7 @@ if(isset($_GET['edit']))
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Blank Page</h1>
+      <h1>Modifier Candidat</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
