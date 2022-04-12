@@ -1,3 +1,18 @@
+<?php
+
+require "../php/connection.php";
+
+if(isset($_GET['delete']))
+{
+    $cinCandidat = $_GET['delete'];
+    $con ->query("DELETE FROM candidats WHERE cin LIKE '$cinCandidat' ") or die ($mysqli->error());
+  
+    header("location:crud.php");
+
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -315,7 +330,7 @@
                <!-- Start Table -->
                <?php
                   require "../php/connection.php";
-                  $resultdata = $con->query("SELECT imgc.image_cin,
+                  $resultdata = $con->query("SELECT imgc.candidats_photo,
                   cand.cin,
                   cand. nom,
                   cand.prenom,
@@ -324,7 +339,7 @@
                   cand.categorie,
                   cand.forfais
             FROM candidats cand
-            INNER JOIN images_cin imgc
+            INNER JOIN photos_candidats imgc
             ON cand.cin = imgc.cin")
             
             or die ($mysqli->error());
@@ -349,7 +364,7 @@
 
                         <tr>
                           
-                          <td> <img src="cin_candidats/<?php echo $row['image_cin'];?>" style="height:70px;width:50px" ></td>  
+                          <td> <img src="photos_candidats/<?php echo $row['candidats_photo'];?>" style="height:70px;width:50px" ></td>  
                           <td> <?php echo $row['cin']; ?>  </td>
                           <td> <?php echo $row['nom']; ?>  </td>
                           <td> <?php echo $row['prenom']; ?>  </td>

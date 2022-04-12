@@ -1,3 +1,45 @@
+<?php
+
+require "../php/connection.php";
+
+if(isset($_GET['edit']))
+{
+
+    $cin = $_GET['edit'];
+    
+    $resultdata = $con->query("SELECT * FROM candidats WHERE cin LIKE '$cin' ") or die($mysqli->error());
+
+    $photoCandidatData = $con->query("SELECT * FROM photos_candidats WHERE cin LIKE '$cin' ") 
+    or die($mysqli->error());
+    
+    
+    if(mysqli_num_rows($resultdata) == 1)
+    {
+        $row  =  $resultdata->fetch_array();
+
+        $nameCandidat    = $row['nom'];
+        $prenomCandidat  = $row['prenom'];
+        $genreCandidat   = $row['genre'];
+        $teleCandidat    = $row['tele'];
+        $emailCandidat   = $row['email'];
+        $adresseCandidat = $row['adresse'];
+        
+    }
+
+    if(mysqli_num_rows($photoCandidatData) == 1)
+    {
+        $row  =  $photoCandidatData->fetch_array();
+
+        $PhotoCandidat = $row['candidats_photo'];
+        
+    }
+    
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -279,7 +321,7 @@
           <li class="breadcrumb-item active">Blank</li>
         </ol>
       </nav>
-    </div><!-- End Page Title -->
+    </div><!-- End Page Title col-lg-6 -->
 
     <section class="section">
       <div class="row">
@@ -288,55 +330,80 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Modifier Infos Candidat</h5>
-
-              <div class="d-flex justify-content-center">
-                  <div class="photoCandidats" style="height:200px;width:200px;background-color:#006778;color:#FFF" >
-                    <h6 class= "">Photo Candidat</h6>
-                  </div>
-                </div>
-      
-                <br>
+               
               <!-- Start Form Create Candidat -->
                 <form action="crud.php" method="POST" enctype="multipart/form-data" >
                   <!-- -->
                   <div class="form-group">
                       <label>Nom :</label>
-                      <input type="text" class="form-control" name="nom" placeholder="Nom Candidat">
+                      <input type="text" class="form-control" name="nom" placeholder="Nom Candidat" value = "<?php echo $nameCandidat ?>">
                   </div>
                   <div class="form-group">
                     <label style="margin-top:10px">Prénom :</label>
-                    <input type="text" class="form-control" name="prenom" placeholder="Prénom Candidat">
+                    <input type="text" class="form-control" name="prenom" placeholder="Prénom Candidat" value = "<?php echo $prenomCandidat ?>">
                   </div>
                     
                   <div class="form-group">
                     <label style="margin-top:10px">CIN :</label>
-                    <input type="text" class="form-control" name="cin" placeholder="CIN Candidat">
+                    <input type="text" class="form-control" name="cin" placeholder="CIN Candidat" value = "<?php echo $cin ?>" disabled>
                   </div>
 
                   <div class="form-group">
                       <label style="margin-top:10px">Genre</label>
                       <select class="form-control" name="genre">
-                        <option value="">------</option>
-                        <option value="Homme">Homme</option>
-                        <option value="Femme">Femme</option>
+                        <?php
+                          if($genreCandidat == 'Homme')
+                          {
+                          ?>  
+                          <option value="Homme">Homme</option>
+                          <?php
+                          }
+                          else
+                          {
+                          ?>
+                           <option value="Femme">Femme</option>
+                           <?php
+                          }
+                        ?>
+
                       </select>
                   </div>
 
                   <div class="form-group">
                     <label  style="margin-top:10px">Num télé :</label>
-                    <input type="text" class="form-control" name="tele" placeholder="Téléphone Candidat">
+                    <input type="text" class="form-control" name="tele" placeholder="Téléphone Candidat" value = "<?php echo $teleCandidat ?>">
                   </div>
 
                   <div class="form-group">
                     <label style="margin-top:10px">Adresse</label>
-                    <input type="text" class="form-control" name="adresse" placeholder="Adresse Candidat">
+                    <input type="text" class="form-control" name="adresse" placeholder="Adresse Candidat" value = "<?php echo $adresseCandidat ?>">
                   </div>
 
                   <div class="form-group">
                     <label style="margin-top:10px">Maps</label>
-                    <input type="text" class="form-control" name="adressemMaps" placeholder="Localisation Maps">
+                    <input type="text" class="form-control" name="adressemMaps" placeholder="Localisation Maps" value = "<?php echo "test Maps" ?>" disabled>
                   </div>
 
+                   <!-- -->
+                  <div class="form-group">
+                      <label>Email</label>
+                      <input type="Email" class="form-control" name="email" placeholder="Email Candidat" value = "<?php echo $emailCandidat ?>">
+                    </div>              
+
+                    <div class="form-group">
+                    <label style="margin-top:30px">Modifier Photo CIN &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                    <input type="file" class="form-control-file">
+                  </div>
+
+                  
+
+                  <div class="modal-footer" style="margin-top:30px">
+                        <button type="submit" class="btn btn-primary" name="update">Modifier</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quitter</button>
+                    </div>
+                  <!-- -->
+                  </form>
+                  <!-- End Form Create Candidat -->
 
                   <!-- -->
             </div>
@@ -348,40 +415,84 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Modifier Dossier Candidat</h5>
+              <h5 class="card-title">Image Candidat</h5>
+             
               <!-- -->
-              <div class="form-group">
-                  <label>Email</label>
-                  <input type="Email" class="form-control" name="email" placeholder="Email Candidat">
+               <!-- Start Image Candidat -->
+               <div class="d-flex justify-content-center" >
+                  <div class="photoCandidats">
+                  <!-- Test -->
+                  <?php
+                  require "../php/connection.php";
+                  $resultphoto = $con->query("SELECT * FROM photos_candidats WHERE cin LIKE '$cin' ") or die ($mysqli->error())
+                  ?>
+
+                  <?php while($row = $resultphoto->fetch_assoc()) : ?>
+
+                  <img src="photos_candidats/<?php echo $row['candidats_photo'];?>" style="height: 284px;width: 230px; border-style: solid;" >
+                 
+                  <?php endwhile ?>
+                    
+
+                  </div>
+                  
                 </div>
-
-                <div class="form-group">
-                  <label style="margin-top:20px">Mot de passe (Par défeaut) </label>
-                  <input type="text" class="form-control" name="psswd" placeholder="Mot de passe Candidat par défeaut ">
-                </div>
-
-               <div class="form-group">
-                 <label style="margin-top:30px">Modifier Photo CIN &nbsp; &nbsp; &nbsp; &nbsp;</label>
-                 <input type="file" class="form-control-file">
-               </div>
-
-               <div class="form-group">
-                 <label style="margin-top:30px">Modifier Photo Candidat</label>
-                 <input type="file" class="form-control-file" name="candidatphoto">
-               </div>
-
-               <div class="modal-footer" style="margin-top:30px">
-                    <button type="submit" class="btn btn-primary" name="save">Enregistrer</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quitter</button>
-                </div>
-              <!-- -->
-              </form>
-              <!-- End Form Create Candidat -->
+      
+                 <!-- End Image Candidat -->
+                
+                 <div class="form-group">
+                    <label style="margin-top:30px;margin-left:150px"></label>
+                    <input type="file" class="form-control-file" name="candidatphoto">
+                  </div>
+                 
               <!-- -->
             </div>
           </div>
-
         </div>
+        <!-- -------------------------------------------------->
+        <div class="col-lg-6">
+          
+        </div>
+        <div class="col-lg-6">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">CIN Candidat</h5>
+             
+              <!-- -->
+               <!-- Start Image Candidat -->
+               <div class="d-flex justify-content-center" >
+                  <div class="photoCandidats">
+                  <!-- Test -->
+                  <?php
+                  require "../php/connection.php";
+                  $resultphoto = $con->query("SELECT * FROM photos_candidats WHERE cin LIKE '$cin' ") or die ($mysqli->error())
+                  ?>
+
+                  <?php while($row = $resultphoto->fetch_assoc()) : ?>
+
+                  <img src="photos_candidats/<?php echo $row['candidats_photo'];?>" style="height: 284px;width: 230px; border-style: solid;" >
+                 
+                  <?php endwhile ?>
+                    
+
+                  </div>
+                  
+                </div>
+      
+                 <!-- End Image Candidat -->
+                
+                 <div class="form-group">
+                    <label style="margin-top:30px;margin-left:150px"></label>
+                    <input type="file" class="form-control-file" name="candidatphoto">
+                  </div>
+                 
+              <!-- -->
+            </div>
+          </div>
+        </div>
+        <!-- -------------------------------------------------->
+        
       </div>
     </section>
 

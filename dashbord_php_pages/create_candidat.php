@@ -6,9 +6,6 @@
 if(isset($_POST['save']))
 {
 
-  echo "<script>alert(\"la variable est nulle\")</script>";
-
-
   $cin         =  $_POST['cin'];
   $nom         =  $_POST['nom'];
 
@@ -41,6 +38,27 @@ if(isset($_POST['save']))
     $image_name = "";
   }
 
+  //*** */
+  if(isset($_FILES['candidatphoto']['name']))
+  {
+    $photos_name = $_FILES['candidatphoto']['name'];
+
+    $extPhoto = end(explode('.',$photos_name));
+
+    $photos_name = "candidat_cin_". $cin.'.'.$extPhoto;
+
+    $source_path_photos = $_FILES['candidatphoto']['tmp_name'];
+
+    $destination_path_photos = "photos_candidats/".$photos_name;
+
+    $upload = move_uploaded_file($source_path_photos,$destination_path_photos);
+  
+  }
+  else
+  {
+    $photos_name = "";
+  }
+
 
 
   $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,forfais) 
@@ -51,6 +69,10 @@ if(isset($_POST['save']))
 
   $con ->query("INSERT INTO images_cin (cin,image_cin) 
   VALUES ('$cin','$image_name')") 
+  or die($con->error);
+  
+  $con ->query("INSERT INTO photos_candidats (cin,photos_candidats) 
+  VALUES ('$cin','$photos_name')") 
   or die($con->error);
   
 
