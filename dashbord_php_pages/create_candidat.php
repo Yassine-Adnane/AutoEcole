@@ -6,6 +6,9 @@
 if(isset($_POST['save']))
 {
 
+  echo "<script>alert(\"la variable est nulle\")</script>";
+
+
   $cin         =  $_POST['cin'];
   $nom         =  $_POST['nom'];
 
@@ -347,7 +350,7 @@ if(isset($_POST['save']))
             <div class="card-body">
               <h5 class="card-title">Infos Candidat</h5>
               <!-- Start Form Create Candidat crud.php -->
-              <form action="crud.php" method="POST" enctype="multipart/form-data" >
+              <form action="" method="POST" enctype="multipart/form-data" >
                 <!-- -->
                 <div class="form-group">
                     <label>Nom :</label>
