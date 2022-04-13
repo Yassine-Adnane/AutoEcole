@@ -2,99 +2,67 @@
 
 require "../php/connection.php";
 
-$cin         = '';
-$nameCandidat = '';
-$prenomCandidat = '';
-$genreCandidat = '';
-$teleCandidat = '';
-$emailCandidat = '';
-$adresseCandidat = '';
+global $idupd;
+$coure_th_value = '';
+$resultdata_th = '';
+$valcoures_update = '';
+$CheckUpdate = false;
 
-if(isset($_GET['consult']))
+if(isset($_POST['save_th']))
 {
+  
+  $coure_th_value = $_POST['coure_label_th'];
 
-    $cin = $_GET['consult'];
+  if(!empty($coure_th_value))
+  {
+    $con ->query("INSERT INTO coures_theorique (description_th) 
+    VALUES ('$coure_th_value')") 
+    or die($con->error); 
+
     
-    $resultdata = $con->query("SELECT * FROM candidats WHERE cin LIKE '$cin' ") or die($mysqli->error());
-
-    $photoCandidatData = $con->query("SELECT * FROM photos_candidats WHERE cin LIKE '$cin' ") 
-    or die($mysqli->error());
-    
-    
-    if(mysqli_num_rows($resultdata) == 1)
-    {
-        $row  =  $resultdata->fetch_array();
-
-        $nameCandidat    = $row['nom'];
-        $prenomCandidat  = $row['prenom'];
-        $genreCandidat   = $row['genre'];
-        $teleCandidat    = $row['tele'];
-        $emailCandidat   = $row['email'];
-        $adresseCandidat = $row['adresse'];
-        
-    }
-
-    if(mysqli_num_rows($photoCandidatData) == 1)
-    {
-        $row  =  $photoCandidatData->fetch_array();
-
-        $PhotoCandidat = $row['candidats_photo'];
-        
-    }    
+  }
 }
 
-    if(isset($_POST['modifier_candidat']))
+if(isset($_GET['delete']))
+{
+    $id_coures_delete = $_GET['delete'];
+    $con ->query("DELETE FROM coures_theorique WHERE id = '$id_coures_delete' ") or die ($mysqli->error());
+  
+}
+
+if(isset($_GET['modifier_th']))
+{
+  $id_coures_update = $_GET['modifier_th'];
+  $idupd             = $_GET['modifier_th'];
+
+  $resultdata_th = $con->query("SELECT * FROM coures_theorique WHERE id = '$id_coures_update' ") or die ($mysqli->error());
+ 
+    if(mysqli_num_rows($resultdata_th) == 1)
     {
-
-      $nom            =  $_POST['nom'];
-      $prenom         =  $_POST['prenom'];
-      $genre          =  $_POST['genre'];
-      $tele           =  $_POST['tele'];
-      $email          =  $_POST['email'];
-      $adresse        =  $_POST['adresse'];
-      /*$adressemMaps   =  $_POST['adressemMaps'];*/
-
-      
-
-      /* Update Photo Candidat */
-      if(isset($_FILES['candidatphoto']['name']))
-      {
-        /* Repare PhotoName */
-        $photos_name = $_FILES['candidatphoto']['name'];
-    
-        $extPhoto = end(explode('.',$photos_name));
-    
-        $photos_name = "candidat_cin_". $cin.'.'.$extPhoto;
-        /* End Repare PhotoName */
-    
-        /*
-        $source_path_photos = $_FILES['candidatphoto']['tmp_name'];
-    
-        $destination_path_photos = "photos_candidats/".$photos_name;
-    
-        $upload = move_uploaded_file($source_path_photos,$destination_path_photos);
-
-        */
-      
-      }
-
-      $con ->query("UPDATE candidats 
-                    SET nom='$nom',
-                    prenom = '$prenom',
-                    genre = '$genre',
-                    tele = '$tele',
-                    email = '$email',
-                    adresse = '$adresse'
-                    WHERE cin LIKE '$cin'")
-      or die($con->error);
-
-      /* End Update Photo Candidat */
-      header("location:crud.php");
-
+        $row  =  $resultdata_th->fetch_array();
+        $valcoures_update    = $row['description_th'];
+       $CheckUpdate = true;
     }
+   
+}
+
+if(isset($_POST['update_th']))
+{
+
+    $newvalue_th = $_POST['coure_label_th'];
+
+    /*$CheckUpdate = false;*/
+
+    $con ->query("UPDATE coures_theorique SET description_th='$newvalue_th' WHERE id = $idupd ") 
+    or die ($mysqli->error());
+    
+    $valcoures_update = '';
+
+  
+    header("location:gestion_coures.php");
+}
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -123,6 +91,23 @@ if(isset($_GET['consult']))
   <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- font-awesome -->
+  <script src="https://kit.fontawesome.com/f7f97a992e.js" crossorigin="anonymous"></script>
+
+  <!-- Bootstrap CSS -->
+  <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -360,6 +345,7 @@ if(isset($_GET['consult']))
 
   </header><!-- End Header -->
 
+
   <!-- ======= Start Sidebar ======= -->
   <?php 
         require "menu.php";
@@ -369,7 +355,7 @@ if(isset($_GET['consult']))
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Consulter Candidat</h1>
+      <h1>Gestion Coures</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -377,194 +363,92 @@ if(isset($_GET['consult']))
           <li class="breadcrumb-item active">Blank</li>
         </ol>
       </nav>
-    </div><!-- End Page Title col-lg-6 -->
+    </div><!-- End Page Title -->
 
     <section class="section">
       <div class="row">
         <div class="col-lg-6">
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Modifier Infos Candidat</h5>
-               
-              <!-- Start Form Create Candidat -->
-                <form action="" method="POST" enctype="multipart/form-data" >
-                  <!-- -->
-                  <div class="form-group">
-                    <label style="margin-top:10px">CIN :</label>
-                    <input type="text" class="form-control" name="cin" placeholder="CIN Candidat" value = "<?php echo $cin ?>" disabled>
-                  </div>
-
-                  <div class="form-group">
-                      <label>Nom :</label>
-                      <input type="text" class="form-control" name="nom" placeholder="Nom Candidat" value = "<?php echo $nameCandidat ?>" disabled>
-                  </div>
-                  <div class="form-group">
-                    <label style="margin-top:10px">Prénom :</label>
-                    <input type="text" class="form-control" name="prenom" placeholder="Prénom Candidat" value = "<?php echo $prenomCandidat ?>" disabled>
-                  </div>
-                 
-                  <div class="form-group">
-                      <label style="margin-top:10px">Genre</label>
-                      <select class="form-control" name="genre" disabled>
-                        <?php
-                          if($genreCandidat == 'Homme')
-                          {
-                          ?>  
-                          <option value="Homme">Homme</option>
-                          <?php
-                          }
-                          else
-                          {
-                          ?>
-                           <option value="Femme">Femme</option>
-                           <?php
-                          }
-                        ?>
-
-                      </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label  style="margin-top:10px">Num télé :</label>
-                    <input type="text" class="form-control" name="tele" placeholder="Téléphone Candidat" value = "<?php echo $teleCandidat ?>" disabled>
-                  </div>
-
-                  <div class="form-group">
-                      <label style="margin-top:10px">Email</label>
-                      <input type="Email" class="form-control" name="email" placeholder="Email Candidat" value = "<?php echo $emailCandidat ?>" disabled>
-                    </div>  
-
-                  <div class="form-group">
-                    <label style="margin-top:10px">Adresse</label>
-                    <input type="text" class="form-control" name="adresse" placeholder="Adresse Candidat" value = "<?php echo $adresseCandidat ?>" disabled>
-                  </div>
-
-                  <div class="form-group">
-                    <label style="margin-top:10px">Maps</label>
-                    <input type="text" class="form-control" name="adressemMaps" placeholder="Localisation Maps" value = "<?php echo "test Maps" ?>" disabled>
-                  </div>
-
-                   <!-- -->
-                  
-                  <div class="modal-footer" style="margin-top:100px">
-                  <!-- 
-                        <button type="submit" class="btn btn-primary" name="modifier_candidat">Modifier</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quitter</button>
-                   -->
-                  </div>
-                  
-                  <!-- -->
-                  
-                  <!-- End Form Create Candidat -->
-                  </form> <!-- End Form -->
-
-                  
-                  <!-- -->
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-lg-6">
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Image Candidat</h5>
-             
-              <!-- -->
-               <!-- Start Image Candidat -->
-               <div class="d-flex justify-content-center" >
-                  <div class="photoCandidats">
-                  <!-- Test -->
-                  <?php
-                  require "../php/connection.php";
-                  $resultphoto = $con->query("SELECT * FROM photos_candidats WHERE cin LIKE '$cin' ") or die ($mysqli->error())
-                  ?>
-
-                  <?php while($row = $resultphoto->fetch_assoc()) : ?>
-
-                  <img src="photos_candidats/<?php echo $row['candidats_photo'];?>" style="height: 284px;width: 230px; border-style: solid;" >
-                 
-                  <?php endwhile ?>
-                  
-                  </div>
-                  
-                </div>
-      
-                 <!-- End Image Candidat -->
-                
-                 <!--
-                 <div class="form-group">
-                    <label style="margin-top:30px;margin-left:150px"></label>
-                    <input type="file" class="form-control-file" name="candidatphoto">
-                  </div>
-                 -->
-              <!-- -->
-            </div>
-          </div>
-        <!-- -->
-          <!--Test-->   
-          <div class="test">
             <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">CIN Candidat</h5>
-              
-                <!-- -->
-                <!-- Start Image Candidat -->
-                <div class="d-flex justify-content-center" style="border-style: solid;" >
-                    <div class="photoCandidats">
-                    <!-- Test -->
-                    <?php
-                    require "../php/connection.php";
-                    $resultphoto = $con->query("SELECT * FROM images_cin WHERE cin LIKE '$cin' ") or die ($mysqli->error())
-                    ?>
-
-                    <?php while($row = $resultphoto->fetch_assoc()) : ?>
-
-                    <img src="cin_candidats/<?php echo $row['image_cin'];?>" style="height: 284px;width:500px;" >
-                  
-                    <?php endwhile ?>
+                <div class="card-body">
+                  <h5 class="card-title">Liste Coures Théorique</h5>
+                  <form action="" method="POST">
+                      <input type="text" class="form-control" name="coure_label_th" value ="<?php echo $valcoures_update ?>" style="width:60%; display: inline;" >
                       
-                    </div>                    
-                    
+                      <?php 
+                        if($CheckUpdate == false)
+                        { 
+                        
+                        ?>
+                          <button type="submit" class="btn btn-success" name="save_th" style="display:inline;">Ajouter Coure</button>
+                        <?php 
+                        }
+                        else
+                        {
+                          
+                        ?>
+                          <button type="submit" class="btn btn-success" name="update_th" style="display:inline;">Modifier Coure</button>
+                        <?php
+                        }
+                      ?>
+                      
+                  </form>      
+                 
+                  <br>
+                  <hr>
+                  <!-- Start Table -->
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Titre Coure</th>
+                        <th scope="col">Operations</th>
+                      </tr>
+                    </thead>
+                    <tbody> 
+                        
+                        <?php 
+                        $resultdata_th = $con ->query("SELECT * FROM coures_theorique") or die($con->error); 
+                        while($row = $resultdata_th->fetch_assoc()) : 
+                        ?>
+                        <tr>
+
+                        <td>
+                          <!-- -->
+                          <?php echo $row['description_th']; ?>
+                          <!-- -->
+                        </td>
+
+                        <td>
+                          <!-- -->
+                          
+
+                          <a <?php $CheckUpdate = true; ?> href="?modifier_th=<?php echo $row['id'];  ?>">
+                                <i class="fa-solid fa-pen-to-square fa-2xl" style="color:#FFD93D"></i>
+                          </a>
+  
+                             <a href="?delete=<?php echo $row['id']; ?>">
+                                <i class="fa-solid fa-trash-can fa-2xl" style="color:#FF6B6B"></i>
+                            </a>
+                          <!-- -->
+                        </td>
+
+                        </tr>
+
+                        <?php endwhile ?>
+                    </tbody>
+                  </table>
+                  <!-- End Table -->
                   </div>
-
-                  <!-- End CIN Candidat -->
-                
-                  <!--
-                    <div class="form-group">
-                      <label style="margin-top:30px">Modifier Photo CIN &nbsp; &nbsp; &nbsp; &nbsp;</label>
-                      <input type="file" class="form-control-file">
-                    </div>
-                  -->
-
-                <!-- -->
-              </div>
             </div>
-            </div> <!--End Div Tree (CIN Image) -->
-          <!--Test-->
-        </div> <!--End Div two -->
-        <!-- -------------------------------------------------->
-        
-      
-        <!-- -------------------------------------------------->
-        
-      </div>
-
-      <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Liste Coures Théorique</h5>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut, aspernatur.
-              </div>
-      </div>
-      
-      <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Liste Coures Pratique</h5>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut, aspernatur.
-              </div>
-      </div>
+        </div> <!-- End Col -->
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Liste Coures Pratique</h5>
+                  <button type="button" class="btn btn-success" name="add_pr">Ajouter Coure</button>
+                  </div>
+            </div>
+        </div> <!-- End Col -->
+      </div> <!-- End Row -->
     </section>
 
   </main><!-- End #main -->
@@ -595,6 +479,13 @@ if(isset($_GET['consult']))
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
+  <!-- Bootsrap -->
+  <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 

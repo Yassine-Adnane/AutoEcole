@@ -40,6 +40,13 @@
     </a>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="gestion_coures.php">
+      <i class="bi bi-file-earmark"></i>
+      <span>Gestion Coures</span>
+    </a>
+  </li>
+
   <!-- 
 
   <li class="nav-item">
