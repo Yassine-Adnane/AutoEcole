@@ -77,6 +77,26 @@ if(isset($_POST['save']))
   VALUES ('$cin','$photos_name')") 
   or die($con->error);
   
+  /*Traitement Add Listes Lessons*/
+
+  $Liste_coures_th = $con->query("SELECT * FROM coures_theorique WHERE categorie_permis = 'A - Moto'") 
+  or die($mysqli->error());
+    
+  while($row = $Liste_coures_th->fetch_assoc()) :
+
+        $code_coure_th_log  = $row['code_coure_th'];
+        $cin_log_th         = $cin;
+        $coure              = $row['description_th'];
+
+        $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,coure) 
+        VALUES ('$code_coure_th_log','$cin_log_th','$coure')")
+        or die($mysqli->error());
+        
+
+  endwhile;
+
+
+  /*End Traitement Add Listes Lessons*/
 
   header("location:crud.php");
   

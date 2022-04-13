@@ -4,6 +4,11 @@
 require "../php/connection.php";
 
 global $candidat_nom;
+$candidat_prenom = "";
+$candidat_forfais = "";
+$candidat_categorie = "";
+$candidat_categorie = "";
+$cin_candidat = "";
 
 if(isset($_GET['show']))
 {
@@ -24,6 +29,29 @@ if(isset($_GET['show']))
         
     }
     
+}
+
+if(isset($_GET['upd_date_th']))
+{
+
+  $valuedata = $_GET['upd_date_th'];
+  $array_data = explode(",",$valuedata);
+
+  /* Valeur Code Coure Theorque <=> $array_data[0]; */
+  /* Valeur CIN Candidat        <=> $array_data[1]; */
+
+  $Val_cin       = $array_data[1]; 
+  $Val_code_affe = $array_data[0]; 
+
+  $date_coure_th = date("Y-m-d");
+    
+  $con ->query("UPDATE log_coures_th 
+                    SET date_etudie='$date_coure_th'
+                    WHERE (code_coure_th_log = '$Val_code_affe' )
+                    AND (cin LIKE '$Val_cin')")
+  or die($con->error);
+
+  header("location:presence_details.php?show=$Val_cin");
 }
 
 ?>
@@ -342,13 +370,17 @@ if(isset($_GET['show']))
                 <!-- -->
                   <?php 
                       $resultdata_pr = $con ->query("SELECT
+                            lc.cin,
+                            lc.code_coure_th_log,
                             ct.description_th,
                             ct.type_coures,
                             lc.date_etudie
                       FROM coures_theorique ct
                       INNER JOIN log_coures_th lc
                       ON ct.code_coure_th = lc.code_coure_th_log
-                      WHERE lc.cin = '$cin_candidat'") 
+                      WHERE (categorie_permis = '$candidat_categorie')
+                      AND lc.cin = '$cin_candidat'
+                      ORDER BY lc.id ASC")
                       or die($con->error); 
                       while($row = $resultdata_pr->fetch_assoc()) : 
                   ?>
@@ -382,7 +414,9 @@ if(isset($_GET['show']))
                         else
                         {
                         ?>
-                          <a href="">Affecté Cour</a>
+                          <a href="?upd_date_th=<?php echo $row['code_coure_th_log']?>,<?php echo $row['cin']?> ">
+                          Affecté Coure
+                        </a>  
                         <?php  
                         }
                          
