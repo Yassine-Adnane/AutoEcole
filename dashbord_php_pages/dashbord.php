@@ -644,7 +644,7 @@
                   <div class="activite-label">Coure 2</div>
                   <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
                   <div class="activity-content">
-                    Lorem ipsum dolor sit Coure 2.
+                      Coure 2 : Lorem ipsum dolor sit.
                   </div>
                 </div><!-- End activity item-->
 

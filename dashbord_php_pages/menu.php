@@ -47,6 +47,20 @@
     </a>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="presence.php">
+      <i class="bi bi-file-earmark"></i>
+      <span>Presence Candidats</span>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="Frais.php">
+      <i class="bi bi-file-earmark"></i>
+      <span>Frais Candidats</span>
+    </a>
+  </li>
+
   <!-- 
 
   <li class="nav-item">

@@ -1,130 +1,3 @@
-<?php
-
-require "../php/connection.php";
-
-global $idupd;
-$coure_th_value = '';
-$resultdata_th = '';
-$valcoures_update = '';
-$CheckUpdate = false;
-/********************* */
-global $idupd_pr;
-$coure_pr_value = '';
-$resultdata_pr = '';
-$valcoures_pr_update = '';
-$CheckUpdate_pr = false;
-
-/*********************************************************************** */
-if(isset($_POST['save_th']))
-{
-  
-  $coure_th_value = $_POST['coure_label_th'];
-
-  if(!empty($coure_th_value))
-  {
-    $con ->query("INSERT INTO coures_theorique (description_th) 
-    VALUES ('$coure_th_value')") 
-    or die($con->error); 
-
-    
-  }
-}
-
-if(isset($_GET['delete']))
-{
-    $id_coures_delete = $_GET['delete'];
-    $con ->query("DELETE FROM coures_theorique WHERE id = '$id_coures_delete' ") or die ($mysqli->error());
-  
-}
-
-if(isset($_GET['modifier_th']))
-{
-  $id_coures_update = $_GET['modifier_th'];
-  $idupd             = $_GET['modifier_th'];
-
-  $resultdata_th = $con->query("SELECT * FROM coures_theorique WHERE id = '$id_coures_update' ") or die ($mysqli->error());
- 
-    if(mysqli_num_rows($resultdata_th) == 1)
-    {
-        $row  =  $resultdata_th->fetch_array();
-        $valcoures_update    = $row['description_th'];
-       $CheckUpdate = true;
-    }
-   
-}
-
-if(isset($_POST['update_th']))
-{
-
-    $newvalue_th = $_POST['coure_label_th'];
-
-    $con ->query("UPDATE coures_theorique SET description_th='$newvalue_th' WHERE id = $idupd ") 
-    or die ($mysqli->error());
-    
-    $valcoures_update = '';
-
-    header("location:gestion_coures.php");
-}
-
-
-/*********************************************************************************** */
-//*** Traitement Partie Cours Pratique */
-if(isset($_POST['save_pr']))
-{
-  
-  $coure_pr_value = $_POST['coure_label_pr'];
-
-  if(!empty($coure_pr_value))
-  {
-    $con ->query("INSERT INTO coures_pratiques (description_pr) 
-    VALUES ('$coure_pr_value')") 
-    or die($con->error); 
-  }
-}
-
-if(isset($_GET['delete_pr']))
-{
-    $id_coures_delete_pr = $_GET['delete_pr'];
-    $con ->query("DELETE FROM coures_pratiques WHERE id = '$id_coures_delete_pr' ") 
-    or die ($mysqli->error());
-}
-
-if(isset($_GET['modifier_pr']))
-{
-  $id_coures_update_pr = $_GET['modifier_pr'];
-  $idupd_pr            = $_GET['modifier_pr'];
-
-  $resultdata_pr = $con->query("SELECT * FROM coures_pratiques WHERE id = '$id_coures_update_pr' ") 
-  or die ($mysqli->error());
- 
-    if(mysqli_num_rows($resultdata_pr) == 1)
-    {
-        $row  =  $resultdata_pr->fetch_array();
-        $valcoures_pr_update    = $row['description_pr'];
-         $CheckUpdate_pr = true;
-    }
-   
-}
-
-if(isset($_POST['update_pr']))
-{
-
-    $newvalue_pr = $_POST['coure_label_pr'];
-
-    $con ->query("UPDATE coures_pratiques SET description_pr='$newvalue_pr' WHERE id = $idupd_pr") 
-    or die ($mysqli->error());
-    
-    $valcoures_pr_update = '';
-
-    header("location:gestion_coures.php");
-}
-
-
-
-/*********************************************************************************** */
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -153,26 +26,15 @@ if(isset($_POST['update_pr']))
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
-  <!-- font-awesome -->
-  <script src="https://kit.fontawesome.com/f7f97a992e.js" crossorigin="anonymous"></script>
-
-  <!-- Bootstrap CSS -->
-  <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-  
-
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.2.2
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
 <body>
@@ -406,17 +268,16 @@ if(isset($_POST['update_pr']))
 
   </header><!-- End Header -->
 
-
-  <!-- ======= Start Sidebar ======= -->
-  <?php 
+    <!-- ======= Start Sidebar ======= -->
+    <?php 
         require "menu.php";
-  ?>
+     ?>
   <!-- ======= End Sidebar ======= -->
 
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Gestion Coures</h1>
+      <h1>Presence Candidats</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -428,164 +289,21 @@ if(isset($_POST['update_pr']))
 
     <section class="section">
       <div class="row">
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Liste Coures Théorique</h5>
-                  <form action="" method="POST">
-                      <input type="text" class="form-control" name="coure_label_th" value ="<?php echo $valcoures_update ?>" style="width:60%; display: inline;" >
-                      
-                      <?php 
-                        if($CheckUpdate == false)
-                        { 
-                        
-                        ?>
-                          <button type="submit" class="btn btn-success" name="save_th" style="display:inline;">Ajouter Coure</button>
-                        <?php 
-                        }
-                        else
-                        {
-                          
-                        ?>
-                          <button type="submit" class="btn btn-success" name="update_th" style="display:inline;">Modifier Coure</button>
-                        <?php
-                        }
-                      ?>
-                      
-                  </form>      
-                 
-                  <br>
-                  <hr>
-                  <!-- Start Table -->
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Titre Coure</th>
-                        <th scope="col">Operations</th>
-                      </tr>
-                    </thead>
-                    <tbody> 
-                        
-                        <?php 
-                        $resultdata_th = $con ->query("SELECT * FROM coures_theorique") or die($con->error); 
-                        while($row = $resultdata_th->fetch_assoc()) : 
-                        ?>
-                        <tr>
+        <div class="col-lg-12">
 
-                        <td>
-                          <!-- -->
-                          <?php echo $row['description_th']; ?>
-                          <!-- -->
-                        </td>
-
-                        <td>
-                          <!-- -->
-                          
-
-                          <a <?php $CheckUpdate = true; ?> href="?modifier_th=<?php echo $row['id'];  ?>">
-                                <i class="fa-solid fa-pen-to-square fa-2xl" style="color:#FFD93D"></i>
-                          </a>
-  
-                             <a href="?delete=<?php echo $row['id']; ?>">
-                                <i class="fa-solid fa-trash-can fa-2xl" style="color:#FF6B6B"></i>
-                            </a>
-                          <!-- -->
-                        </td>
-
-                        </tr>
-
-                        <?php endwhile ?>
-                    </tbody>
-                  </table>
-                  <!-- End Table -->
-                  </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Listes des Candidats - Presences</h5>
+              <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
             </div>
-        </div> <!-- End Col -->
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Liste Coures Pratique</h5>
-                  <form action="" method="POST">
-                      <input type="text" class="form-control" name="coure_label_pr" value ="<?php echo $valcoures_pr_update ?>" style="width:60%; display: inline;" >
-                      
-                      <?php 
-                        if($CheckUpdate_pr == false)
-                        { 
-                        
-                        ?>
-                          <button type="submit" class="btn btn-success" name="save_pr" style="display:inline;">Ajouter Coure</button>
-                        <?php 
-                        }
-                        else
-                        {
-                          
-                        ?>
-                          <button type="submit" class="btn btn-success" name="update_pr" style="display:inline;">Modifier Coure</button>
-                        <?php
-                        }
-                      ?>
-                      
-                  </form>      
-                 
-                  <br>
-                  <hr>
-                  <!-- Start Table -->
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Titre Coure</th>
-                        <th scope="col">Operations</th>
-                      </tr>
-                    </thead>
-                    <tbody> 
-                        
-                        <?php 
-                        $resultdata_pr = $con ->query("SELECT * FROM coures_pratiques") or die($con->error); 
-                        while($row = $resultdata_pr->fetch_assoc()) : 
-                        ?>
-                        <tr>
+          </div>
 
-                        <td>
-                          <!-- -->
-                          <?php echo $row['description_pr']; ?>
-                          <!-- -->
-                        </td>
+        </div>
 
-                        <td>
-                          <!-- -->
-                          
+        
 
-                          <a <?php $CheckUpdate_pr = true; ?> href="?modifier_pr=<?php echo $row['id'];  ?>">
-                                <i class="fa-solid fa-pen-to-square fa-2xl" style="color:#FFD93D"></i>
-                          </a>
-  
-                             <a href="?delete_pr=<?php echo $row['id']; ?>">
-                                <i class="fa-solid fa-trash-can fa-2xl" style="color:#FF6B6B"></i>
-                            </a>
-                          <!-- -->
-                        </td>
-
-                        </tr>
-
-                        <?php endwhile ?>
-                    </tbody>
-                  </table>
-                  <!-- End Table -->
-                  </div>
-            </div>
-        </div> <!-- End Col -->
-
-        <!-- 
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Liste Coures Pratique</h5>
-                  <button type="button" class="btn btn-success" name="add_pr">Ajouter Coure</button>
-                  </div>
-            </div>
-        </div> 
-        --><!-- End Col -->
-      </div> <!-- End Row -->
+        </div>
+      </div>
     </section>
 
   </main><!-- End #main -->
@@ -616,13 +334,6 @@ if(isset($_POST['update_pr']))
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Bootsrap -->
-  <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
-    
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
