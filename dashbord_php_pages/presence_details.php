@@ -360,6 +360,7 @@ if(isset($_GET['upd_date_th']))
               <table class="table">
               <thead>
                 <tr>
+                  <th scope="col">#</th>
                   <th scope="col">Coures</th>
                   <th scope="col">Type Coure</th>
                   <th scope="col">Date Etudié</th>
@@ -369,6 +370,7 @@ if(isset($_GET['upd_date_th']))
               <tbody>
                 <!-- -->
                   <?php 
+                      $indiceLoop = 1;
                       $resultdata_pr = $con ->query("SELECT
                             lc.cin,
                             lc.code_coure_th_log,
@@ -385,6 +387,11 @@ if(isset($_GET['upd_date_th']))
                       while($row = $resultdata_pr->fetch_assoc()) : 
                   ?>
                   <tr>
+                    <td>
+                    <?php echo $indiceLoop++; ?>
+                    
+                    </td>
+
                     <td>
                         <?php echo $row['description_th']; ?>
                     </td>

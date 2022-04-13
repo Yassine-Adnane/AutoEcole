@@ -42,7 +42,7 @@ if(isset($_GET['modifier_th']))
   $id_coures_update = $_GET['modifier_th'];
   $idupd             = $_GET['modifier_th'];
 
-  $resultdata_th = $con->query("SELECT * FROM coures_theorique WHERE id = '$id_coures_update' ") or die ($mysqli->error());
+  $resultdata_th = $con->query("SELECT * FROM coures_theorique WHERE id = '$id_coures_update'") or die ($mysqli->error());
  
     if(mysqli_num_rows($resultdata_th) == 1)
     {
@@ -431,7 +431,7 @@ if(isset($_POST['update_pr']))
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Liste Coures Théorique</h5>
+                  <h5 class="card-title">Liste Coures Théorique (Moto)</h5>
                   <form action="" method="POST">
                       <input type="text" class="form-control" name="coure_label_th" value ="<?php echo $valcoures_update ?>" style="width:60%; display: inline;" >
                       
@@ -467,7 +467,7 @@ if(isset($_POST['update_pr']))
                     <tbody> 
                         
                         <?php 
-                        $resultdata_th = $con ->query("SELECT * FROM coures_theorique") or die($con->error); 
+                        $resultdata_th = $con ->query("SELECT * FROM coures_theorique ORDER BY id ASC") or die($con->error); 
                         while($row = $resultdata_th->fetch_assoc()) : 
                         ?>
                         <tr>
@@ -504,7 +504,7 @@ if(isset($_POST['update_pr']))
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Liste Coures Pratique</h5>
+                  <h5 class="card-title">Liste Coures Pratique (Moto)</h5>
                   <form action="" method="POST">
                       <input type="text" class="form-control" name="coure_label_pr" value ="<?php echo $valcoures_pr_update ?>" style="width:60%; display: inline;" >
                       
