@@ -1,3 +1,34 @@
+
+<?php
+
+require "../php/connection.php";
+
+global $candidat_nom;
+
+if(isset($_GET['show']))
+{
+
+  $cin_candidat = $_GET['show'];
+
+
+  $resultdata = $con->query("SELECT * FROM candidats WHERE cin LIKE '$cin_candidat' ") 
+  or die ($mysqli->error());
+ 
+    if(mysqli_num_rows($resultdata) == 1)
+    {
+        $row  =  $resultdata->fetch_array();
+        $candidat_nom       = $row['nom'];
+        $candidat_prenom    = $row['prenom'];
+        $candidat_categorie = $row['categorie'];
+        $candidat_forfais = $row['forfais'];
+        
+    }
+    
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,12 +60,6 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin - v2.2.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -277,7 +302,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Presence Candidats</h1>
+      <h1>Details Presence Candidats</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -291,49 +316,91 @@
       <div class="row">
         <div class="col-lg-12">
 
+          <!-- -->
+          
+          <!-- -->
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Listes des Candidats - Presences</h5>
-              <!--Start Table Présence -->
-              <?php
-                  require "../php/connection.php";
-                  $resultdata = $con->query("SELECT
-                  cin,
-                  nom,
-                  prenom,
-                  categorie
-                  FROM candidats")
-            
-            or die ($mysqli->error());
+              <h4 class="card-title">Candidat : &nbsp; &nbsp; <?php echo $candidat_nom .' ' . $candidat_prenom?> </h4>
+              <h5 class="card-title" style="margin-top:-20px;">Catégorie de Permis  : &nbsp; <?php echo $candidat_categorie?> </h5>
+              <h5 class="card-title" style="margin-top:-20px;">Forfais de Candidat  : &nbsp; <?php echo $candidat_forfais?> </h5>
+              <!-- -->
+              <?php 
+                   
               ?>
-              
+
               <table class="table">
-                <thead>
+              <thead>
+                <tr>
+                  <th scope="col">Coures</th>
+                  <th scope="col">Type Coure</th>
+                  <th scope="col">Date Etudié</th>
+                  <th scope="col">Operation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- -->
+                  <?php 
+                      $resultdata_pr = $con ->query("SELECT
+                            ct.description_th,
+                            ct.type_coures,
+                            lc.date_etudie
+                      FROM coures_theorique ct
+                      INNER JOIN log_coures_th lc
+                      ON ct.code_coure_th = lc.code_coure_th_log
+                      WHERE lc.cin = '$cin_candidat'") 
+                      or die($con->error); 
+                      while($row = $resultdata_pr->fetch_assoc()) : 
+                  ?>
                   <tr>
-                    <th scope="col">CIN</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Prénom</th>
-                    <th scope="col">Catégorie Permis</th>
-                    <th scope="col">Operations</th>
+                    <td>
+                        <?php echo $row['description_th']; ?>
+                    </td>
+                    <td>
+                        <?php echo $row['type_coures']; ?>
+                    </td>
+                    <td>
+                        <?php 
+                        if($row['date_etudie'] == '0000-00-00')
+                        {
+                          echo '---------';
+                        }
+                        else
+                        {
+                          echo $row['date_etudie'];
+                        }
+                         
+                        ?>
+                    </td>
+
+                    <td>
+                        <?php 
+                        if($row['date_etudie'] <> '0000-00-00')
+                        {
+                          echo "Déja Etudié";
+                        }
+                        else
+                        {
+                        ?>
+                          <a href="">Affecté Cour</a>
+                        <?php  
+                        }
+                         
+
+                        ?>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                    <?php while($row = $resultdata->fetch_assoc()) : ?>
-                      <tr>
-                          <td> <?php echo $row['cin']; ?>  </td>
-                          <td> <?php echo $row['nom']; ?>  </td>
-                          <td> <?php echo $row['prenom']; ?>  </td>
-                          <td> <?php echo $row['categorie']; ?>  </td>
-                          <td> 
-                              <a href="presence_details.php?show=<?php echo $row['cin']; ?>"> Précence Candidat </a>
-                          </td>
-                      </tr>
-                    <?php endwhile ?>
-                </tbody>
-              </table>
-              <!--End Table Présence -->
+                <!-- -->
+                <?php endwhile ?>
+              </tbody>
+            </table>
+              <!-- -->
+              
+              
             </div>
           </div>
+
+          
 
         </div>
 

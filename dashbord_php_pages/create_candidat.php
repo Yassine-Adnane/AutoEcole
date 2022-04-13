@@ -7,7 +7,9 @@ if(isset($_POST['save']))
 {
 
   $cin         =  $_POST['cin'];
+  
   $nom         =  $_POST['nom'];
+  $nom = strtoupper($nom);
 
   $prenom      =  $_POST['prenom'];
   $tele        =  $_POST['tele'];

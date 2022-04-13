@@ -382,8 +382,7 @@ if(isset($_GET['delete']))
                               <a href="update_candidat.php?edit=<?php echo $row['cin']; ?>">
                                   <i class="fa-solid fa-pen-to-square fa-2xl" style="color:#6BCB77"></i>
                               </a> 
-                             
-
+                            
                               <a href="?delete=<?php echo $row['cin']; ?>">
                                   <i class="fa-solid fa-trash-can fa-2xl" style="color:#FF6B6B"></i>
                               </a> 
