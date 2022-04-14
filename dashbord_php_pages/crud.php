@@ -4,9 +4,20 @@ require "../php/connection.php";
 
 if(isset($_GET['delete']))
 {
-    $cinCandidat = $_GET['delete'];
-    $con ->query("DELETE FROM candidats WHERE cin LIKE '$cinCandidat' ") or die ($mysqli->error());
+
+    $valuedata = $_GET['delete'];
+    $array_data = explode(",",$valuedata);
+
+    $val_cin = $array_data[0];
+    $val_categorie = $array_data[1];
+
+    $con ->query("DELETE FROM candidats WHERE cin LIKE '$val_cin' ") or die ($mysqli->error());
   
+    /* Delete Listes Présence Coure de Candidat*/
+
+    $con ->query("DELETE FROM log_coures_th WHERE (cin LIKE '$val_cin') AND (categorie = '$val_categorie') ") 
+    or die ($mysqli->error());
+
     header("location:crud.php");
 
 }
@@ -383,7 +394,7 @@ if(isset($_GET['delete']))
                                   <i class="fa-solid fa-pen-to-square fa-2xl" style="color:#6BCB77"></i>
                               </a> 
                             
-                              <a href="?delete=<?php echo $row['cin']; ?>">
+                              <a href="?delete=<?php echo $row['cin']?>,<?php echo $row['categorie']?>">
                                   <i class="fa-solid fa-trash-can fa-2xl" style="color:#FF6B6B"></i>
                               </a> 
                               

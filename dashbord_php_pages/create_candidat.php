@@ -3,13 +3,12 @@
   require "../php/connection.php";
 
 
-if(isset($_POST['save']))
+if(isset($_POST['save_']))
 {
 
   $cin         =  $_POST['cin'];
-  
   $nom         =  $_POST['nom'];
-  $nom = strtoupper($nom);
+  $nom         = strtoupper($nom);
 
   $prenom      =  $_POST['prenom'];
   $tele        =  $_POST['tele'];
@@ -19,7 +18,7 @@ if(isset($_POST['save']))
   $genre       =  $_POST['genre'];
   $categorie   =  $_POST['categorie'];
   $forfais     =  $_POST['forfais'];
- 
+  
   if(isset($_FILES['photo_cin']['name']))
   {
     $image_name = $_FILES['photo_cin']['name'];
@@ -41,6 +40,7 @@ if(isset($_POST['save']))
   }
 
   //*** */
+  
   if(isset($_FILES['candidatphoto']['name']))
   {
     $photos_name = $_FILES['candidatphoto']['name'];
@@ -60,8 +60,6 @@ if(isset($_POST['save']))
   {
     $photos_name = "";
   }
-
-
 
   $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,forfais) 
   VALUES ('$cin','$nom','$prenom','$tele',
@@ -87,16 +85,90 @@ if(isset($_POST['save']))
         $code_coure_th_log  = $row['code_coure_th'];
         $cin_log_th         = $cin;
         $coure              = $row['description_th'];
+        $type_coure         = "coure";
+        $categorie_permis   = $categorie;
 
-        $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,coure) 
-        VALUES ('$code_coure_th_log','$cin_log_th','$coure')")
+        $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,type_coure,coure,categorie) 
+        VALUES ('$code_coure_th_log','$cin_log_th','$type_coure','$coure','$categorie_permis')")
         or die($mysqli->error());
         
-
   endwhile;
 
-
   /*End Traitement Add Listes Lessons*/
+
+  /*Start Calcule Number Coures_Serie*/
+  
+  /*
+  $Data = $con->query("SELECT * FROM log_coures_th WHERE (cin LIKE '$cin') AND (categorie LIKE '$forfais') ") 
+  or die($mysqli->error());
+
+  $rowcount = mysqli_num_rows( $Data ); /* For Ex : 10 */
+
+  if($forfais == '20 Heurs') /* Forfait 20Heurs */
+  {
+    for ($x = 1; $x < 11; $x++) 
+    {
+        $cin_log_th         = $cin;
+        $code_serie         = "moto_serie_".''.rand(1,100000000);
+        $type_coure         = "Série";
+        $coure              = "Série Examen num-". $x;
+        $categorie_permis   = $categorie;
+  
+        $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,type_coure,coure,categorie) 
+        VALUES ('$code_serie','$cin_log_th','$type_coure','$coure','$categorie_permis')")
+        or die($mysqli->error());
+    }
+  }
+
+  if($forfais == '30 Heurs') /* Forfait 30Heurs */
+  {
+    for ($x = 1; $x < 21; $x++) 
+    {
+        $cin_log_th         = $cin;
+        $code_serie         = "moto_serie_".''.rand(1,100000000);
+        $type_coure         = "Série";
+        $coure              = "Série Examen num-". $x;
+        $categorie_permis   = $categorie;
+  
+        $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,type_coure,coure,categorie) 
+        VALUES ('$code_serie','$cin_log_th','$type_coure','$coure','$categorie_permis')")
+        or die($mysqli->error());
+    }
+  }
+
+  if($forfais == '40 Heurs') /* Forfait 30Heurs */
+  {
+    for ($x = 1; $x < 31; $x++) 
+    {
+        $cin_log_th         = $cin;
+        $code_serie         = "moto_serie_".''.rand(1,100000000);
+        $type_coure         = "Série";
+        $coure              = "Série Examen num-". $x;
+        $categorie_permis   = $categorie;
+  
+        $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,type_coure,coure,categorie) 
+        VALUES ('$code_serie','$cin_log_th','$type_coure','$coure','$categorie_permis')")
+        or die($mysqli->error());
+    }
+  }
+
+  /*
+  for ($x = 0; $x <= $rowcount; $x++) 
+  {
+        $code_coure_th_log  = $row['code_coure_th'];
+        $cin_log_th         = $cin;
+        $coure              = $row['description_th'];
+        $type_coure         = "coure";
+
+        $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,type_coure,coure) 
+        VALUES ('$code_coure_th_log','$cin_log_th','$type_coure','$coure')")
+        or die($mysqli->error());
+  }
+  */
+  /*echo "<script>alert(\"$rowcount\")</script>";*/
+  /*End Calcule Number Coures_Serie*/
+
+
 
   header("location:crud.php");
   
@@ -489,7 +561,7 @@ if(isset($_POST['save']))
 
                
                <div class="modal-footer" style="margin-top:30px">
-                    <button type="submit" class="btn btn-primary" name="save">Enregistrer</button>
+                    <button type="submit" class="btn btn-primary" name="save_">Enregistrer</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quitter</button>
                 </div>
 
@@ -498,8 +570,28 @@ if(isset($_POST['save']))
               </form>
               <!-- End Form Create Candidat -->
 
+              <?php
+
+              /*
+                require "../php/connection.php";
+
+              if(isset($_POST['Test']))
+              {
+                $cin = "k123";
+                $Data = $con->query("SELECT * FROM log_coures_th WHERE cin LIKE '$cin' ") 
+                or die($mysqli->error());
+
+                $rowcount = mysqli_num_rows( $Data );
+
+                echo "<script>alert(\"$rowcount\")</script>";
+              }
+              */
+                            
+              ?>
               
-              
+              <form action="" method="POST">
+                 <button type="submit" class="btn btn-primary" name="Test">Test</button>
+              </form>
 
             </div>
           </div>

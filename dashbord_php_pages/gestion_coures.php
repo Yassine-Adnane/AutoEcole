@@ -22,10 +22,16 @@ if(isset($_POST['save_th']))
 
   if(!empty($coure_th_value))
   {
-    $con ->query("INSERT INTO coures_theorique (description_th) 
-    VALUES ('$coure_th_value')") 
-    or die($con->error); 
 
+    $date_val = "moto_th_".''.date("Ymdhis");
+    $categorie_moto = "A - Moto";
+    $type_coures = "coure";
+
+    /*echo "<script>alert(\"$date_val\")</script>";*/
+    
+    $con ->query("INSERT INTO coures_theorique (code_coure_th,categorie_permis,description_th,type_coures) 
+    VALUES ('$date_val','$categorie_moto','$coure_th_value','$type_coures')") 
+    or die($con->error);
     
   }
 }

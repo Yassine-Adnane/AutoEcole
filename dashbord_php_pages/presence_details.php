@@ -371,19 +371,20 @@ if(isset($_GET['upd_date_th']))
                 <!-- -->
                   <?php 
                       $indiceLoop = 1;
-                      $resultdata_pr = $con ->query("SELECT
-                            lc.cin,
+                      $resultdata_pr = $con ->query("SELECT DISTINCT
                             lc.code_coure_th_log,
-                            ct.description_th,
-                            ct.type_coures,
-                            lc.date_etudie
-                      FROM coures_theorique ct
-                      INNER JOIN log_coures_th lc
-                      ON ct.code_coure_th = lc.code_coure_th_log
-                      WHERE (categorie_permis = '$candidat_categorie')
-                      AND lc.cin = '$cin_candidat'
+                            lc.cin,
+                            lc.coure,
+                            lc.type_coure,
+                            lc.date_etudie,
+                            lc.categorie
+                      FROM log_coures_th lc
+                      LEFT JOIN coures_theorique th
+                      ON th.categorie_permis = lc.categorie
+                      WHERE lc.cin = '$cin_candidat'
                       ORDER BY lc.id ASC")
-                      or die($con->error); 
+                      or die($con->error);
+
                       while($row = $resultdata_pr->fetch_assoc()) : 
                   ?>
                   <tr>
@@ -393,10 +394,10 @@ if(isset($_GET['upd_date_th']))
                     </td>
 
                     <td>
-                        <?php echo $row['description_th']; ?>
+                        <?php echo $row['coure']; ?>
                     </td>
                     <td>
-                        <?php echo $row['type_coures']; ?>
+                        <?php echo $row['type_coure']; ?>
                     </td>
                     <td>
                         <?php 
