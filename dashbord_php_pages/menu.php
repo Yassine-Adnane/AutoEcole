@@ -19,6 +19,7 @@
     </a>
   </li><!-- Gestion Candidats -->
 
+  <!-- 
   <li class="nav-item">
     <a class="nav-link collapsed" href="create_candidat.php">
       <i class="bi bi-file-earmark"></i>
@@ -39,6 +40,7 @@
       <span>Consulter Candidat</span>
     </a>
   </li>
+  -->
 
   <li class="nav-item">
     <a class="nav-link collapsed" href="gestion_coures.php">
@@ -58,6 +60,13 @@
     <a class="nav-link collapsed" href="Frais.php">
       <i class="bi bi-file-earmark"></i>
       <span>Frais Candidats</span>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="frais_details.php">
+      <i class="bi bi-file-earmark"></i>
+      <span>Details Frais</span>
     </a>
   </li>
 

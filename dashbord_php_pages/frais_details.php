@@ -1,185 +1,3 @@
-<?php
-
-  require "../php/connection.php";
-
-
-if(isset($_POST['save_']))
-{
-
-  $cin         =  $_POST['cin'];
-  $nom         =  $_POST['nom'];
-  $nom         = strtoupper($nom);
-
-  $prenom      =  $_POST['prenom'];
-  $tele        =  $_POST['tele'];
-  $adresse     =  $_POST['adresse'];
-  $email       =  $_POST['email'];
-  $psswd       =  $_POST['psswd'];
-  $genre       =  $_POST['genre'];
-  $categorie   =  $_POST['categorie'];
-  $forfais     =  $_POST['forfais'];
-  
-  if(isset($_FILES['photo_cin']['name']))
-  {
-    $image_name = $_FILES['photo_cin']['name'];
-
-    $ext = end(explode('.',$image_name));
-
-    $image_name = "image_cin_". $cin.'.'.$ext;
-
-    $source_path = $_FILES['photo_cin']['tmp_name'];
-
-    $destination_path = "cin_candidats/".$image_name;
-
-    $upload = move_uploaded_file($source_path,$destination_path);
-  
-  }
-  else
-  {
-    $image_name = "";
-  }
-
-  //*** */
-  
-  if(isset($_FILES['candidatphoto']['name']))
-  {
-    $photos_name = $_FILES['candidatphoto']['name'];
-
-    $extPhoto = end(explode('.',$photos_name));
-
-    $photos_name = "candidat_cin_". $cin.'.'.$extPhoto;
-
-    $source_path_photos = $_FILES['candidatphoto']['tmp_name'];
-
-    $destination_path_photos = "photos_candidats/".$photos_name;
-
-    $upload = move_uploaded_file($source_path_photos,$destination_path_photos);
-  
-  }
-  else
-  {
-    $photos_name = "";
-  }
-
-  $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,forfais) 
-  VALUES ('$cin','$nom','$prenom','$tele',
-          '$adresse','$email','$psswd',
-          '$genre','$categorie','$forfais')") 
-          or die($con->error);
-
-  $con ->query("INSERT INTO images_cin (cin,image_cin) 
-  VALUES ('$cin','$image_name')") 
-  or die($con->error);
-  
-  $con ->query("INSERT INTO photos_candidats (cin,candidats_photo) 
-  VALUES ('$cin','$photos_name')") 
-  or die($con->error);
-  
-  /*Traitement Add Listes Lessons*/
-
-  $Liste_coures_th = $con->query("SELECT * FROM coures_theorique WHERE categorie_permis = 'A - Moto'") 
-  or die($mysqli->error());
-    
-  while($row = $Liste_coures_th->fetch_assoc()) :
-
-        $code_coure_th_log  = $row['code_coure_th'];
-        $cin_log_th         = $cin;
-        $coure              = $row['description_th'];
-        $type_coure         = "coure";
-        $categorie_permis   = $categorie;
-
-        $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,type_coure,coure,categorie) 
-        VALUES ('$code_coure_th_log','$cin_log_th','$type_coure','$coure','$categorie_permis')")
-        or die($mysqli->error());
-        
-  endwhile;
-
-  /*End Traitement Add Listes Lessons*/
-
-  /*Start Calcule Number Coures_Serie Moto*/
-  if($categorie == 'A - Moto')
-  {
-    /*********************************************/
-      if($forfais == '20 Heurs') /* Forfait 20Heurs */
-      {
-        for ($x = 1; $x < 11; $x++) 
-        {
-            $cin_log_th         = $cin;
-            $code_serie         = "moto_serie_".''.rand(1,100000000);
-            $type_coure         = "Série";
-            $coure              = "Série Examen num-". $x;
-            $categorie_permis   = $categorie;
-      
-            $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,type_coure,coure,categorie) 
-            VALUES ('$code_serie','$cin_log_th','$type_coure','$coure','$categorie_permis')")
-            or die($mysqli->error());
-        }
-      }
-
-      if($forfais == '30 Heurs') /* Forfait 30Heurs */
-      {
-        for ($x = 1; $x < 21; $x++) 
-        {
-            $cin_log_th         = $cin;
-            $code_serie         = "moto_serie_".''.rand(1,100000000);
-            $type_coure         = "Série";
-            $coure              = "Série Examen num-". $x;
-            $categorie_permis   = $categorie;
-      
-            $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,type_coure,coure,categorie) 
-            VALUES ('$code_serie','$cin_log_th','$type_coure','$coure','$categorie_permis')")
-            or die($mysqli->error());
-        }
-      }
-
-      if($forfais == '40 Heurs') /* Forfait 30Heurs */
-      {
-        for ($x = 1; $x < 31; $x++) 
-        {
-            $cin_log_th         = $cin;
-            $code_serie         = "moto_serie_".''.rand(1,100000000);
-            $type_coure         = "Série";
-            $coure              = "Série Examen num-". $x;
-            $categorie_permis   = $categorie;
-      
-            $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,type_coure,coure,categorie) 
-            VALUES ('$code_serie','$cin_log_th','$type_coure','$coure','$categorie_permis')")
-            or die($mysqli->error());
-        }
-      }
-    /*********************************************/
-
-  }
-  /*End Calcule Number Coures_Serie Moto*/
-  
-
-
-  
-
-  /*
-  for ($x = 0; $x <= $rowcount; $x++) 
-  {
-        $code_coure_th_log  = $row['code_coure_th'];
-        $cin_log_th         = $cin;
-        $coure              = $row['description_th'];
-        $type_coure         = "coure";
-
-        $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,type_coure,coure) 
-        VALUES ('$code_coure_th_log','$cin_log_th','$type_coure','$coure')")
-        or die($mysqli->error());
-  }
-  */
-  /*echo "<script>alert(\"$rowcount\")</script>";*/
-  /*End Calcule Number Coures_Serie*/
-
-
-
-  header("location:crud.php");
-  
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -210,6 +28,13 @@ if(isset($_POST['save_']))
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.2.2
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
 <body>
@@ -443,16 +268,16 @@ if(isset($_POST['save_']))
 
   </header><!-- End Header -->
 
-  <!-- ======= Start Sidebar ======= -->
-  <?php 
+    <!-- ======= Start Sidebar ======= -->
+    <?php 
         require "menu.php";
-  ?>
+     ?>
   <!-- ======= End Sidebar ======= -->
 
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Blank Page</h1>
+      <h1>Presence Candidats</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -464,118 +289,18 @@ if(isset($_POST['save_']))
 
     <section class="section">
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Infos Candidat</h5>
-              <!-- Start Form Create Candidat crud.php -->
-              <form action="" method="POST" enctype="multipart/form-data" >
-                <!-- -->
-                <div class="form-group">
-                    <label>Nom :</label>
-                    <input type="text" class="form-control" name="nom" placeholder="Nom Candidat" require >
-                </div>
-               <div class="form-group">
-                 <label style="margin-top:10px">Prénom :</label>
-                 <input type="text" class="form-control" name="prenom" placeholder="Prénom Candidat" >
-                 </div>
-
-                 <div class="form-group">
-                    <label style="margin-top:10px">CIN :</label>
-                    <input type="text" class="form-control" name="cin" placeholder="CIN Candidat" >
-                  </div>
-
-                  <div class="form-group">
-                      <label style="margin-top:10px">Genre</label>
-                      <select class="form-control" name="genre">
-                        <!-- <option value="---">------</option> -->
-                        <option value="Homme">Homme</option>
-                        <option value="Femme">Femme</option>
-                      </select>
-                      
-                  </div>
-
-                  <div class="form-group">
-                    <label  style="margin-top:10px">Num télé :</label>
-                    <input type="text" class="form-control" name="tele" placeholder="Téléphone Candidat"  maxlength="15">
-                  </div>
-
-                  <div class="form-group">
-                    <label style="margin-top:10px">Adresse</label>
-                    <input type="text" class="form-control" name="adresse" placeholder="Adresse Candidat" >
-                  </div>
-
-                  <div class="form-group">
-                    <label style="margin-top:10px">Maps</label>
-                    <input type="text" class="form-control" name="adressemMaps" placeholder="Localisation Maps" >
-                  </div>
-                <!-- -->
+              <h5 class="card-title">Listes des Candidats - Presences</h5>
+              <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
             </div>
           </div>
 
         </div>
 
-        <div class="col-lg-6">
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Dossier Candidat</h5>
-              <!-- -->
-              <div class="form-group">
-                  <label>Email</label>
-                  <input type="Email" class="form-control" name="email" placeholder="Email Candidat" >
-                </div>
-
-                <div class="form-group">
-                  <label style="margin-top:10px">Mot de passe (Par défeaut) </label>
-                  <input type="text" class="form-control" name="psswd" placeholder="Mot de passe Candidat par défeaut " >
-                </div>
-
-                <div class="form-group">
-                   <label style="margin-top:10px">Catégorie Permis</label>
-                   <select class="form-control" name="categorie">
-                     <!-- <option value="">------</option> -->
-                     <option value="A - Moto">A - Moto</option>
-                     <option value="B - Voiture">B - Voiture</option>
-                     <option value="C - Camion">C - Camion</option>
-                     <option value="D - AutoBus">D - AutoBus</option>
-                   </select>
-               </div>
-
-               <div class="form-group">
-                   <label for="exampleFormControlSelect1" style="margin-top:10px">Forfais Permis</label>
-                   <select class="form-control" name="forfais">
-                     <!-- <option value="">------</option> -->
-                     <option value="20 Heurs">20 Heurs</option>
-                     <option value="30 Heurs">30 Heurs</option>
-                     <option value="40 Heurs">40 Heurs</option>
-                   </select>
-               </div>
-
-               <div class="form-group">
-                 <label style="margin-top:30px">Photo CIN &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
-                 <input type="file" class="form-control-file"  name="photo_cin" >
-               </div>
-
-               <div class="form-group">
-                 <label style="margin-top:30px">Photo Candidat</label>
-                 <input type="file" class="form-control-file" name="candidatphoto" >
-               </div>
-
-               
-               <div class="modal-footer" style="margin-top:30px">
-                    <button type="submit" class="btn btn-primary" name="save_">Enregistrer</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quitter</button>
-                </div>
-
-                
-              <!-- -->
-              </form>
-              <!-- End Form Create Candidat -->
-              
-            </div>
-          </div>
+        
 
         </div>
       </div>

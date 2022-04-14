@@ -293,8 +293,42 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Listes des Candidats - Presences</h5>
-              <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
+              <h5 class="card-title">Listes des Candidats - Frais</h5>
+                 <!-- -->
+                 <?php
+                  require "../php/connection.php";
+                  $resultdata = $con->query("SELECT cin,nom,prenom,categorie,forfais FROM candidats") or die ($mysqli->error());
+                  ?>
+                  
+                 <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">CIN</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prenom</th>
+                        <th scope="col">Catégorie</th>
+                        <th scope="col">Forfait</th>
+                        <th scope="col">Details Frais</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <!-- -->
+                        <?php while($row = $resultdata->fetch_assoc()) : ?>
+                          <tr>
+                          <td> <?php echo $row['cin']; ?>  </td>
+                          <td> <?php echo $row['nom']; ?>  </td>
+                          <td> <?php echo $row['prenom']; ?>  </td>
+                          <td> <?php echo $row['categorie']; ?>  </td>
+                          <td> <?php echo $row['forfais']; ?>  </td>
+                          <td> 
+                              <a href="frais_details.php?show=<?php echo $row['cin']; ?>"> Frais Candidat </a>
+                          </td>
+                         </tr>
+                        <?php endwhile ?>
+                        <!-- -->
+                    </tbody>
+                  </table>
+                 <!-- -->
             </div>
           </div>
 
