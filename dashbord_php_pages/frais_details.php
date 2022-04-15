@@ -1,3 +1,59 @@
+
+<?php
+
+require "../php/connection.php";
+
+global $candidat_nom;
+$candidat_prenom = "";
+$candidat_forfais = "";
+$candidat_categorie = "";
+$cin_candidat = "";
+$val_montant = "";
+$val_date_montant = "";
+$val_methode_payment = "";
+
+if(isset($_GET['show']))
+{
+
+  $cin_candidat = $_GET['show'];
+
+
+  $resultdata = $con->query("SELECT * FROM candidats WHERE cin LIKE '$cin_candidat' ") 
+  or die ($mysqli->error());
+ 
+    if(mysqli_num_rows($resultdata) == 1)
+    {
+        $row  =  $resultdata->fetch_array();
+        $candidat_nom       = $row['nom'];
+        $candidat_prenom    = $row['prenom'];
+        $candidat_categorie = $row['categorie'];
+        $candidat_forfais   = $row['forfais'];
+        $Total_frais        = $row['frais_candidat'];
+
+        /*$Reste_frais = "";*/
+        $sum_frais = $con->query("SELECT SUM(frais_dh) FROM frais WHERE cin LIKE '$cin_candidat' ") 
+        or die ($mysqli->error()); 
+
+
+        while($row = $sum_frais->fetch_assoc()) :
+          $Reste_frais = $row['SUM(frais_dh)'];            
+        endwhile;
+        
+    }
+    
+    
+}
+
+if(isset($_POST['add_frais']))
+{
+  echo "<script>alert(\"Test\")</script>";
+}
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -277,7 +333,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Presence Candidats</h1>
+      <h1>Détails Frais Candidats</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -293,17 +349,72 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Listes des Candidats - Presences</h5>
-              <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
+              <h4 class="card-title">Candidat : &nbsp; &nbsp; <?php echo $candidat_nom .' ' . $candidat_prenom?> </h4>
+              <h5 class="card-title" style="margin-top:-20px;">Catégorie de Permis  : &nbsp; <?php echo $candidat_categorie?> </h5>
+              <h5 class="card-title" style="margin-top:-20px;">Forfais de Candidat  : &nbsp; <?php echo $candidat_forfais?> </h5>
+              <h5 class="card-title" style="margin-top:-20px;">Frais Totale : &nbsp; <?php echo $Total_frais?> DH </h5>
+              <h5 class="card-title" style="margin-top:-20px;margin-bottom:20px;color:red">Reste Frais (DH)  : &nbsp; <?php echo $Reste_frais?> DH </h5>
+
+              <form action="" method="POST">
+
+              <label for="monatant">Montant DH:</label>
+                  <input type="number" class="form-control" min="0" name="input_frais" value ="<?php echo $val_montant ?>" style="width:10%; display: inline;"  required>
+                  
+                  <label for="date_payment" style="margin-left:20px">Date de Paiement:</label>
+                  <input type="date" class="form-control" value ="<?php echo $val_date_montant ?>" name="input_frais" style="width:20%; display: inline;" required >
+                  
+                  <label for="cars" style="margin-left:20px">Méthode de Paiement :</label>
+                  <select name="cars" id="cars">
+                    <option value="especes" >Argent espèces</option>
+                    <option value="virement">Virement bancaire</option>
+                    <option value="cheque">chèque</option>
+                  </select>
+                  
+                  <button button type="submit" class="btn btn-success" name="add_frais" style="margin-left:20px">Ajouter Faris</button>
+
+              </form>
+              <!--End Form-->
+
+              <!--Start Table-->
+              <table class="table" style="margin-top:30px">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                </tbody>
+              </table>
+              <!--End Table-->
+
+
             </div>
-          </div>
 
-        </div>
-
-        
-
-        </div>
-      </div>
+            </div> <!--End card -->
+        </div> <!--Col-12 -->
+        </div> <!--End Card-->
+      </div> <!--End Row-->
     </section>
 
   </main><!-- End #main -->

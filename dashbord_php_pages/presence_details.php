@@ -7,7 +7,6 @@ global $candidat_nom;
 $candidat_prenom = "";
 $candidat_forfais = "";
 $candidat_categorie = "";
-$candidat_categorie = "";
 $cin_candidat = "";
 
 if(isset($_GET['show']))

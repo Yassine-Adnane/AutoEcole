@@ -61,10 +61,35 @@ if(isset($_POST['save_']))
     $photos_name = "";
   }
 
-  $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,forfais) 
+  /** Start Calcul Frais Permis */
+ $frais_candidat = 0;
+
+ if($categorie == "A - Moto")
+ {
+   
+    if($forfais = '30 Heurs')
+    {
+      
+      $faris_moto_thorique = 0;
+      $faris_moto_pratique = 0;
+
+      $faris_moto_thorique = 30*25; //30 => Nomber Heurs,  25 => prix de l'heurs
+
+      $faris_moto_pratique = 30*40; //30 => Nomber Heurs,  40 => 40dh prix de l'heurs
+
+      // + Frais Dariba 750 dh + Frais 150 dh Docteur + 50dh Dossier + 450dh TVA
+
+      $frais_candidat = $faris_moto_thorique + $faris_moto_pratique + 150 + 750 + 50 + 450;
+
+    }
+ }
+
+  /** End Calcul Frais Permis */
+
+  $con ->query("INSERT INTO candidats (cin,nom,prenom,tele,adresse,email,psswd,genre,categorie,forfais,frais_candidat) 
   VALUES ('$cin','$nom','$prenom','$tele',
           '$adresse','$email','$psswd',
-          '$genre','$categorie','$forfais')") 
+          '$genre','$categorie','$forfais','$frais_candidat')") 
           or die($con->error);
 
   $con ->query("INSERT INTO images_cin (cin,image_cin) 
