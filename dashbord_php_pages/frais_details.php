@@ -33,9 +33,8 @@ if(isset($_GET['show']))
         $Total_frais        = $row['frais_candidat'];
 
         /*$Reste_frais = "";*/
-        $sum_frais = $con->query("SELECT SUM(frais_dh) FROM frais WHERE cin LIKE '$cin_candidat' ") 
+        $sum_frais = $con->query("SELECT SUM(frais_dh) FROM frais WHERE cin LIKE '$cin_candidat' AND categorie = '$candidat_categorie' ") 
         or die ($mysqli->error()); 
-
 
         while($row = $sum_frais->fetch_assoc()) :
           $Sum_frais = $row['SUM(frais_dh)'];  
@@ -459,7 +458,7 @@ if(isset($_POST['add_frais']))
                     <?php echo $row['methode']; ?>      
                     </td>
                     <td>
-                    <?php echo "Operation"; ?>      
+                        <a href="?delete=<?php echo $row['cin']?>,<?php echo $row['categorie']?>">Supprmier</a>
                     </td>
                     <!---->
                   </tr>

@@ -297,7 +297,7 @@
                  <!-- -->
                  <?php
                   require "../php/connection.php";
-                  $resultdata = $con->query("SELECT cin,nom,prenom,categorie,forfais FROM candidats") or die ($mysqli->error());
+                  $resultdata = $con->query("SELECT cin,nom,prenom,categorie,forfais,frais_candidat FROM candidats") or die ($mysqli->error());
                   ?>
                   
                  <table class="table">
@@ -308,6 +308,7 @@
                         <th scope="col">Prenom</th>
                         <th scope="col">Catégorie</th>
                         <th scope="col">Forfait</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Details Frais</th>
                       </tr>
                     </thead>
@@ -321,8 +322,41 @@
                           <td> <?php echo $row['categorie']; ?>  </td>
                           <td> <?php echo $row['forfais']; ?>  </td>
                           <td> 
-                              <a href="frais_details.php?show=<?php echo $row['cin']; ?>"> Frais Candidat </a>
+                              <!-- -->
+                              <?php
+
+                              $cin_candidat = $row['cin'];
+                              $candidat_categorie = $row['categorie'];
+
+                               $sum_frais = $con->query("SELECT SUM(frais_dh) FROM frais WHERE cin LIKE '$cin_candidat' AND categorie = '$candidat_categorie' ") 
+                               or die ($mysqli->error()); 
+
+                              $Total_frais = $row['frais_candidat'];
+
+                               while($row = $sum_frais->fetch_assoc()) :
+                                 $Sum_frais = $row['SUM(frais_dh)'];  
+                                 $Reste_frais = $Total_frais - $Sum_frais;  
+                               endwhile;
+                               
+                               if($Reste_frais == '0')
+                               { ?>
+                                <input type="text" style="background-color:#6BCB77; text-align:center;" value="<?php echo $Reste_frais . " DH"; ?>" disabled>
+                               <?php
+                               }
+                               else
+                               { ?>
+                                <input type="text" style="background-color:#ffff00; text-align:center;" value="<?php echo $Reste_frais . " DH"; ?>" disabled>
+                              <?php
+                               }
+                              ?>
+                              <!-- -->
+                              
+                              <!-- -->
                           </td>
+                          <td> 
+                              <a href="frais_details.php?show=<?php echo $cin_candidat; ?>"> Gestion Frais Candidat </a>
+                          </td>
+                          
                          </tr>
                         <?php endwhile ?>
                         <!-- -->
