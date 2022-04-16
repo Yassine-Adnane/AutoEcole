@@ -11,6 +11,8 @@ $cin_candidat = "";
 $val_montant = "";
 $val_date_montant = "";
 $val_methode_payment = "";
+$Reste_frais = "";
+$Total_frais = "";
 
 if(isset($_GET['show']))
 {
@@ -36,8 +38,17 @@ if(isset($_GET['show']))
 
 
         while($row = $sum_frais->fetch_assoc()) :
-          $Reste_frais = $row['SUM(frais_dh)'];            
+          $Sum_frais = $row['SUM(frais_dh)'];  
+          $Reste_frais = $Total_frais - $Sum_frais;  
         endwhile;
+
+        
+        /*Start Afficher Liste Frais */
+        $data_frais = $con->query("SELECT * FROM frais WHERE cin LIKE '$cin_candidat' AND categorie = '$candidat_categorie' ") 
+        or die ($mysqli->error()); 
+        /*End Afficher Liste Frais */
+        
+
         
     }
     
@@ -46,7 +57,35 @@ if(isset($_GET['show']))
 
 if(isset($_POST['add_frais']))
 {
-  echo "<script>alert(\"Test\")</script>";
+  /*Check if Frais Dépasse Total Frais*/
+  $input_frais      = $_POST['input_frais'];
+  $methode_Paiement = $_POST['methode_Paiement'];
+  $date_frais       = $_POST['date_frais'];
+
+  $checkFrais = $Sum_frais + $input_frais;
+
+  echo "<script>alert(\"test\")</script>";
+  echo "<script>alert(\"$input_frais\")</script>";
+  echo "<script>alert(\"$checkFrais\")</script>";
+  echo "<script>alert(\"$Total_frais\")</script>";
+
+ 
+  if($checkFrais > $Total_frais)
+  {
+    //echo "<script>alert(\"vous pouver pas Saisi un Montante supérieure au frais \")</script>";
+    /*header("location:frais_details.php?show=$cin_candidat");*/
+  }
+  else
+  {
+    //date_frais methode_Paiement
+    $data_frais = $con->query("INSERT INTO frais (cin,frais_dh,categorie,methode,date_payement) 
+    VALUES ('$cin_candidat','$input_frais','$candidat_categorie','$methode_Paiement','$date_frais')") 
+    or die ($mysqli->error()); 
+  }
+
+  header("location:frais_details.php?show=$cin_candidat");
+  
+
 }
 
 
@@ -357,20 +396,32 @@ if(isset($_POST['add_frais']))
 
               <form action="" method="POST">
 
-              <label for="monatant">Montant DH:</label>
-                  <input type="number" class="form-control" min="0" name="input_frais" value ="<?php echo $val_montant ?>" style="width:10%; display: inline;"  required>
+              <label>Montant DH:</label>
+                  <input type="number" class="form-control" min="1" name="input_frais" value ="<?php echo $val_montant ?>" style="width:10%; display: inline;"  required>
                   
                   <label for="date_payment" style="margin-left:20px">Date de Paiement:</label>
-                  <input type="date" class="form-control" value ="<?php echo $val_date_montant ?>" name="input_frais" style="width:20%; display: inline;" required >
+                  <input type="date" class="form-control" value ="<?php echo $val_date_montant ?>" name="date_frais" style="width:20%; display: inline;" required >
                   
-                  <label for="cars" style="margin-left:20px">Méthode de Paiement :</label>
-                  <select name="cars" id="cars">
-                    <option value="especes" >Argent espèces</option>
-                    <option value="virement">Virement bancaire</option>
-                    <option value="cheque">chèque</option>
+                  <label style="margin-left:20px">Méthode de Paiement :</label>
+                  <select name="methode_Paiement" id="cars">
+                    <option value="Argent espèces" >Argent espèces</option>
+                    <option value="Virement bancaire">Virement bancaire</option>
+                    <option value="chèque">chèque</option>
                   </select>
                   
-                  <button button type="submit" class="btn btn-success" name="add_frais" style="margin-left:20px">Ajouter Faris</button>
+                  <?php
+                  if($Reste_frais == $Total_frais)
+                  { 
+                  ?>
+                  <button button type="submit" class="btn btn-success" name="add_frais" style="margin-left:20px" disabled>Ajouter Faris</button>
+                  <?php
+                  }
+                  else
+                  { ?>
+                      <button button type="submit" class="btn btn-success" name="add_frais" style="margin-left:20px">Ajouter Faris</button>
+                  <?php
+                  }
+                  ?>
 
               </form>
               <!--End Form-->
@@ -379,31 +430,40 @@ if(isset($_POST['add_frais']))
               <table class="table" style="margin-top:30px">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Date de Paiement</th>
+                    <th scope="col">Méthode de Paiement</th>
+                    <th scope="col">Opérations</th>
                   </tr>
                 </thead>
                 <tbody>
+                  <!---->
+                  <?php 
+                  /*Start Afficher Liste Frais */
+                    $data_frais = $con->query("SELECT * FROM frais WHERE cin LIKE '$cin_candidat' AND categorie = '$candidat_categorie' ") 
+                    or die ($mysqli->error()); 
+                    /*End Afficher Liste Frais */
+
+                  while($row = $data_frais->fetch_assoc()) : 
+                  ?>
+                  <!---->
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <!---->
+                    <td>
+                    <?php echo $row['frais_dh']; ?>      
+                    </td>
+                    <td>
+                    <?php echo $row['date_payement']; ?>      
+                    </td>
+                    <td>
+                    <?php echo $row['methode']; ?>      
+                    </td>
+                    <td>
+                    <?php echo "Operation"; ?>      
+                    </td>
+                    <!---->
                   </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
+                  <?php endwhile ?>
                 </tbody>
               </table>
               <!--End Table-->
