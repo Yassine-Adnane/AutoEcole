@@ -119,6 +119,23 @@ if(isset($_POST['save_']))
         
   endwhile;
 
+  $Liste_coures_pr = $con->query("SELECT * FROM coures_pratiques WHERE categorie_permis = 'A - Moto'") 
+  or die($mysqli->error());
+    
+  while($row = $Liste_coures_pr->fetch_assoc()) :
+
+        $code_coure_pr_log  = $row['code_coure_pr'];
+        $cin_log_pr         = $cin;
+        $coure              = $row['description_pr'];
+        $type_coure         = "coure";
+        $categorie_permis   = $categorie;
+
+        $con->query("INSERT INTO log_coures_pr (code_coure_pr_log,cin,type_coure,coure,categorie) 
+        VALUES ('$code_coure_pr_log','$cin_log_pr','$type_coure','$coure','$categorie_permis')")
+        or die($mysqli->error());
+        
+  endwhile;
+
   /*End Traitement Add Listes Lessons*/
 
   /*Start Calcule Number Coures_Serie Moto*/

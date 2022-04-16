@@ -82,9 +82,13 @@ if(isset($_POST['save_pr']))
 
   if(!empty($coure_pr_value))
   {
-    $con ->query("INSERT INTO coures_pratiques (description_pr) 
-    VALUES ('$coure_pr_value')") 
-    or die($con->error); 
+    $code_val_pr = "moto_pr_".''.date("Ymdhis");
+    $categorie_moto_pr = "A - Moto";
+    $type_coures_pr = "coure";
+
+    $con ->query("INSERT INTO coures_pratiques (code_coure_pr,categorie_permis,description_pr,type_coures) 
+    VALUES ('$code_val_pr','$categorie_moto_pr','$coure_pr_value','$type_coures_pr')") 
+    or die($con->error);
   }
 }
 

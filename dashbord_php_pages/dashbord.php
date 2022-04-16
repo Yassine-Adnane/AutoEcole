@@ -631,89 +631,28 @@
               <h5 class="card-title">Listes Cours Théoriques</h5>
 
               <div class="activity">
+              
+              <!--Liste Des Coure Théoriques-->
+              
+              <?php
+                $resultdata = $con->query("SELECT * FROM coures_theorique") 
+                or die ($mysqli->error());
 
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 1</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                  <div class="activity-content">
-                    Définition Code de La route.
-                  </div>
-                </div><!-- End activity item-->
+                $indice_x = 1;
 
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 2</div>
-                  <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                  <div class="activity-content">
-                      Coure 2 : Lorem ipsum dolor sit.
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 3</div>
-                  <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                  <div class="activity-content">
-                    Lorem ipsum dolor sit Coure 3.
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 4</div>
-                  <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                  <div class="activity-content">
-                      Lorem ipsum dolor sit Coure 4.
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 5</div>
-                  <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                  <div class="activity-content">
-                    Lorem ipsum dolor sit Coure 5.
-                  </div>
-                </div><!-- End activity item-->
-
-               
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 6</div>
-                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                  <div class="activity-content">
-                      Lorem ipsum dolor sit Coure 6.
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 7</div>
-                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                  <div class="activity-content">
-                    Lorem ipsum dolor sit Coure 7.
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 8</div>
-                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                  <div class="activity-content">
-                     Lorem ipsum dolor sit Coure 8.
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 9</div>
-                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                  <div class="activity-content">
-                     Lorem ipsum dolor sit Coure 9.
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 10</div>
-                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                  <div class="activity-content">
-                    Lorem ipsum dolor sit Coure 10.
-                  </div>
-                </div><!-- End activity item-->
-
+                while($row = $resultdata->fetch_assoc()) :
+                ?>
+                    <div class="activity-item d-flex">
+                    <div class="activite-label"><?php echo "Coure  $indice_x";  $indice_x++; ?></div>
+                    <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                    <div class="activity-content">
+                      <?php echo $row['description_th']; ?>
+                    </div>
+                  </div><!-- End activity item-->
+                <?php
+                endwhile;
+                ?>
+ 
               </div>
 
             </div>
@@ -739,46 +678,28 @@
               <!-- Start Coure Pratiques -->
 
               <!-- ****************************************** -->
-              <div class="activity">
+              <div class="activity" style="margin-bottom:30px" >
 
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 1</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                  <div class="activity-content">
-                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
-                  </div>
-                </div><!-- End activity item-->
-                
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 2</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                  <div class="activity-content">
-                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
-                  </div>
-                  
-                </div><!-- End activity item-->
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 3</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                  <div class="activity-content">
-                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
-                  </div>
-                </div><!-- End activity item-->
+                  <!--Liste Des Coure Théoriques-->
+                  <?php
+                    $resultdata = $con->query("SELECT * FROM coures_pratiques") 
+                    or die ($mysqli->error());
 
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 4</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                  <div class="activity-content">
-                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
-                  </div>
+                    $indice_x = 1;
 
-                </div><!-- End activity item-->
-                <div class="activity-item d-flex">
-                  <div class="activite-label">Coure 5</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                  <div class="activity-content">
-                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
-                  </div>
+                    while($row = $resultdata->fetch_assoc()) :
+                    ?>
+                        <div class="activity-item d-flex">
+                        <div class="activite-label"><?php echo "Coure  $indice_x";  $indice_x++; ?></div>
+                        <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                        <div class="activity-content">
+                          <?php echo $row['description_pr']; ?>
+                        </div>
+                      </div><!-- End activity item-->
+                    <?php
+                    endwhile;
+                    ?>
+
                 </div><!-- End activity item-->
 
                 </div>
