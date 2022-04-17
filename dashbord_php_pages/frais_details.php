@@ -409,13 +409,14 @@ if(isset($_POST['add_frais']))
                   </select>
                   
                   <?php
-                  if($Reste_frais == $Total_frais)
-                  { 
+                  if($Reste_frais == 0)
+                  { echo "<script>alert(\"$Reste_frais\")</script>";
+                    echo "<script>alert(\"$Total_frais\")</script>";
                   ?>
-                  <button button type="submit" class="btn btn-success" name="add_frais" style="margin-left:20px" disabled>Ajouter Faris</button>
+                    <button button type="submit" class="btn btn-success" name="add_frais" style="margin-left:20px" disabled>Ajouter Faris</button>
                   <?php
                   }
-                  else
+                  elseif($Total_frais >= $Reste_frais)
                   { ?>
                       <button button type="submit" class="btn btn-success" name="add_frais" style="margin-left:20px">Ajouter Faris</button>
                   <?php

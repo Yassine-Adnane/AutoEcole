@@ -308,7 +308,8 @@
                         <th scope="col">Prenom</th>
                         <th scope="col">Catégorie</th>
                         <th scope="col">Forfait</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Frais</th>
+                        <th scope="col">Reste</th>
                         <th scope="col">Details Frais</th>
                       </tr>
                     </thead>
@@ -321,6 +322,7 @@
                           <td> <?php echo $row['prenom']; ?>  </td>
                           <td> <?php echo $row['categorie']; ?>  </td>
                           <td> <?php echo $row['forfais']; ?>  </td>
+                          <td> <?php echo $row['frais_candidat'].' DH'; ?>  </td>
                           <td> 
                               <!-- -->
                               <?php
