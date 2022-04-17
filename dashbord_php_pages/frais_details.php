@@ -87,6 +87,21 @@ if(isset($_POST['add_frais']))
 
 }
 
+if(isset($_GET['delete']))
+{
+    $id_frais = $_GET['delete'];
+
+    $array_data = explode(",",$id_frais);
+
+    $val_id = $array_data[0];
+    $val_cin = $array_data[1];
+
+    $con ->query("DELETE FROM frais WHERE (id = '$val_id')") 
+    or die ($mysqli->error());
+
+    header("location:frais_details.php?show=$val_cin");
+}
+
 
 
 ?>
@@ -410,8 +425,7 @@ if(isset($_POST['add_frais']))
                   
                   <?php
                   if($Reste_frais == 0)
-                  { echo "<script>alert(\"$Reste_frais\")</script>";
-                    echo "<script>alert(\"$Total_frais\")</script>";
+                  { 
                   ?>
                     <button button type="submit" class="btn btn-success" name="add_frais" style="margin-left:20px" disabled>Ajouter Faris</button>
                   <?php
@@ -459,7 +473,7 @@ if(isset($_POST['add_frais']))
                     <?php echo $row['methode']; ?>      
                     </td>
                     <td>
-                        <a href="?delete=<?php echo $row['cin']?>,<?php echo $row['categorie']?>">Supprmier</a>
+                        <a href="?delete=<?php echo $row['id']?>,<?php echo $row['cin']?>">Supprmier</a>
                     </td>
                     <!---->
                   </tr>
