@@ -63,13 +63,15 @@
     </a>
   </li>
 
+  <!-- 
   <li class="nav-item">
     <a class="nav-link collapsed" href="frais_details.php">
       <i class="bi bi-file-earmark"></i>
       <span>Details Frais</span>
     </a>
   </li>
-
+  -->
+  
   <!-- 
 
   <li class="nav-item">

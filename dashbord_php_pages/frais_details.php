@@ -84,7 +84,6 @@ if(isset($_POST['add_frais']))
 
   header("location:frais_details.php?show=$cin_candidat");
   
-
 }
 
 if(isset($_GET['delete']))

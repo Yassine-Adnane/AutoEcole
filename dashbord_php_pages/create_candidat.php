@@ -67,7 +67,7 @@ if(isset($_POST['save_']))
  if($categorie == "A - Moto")
  {
    
-    if($forfais = '30 Heurs')
+    if($forfais == '30 Heurs')
     {
       
       $faris_moto_thorique = 0;
@@ -138,7 +138,8 @@ if(isset($_POST['save_']))
 
   /*End Traitement Add Listes Lessons*/
 
-  /*Start Calcule Number Coures_Serie Moto*/
+  /*Start Calcule Number Coures_Serie Moto ==> Théorique*/
+  
   if($categorie == 'A - Moto')
   {
     /*********************************************/
@@ -192,27 +193,68 @@ if(isset($_POST['save_']))
     /*********************************************/
 
   }
-  /*End Calcule Number Coures_Serie Moto*/
   
+  /*End Calcule Number Coures_Serie Moto ==> Théorique*/
 
-
-  
-
-  /*
-  for ($x = 0; $x <= $rowcount; $x++) 
+  /*Start Calcule Number Coures_Serie Moto ==> Pratique*/
+  if($categorie == 'A - Moto')
   {
-        $code_coure_th_log  = $row['code_coure_th'];
-        $cin_log_th         = $cin;
-        $coure              = $row['description_th'];
-        $type_coure         = "coure";
+    /*********************************************/
+      if($forfais == '20 Heurs') /* Forfait 20Heurs */
+      {
+        for ($x = 1; $x < 11; $x++) 
+        {
+            $cin_log_th         = $cin;
+            $code_serie         = "moto_Route_".''.rand(1,100000000);
+            $type_coure         = "Série";
+            $coure              = "Série Route Examen num-". $x;
+            $categorie_permis   = $categorie;
+      
+            $con->query("INSERT INTO log_coures_pr (code_coure_pr_log,cin,type_coure,coure,categorie) 
+            VALUES ('$code_serie','$cin_log_th','$type_coure','$coure','$categorie_permis')")
+            or die($mysqli->error());
+        }
+      }
+    /*********************************************/
+    /*********************************************/
+      if($forfais == '30 Heurs') /* Forfait 20Heurs */
+      {
+        for ($x = 1; $x < 21; $x++) 
+        {
+            $cin_log_th         = $cin;
+            $code_serie         = "moto_Route_".''.rand(1,100000000);
+            $type_coure         = "Série";
+            $coure              = "Série Route Examen num-". $x;
+            $categorie_permis   = $categorie;
+      
+            $con->query("INSERT INTO log_coures_pr (code_coure_pr_log,cin,type_coure,coure,categorie) 
+            VALUES ('$code_serie','$cin_log_th','$type_coure','$coure','$categorie_permis')")
+            or die($mysqli->error());
+        }
+      }
+    /*********************************************/
+    /*********************************************/
+      if($forfais == '40 Heurs') /* Forfait 20Heurs */
+      {
+        for ($x = 1; $x < 31; $x++) 
+        {
+          echo "<script>alert(\"$x\")</script>";
+            $cin_log_th         = $cin;
+            $code_serie         = "moto_Route_".''.rand(1,100000000);
+            $type_coure         = "Série";
+            $coure              = "Série Route Examen num-". $x;
+            $categorie_permis   = $categorie;
+      
+            $con->query("INSERT INTO log_coures_pr (code_coure_pr_log,cin,type_coure,coure,categorie) 
+            VALUES ('$code_serie','$cin_log_th','$type_coure','$coure','$categorie_permis')")
+            or die($mysqli->error());
+        }
+      }
+    /*********************************************/
 
-        $con->query("INSERT INTO log_coures_th (code_coure_th_log,cin,type_coure,coure) 
-        VALUES ('$code_coure_th_log','$cin_log_th','$type_coure','$coure')")
-        or die($mysqli->error());
   }
-  */
-  /*echo "<script>alert(\"$rowcount\")</script>";*/
-  /*End Calcule Number Coures_Serie*/
+  /*End Calcule Number Coures_Serie Moto ==> Pratique*/
+  
 
 
 
