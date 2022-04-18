@@ -19,6 +19,8 @@ if(isset($_GET['delete']))
     or die ($mysqli->error());
     $con ->query("DELETE FROM log_coures_pr WHERE (cin LIKE '$val_cin') AND (categorie = '$val_categorie') ") 
     or die ($mysqli->error());
+    $con ->query("DELETE FROM frais WHERE (cin LIKE '$val_cin') AND (categorie = '$val_categorie') ") 
+    or die ($mysqli->error());
 
     header("location:crud.php");
 

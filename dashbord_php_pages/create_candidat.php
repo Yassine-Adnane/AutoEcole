@@ -67,6 +67,21 @@ if(isset($_POST['save_']))
  if($categorie == "A - Moto")
  {
    
+    if($forfais == '20 Heurs')
+    {
+      
+      $faris_moto_thorique = 0;
+      $faris_moto_pratique = 0;
+
+      $faris_moto_thorique = 30*30; //30 => Nomber Heurs,  30 => prix de l'heurs
+
+      $faris_moto_pratique = 30*45; //30 => Nomber Heurs,  45 => 40dh prix de l'heurs
+
+      // + Frais Dariba 750 dh + Frais 150 dh Docteur + 50dh Dossier + 450dh TVA
+
+      $frais_candidat = $faris_moto_thorique + $faris_moto_pratique + 150 + 750 + 50 + 450;
+
+    }
     if($forfais == '30 Heurs')
     {
       
@@ -76,6 +91,22 @@ if(isset($_POST['save_']))
       $faris_moto_thorique = 30*25; //30 => Nomber Heurs,  25 => prix de l'heurs
 
       $faris_moto_pratique = 30*40; //30 => Nomber Heurs,  40 => 40dh prix de l'heurs
+
+      // + Frais Dariba 750 dh + Frais 150 dh Docteur + 50dh Dossier + 450dh TVA
+
+      $frais_candidat = $faris_moto_thorique + $faris_moto_pratique + 150 + 750 + 50 + 450;
+
+    }
+
+    if($forfais == '40 Heurs')
+    {
+      
+      $faris_moto_thorique = 0;
+      $faris_moto_pratique = 0;
+
+      $faris_moto_thorique = 30*20; //30 => Nomber Heurs,  20 => prix de l'heurs
+
+      $faris_moto_pratique = 30*35; //30 => Nomber Heurs,  35 => 40dh prix de l'heurs
 
       // + Frais Dariba 750 dh + Frais 150 dh Docteur + 50dh Dossier + 450dh TVA
 
