@@ -3,6 +3,11 @@
 
 require "../php/connection.php";
 
+
+if(isset($_POST['test']))
+{
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -308,13 +313,13 @@ require "../php/connection.php";
                     <th scope="col">CIN</th>
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
-                    <th scope="col">Catégorie Permis</th>
+                    <th scope="col">Catégorie</th>
                     <th scope="col">Reste Frais</th>
                     <th scope="col">Exman Theorique</th>
                     <th scope="col">Ratt. Theorique</th>
                     <th scope="col">Examen Pratique</th>
                     <th scope="col">Ratt. Pratique</th>
-                    <th scope="col">Affécté</th>
+                    <th scope="col">Opération</th>
                   </tr>
                 </thead>
                 <?php
@@ -364,17 +369,19 @@ require "../php/connection.php";
                        <?php 
                        if (str_contains($row['exman_th'], '0000-00-00')) 
                           {
-                           echo '---------'; 
+                          ?>
+                            <input type="date" name="date_th">
+                          <?php
                           } 
                           else
                            {
-                            echo $row['exman_th'];
+                              echo $row['exman_th'];
                            }
                         ?>
                     </td>
 
                     <td>
-                       <?php 
+                    <?php 
                        if (str_contains($row['exman_ratt_th'], '0000-00-00')) 
                           {
                            echo '---------'; 
@@ -413,7 +420,40 @@ require "../php/connection.php";
                     </td>
 
                     <td>
-                       <a href="">Affécté</a>
+                       <a href="?afecte=<?php echo $row['cin']?>,
+                                        <?php echo $row['categorie']?>,
+                                        <?php echo $row['exman_th']?>
+                                        ">Affécté</a>
+                        
+                                        
+                       <a href="?afecte=<?php echo $row['cin']?>,<?php echo $row['categorie']?>">Supprimer</a>
+                       
+                       <?php
+
+                        $cin_update = $row['cin'];
+
+                        if(isset($_GET['afecte']))
+                        {
+
+                          $valuedata = $_GET['afecte'];
+                          $array_data = explode(",",$valuedata);
+                        
+                          $Val_cin       = $array_data[0]; 
+                          $Val_categorie = $array_data[1];
+                          //$Val_exman_th  = $array_data[2];
+
+                        
+                          //echo "<script>alert(\"$Val_cin\")</script>";
+
+                          /*
+                          $con ->query("UPDATE examanes_candidats
+                          SET exman_th= '$Val_exman_th'
+                          WHERE (cin = '$Val_cin' )")
+                          or die($con->error);
+                          */
+                        }
+                        ?>
+                        
                     </td>
 
                   </tr>
