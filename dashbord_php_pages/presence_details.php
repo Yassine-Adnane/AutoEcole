@@ -53,6 +53,29 @@ if(isset($_GET['upd_date_th']))
   header("location:presence_details.php?show=$Val_cin");
 }
 
+if(isset($_GET['upd_date_pr']))
+{
+
+  $valuedata = $_GET['upd_date_pr'];
+  $array_data = explode(",",$valuedata);
+
+  /* Valeur Code Coure Theorque <=> $array_data[0]; */
+  /* Valeur CIN Candidat        <=> $array_data[1]; */
+
+  $Val_cin       = $array_data[1]; 
+  $Val_code_affe = $array_data[0]; 
+
+  $date_coure_th = date("Y-m-d");
+    
+  $con ->query("UPDATE log_coures_pr
+                    SET date_etudie='$date_coure_th'
+                    WHERE (code_coure_pr_log = '$Val_code_affe' )
+                    AND (cin LIKE '$Val_cin')")
+  or die($con->error);
+
+  header("location:presence_details.php?show=$Val_cin");
+}
+
 ?>
 
 
@@ -370,7 +393,7 @@ if(isset($_GET['upd_date_th']))
                 <!-- -->
                   <?php 
                       $indiceLoop = 1;
-                      $resultdata_pr = $con ->query("SELECT DISTINCT
+                      $resultdata_th = $con ->query("SELECT DISTINCT
                             lc.code_coure_th_log,
                             lc.cin,
                             lc.coure,
@@ -384,7 +407,7 @@ if(isset($_GET['upd_date_th']))
                       ORDER BY lc.id ASC")
                       or die($con->error);
 
-                      while($row = $resultdata_pr->fetch_assoc()) : 
+                      while($row = $resultdata_th->fetch_assoc()) : 
                   ?>
                   <tr>
                     <td>
@@ -450,6 +473,119 @@ if(isset($_GET['upd_date_th']))
         </div>
       </div>
     </section>
+
+    <!-- Strat Listee Présence Pratique -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <!-- -->
+          
+          <!-- -->
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Liste des Séances (Pratique) </h4>
+              <!-- -->
+              <?php 
+                   
+              ?>
+
+              <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Coures</th>
+                  <th scope="col">Type Coure</th>
+                  <th scope="col">Date Etudié</th>
+                  <th scope="col">Operation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- -->
+                  <?php 
+                      $indiceLoop = 1;
+                      $resultdata_pr = $con ->query("SELECT DISTINCT
+                            lc.code_coure_pr_log,
+                            lc.cin,
+                            lc.coure,
+                            lc.type_coure,
+                            lc.date_etudie,
+                            lc.categorie
+                      FROM log_coures_pr lc
+                      LEFT JOIN coures_pratiques th
+                      ON th.categorie_permis = lc.categorie
+                      WHERE lc.cin = '$cin_candidat'
+                      ORDER BY lc.id ASC")
+                      or die($con->error);
+
+                      while($row = $resultdata_pr->fetch_assoc()) : 
+                  ?>
+                  <tr>
+                    <td>
+                    <?php echo $indiceLoop++; ?>
+                    
+                    </td>
+
+                    <td>
+                        <?php echo $row['coure']; ?>
+                    </td>
+                    <td>
+                        <?php echo $row['type_coure']; ?>
+                    </td>
+                    <td>
+                        <?php 
+                        if($row['date_etudie'] == '0000-00-00')
+                        {
+                          echo '---------';
+                        }
+                        else
+                        {
+                          echo $row['date_etudie'];
+                        }
+                         
+                        ?>
+                    </td>
+
+                    <td>
+                        <?php 
+                        if($row['date_etudie'] <> '0000-00-00')
+                        {
+                          echo "Déja Etudié";
+                        }
+                        else
+                        {
+                        ?>
+                          <a href="?upd_date_pr=<?php echo $row['code_coure_pr_log']?>,<?php echo $row['cin']?> ">
+                          Affecté Coure
+                        </a>  
+                        <?php  
+                        }
+                         
+
+                        ?>
+                    </td>
+                  </tr>
+                <!-- -->
+                <?php endwhile ?>
+              </tbody>
+            </table>
+              <!-- -->
+              
+              
+            </div>
+          </div>
+
+          
+
+        </div>
+
+        
+
+        </div>
+      </div>
+    </section>
+
 
   </main><!-- End #main -->
 
