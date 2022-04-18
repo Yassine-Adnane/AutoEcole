@@ -1,3 +1,20 @@
+<?php
+
+require "../php/connection.php";
+
+$CheckUpdate = '';
+$valcoures_update = '';
+
+
+if(isset($_GET['save_ecole']))
+{
+  //$val_description = $_GET['save_ecole'];
+
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -289,16 +306,71 @@
 
     <section class="section">
       <div class="row">
-        <div class="col-lg-12">
 
+      <!-- -->
+        <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Listes des Charges - AutoEcole</h5>
+              <h5 class="card-title">Charges Ecole</h5>
+              <input type="text" class="form-control" name="coure_label_th" value ="<?php echo $valcoures_update ?>" style="width:60%; display: inline;" >
+              <?php 
+                        if($CheckUpdate == false)
+                        { 
+                          
+
+                        ?>
+                          <button type="submit" class="btn btn-success" name="save_ecole" style="display:inline;">Ajouter Charge</button>
+                        <?php 
+                        }
+                        else
+                        {
+                          
+                        ?>
+                          <button type="submit" class="btn btn-success" name="update_th" style="display:inline;">Charge Coure</button>
+                        <?php
+                        }
+                ?>
+                
+                <!--Start Table-->
+                <table class="table" style="margin-top:10px">
+                    <thead>
+                      <tr>
+                        <th scope="col">Description</th>
+                        <th scope="col">Prioritaire</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Opérations</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <?php 
+                        $resultdata_th = $con ->query("SELECT * FROM charges ORDER BY id ASC") or die($con->error); 
+                        while($row = $resultdata_th->fetch_assoc()) : 
+                      ?>
+
+                      <tr>
+                        <td>
+                            <?php echo $row['description']; ?>
+                        </td>
+                      </tr>
+                      <?php endwhile ?>
+                    </tbody>
+                  </table>
+                <!--End Table-->
+            </div>
+            
+          </div>
+        </div>
+        <!-- -->
+      <!-- -->
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Charges Voiture & Matérials</h5>
               <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
             </div>
           </div>
-
         </div>
+        <!-- -->
 
         
 
