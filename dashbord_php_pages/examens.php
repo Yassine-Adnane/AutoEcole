@@ -1,3 +1,10 @@
+
+<?php
+
+require "../php/connection.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -293,8 +300,129 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Listes des Candidats - Presences</h5>
-              <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
+              <h5 class="card-title">Listes des Candidats - Examens</h5>
+              <!---->
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">CIN</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Catégorie Permis</th>
+                    <th scope="col">Reste Frais</th>
+                    <th scope="col">Exman Theorique</th>
+                    <th scope="col">Ratt. Theorique</th>
+                    <th scope="col">Examen Pratique</th>
+                    <th scope="col">Ratt. Pratique</th>
+                    <th scope="col">Affécté</th>
+                  </tr>
+                </thead>
+                <?php
+                $resultdata = $con ->query("SELECT 
+                      can.cin,
+                      can.nom,
+                      can.prenom,
+                      can.categorie,
+                      can.frais_candidat,
+                      fra.frais_dh,
+                      exman_th,
+                      exman_ratt_th,
+                      exman_pr,
+                      exman_ratt_pr,
+                      status_candidat
+                FROM candidats can
+                INNER JOIN frais fra
+                ON can.cin = fra.cin
+                INNER JOIN examanes_candidats
+                ON can.cin = fra.cin")
+                or die($con->error);
+                
+                ?>
+                <tbody>
+                  <?php
+                    while($row = $resultdata->fetch_assoc()) :
+                  ?>
+
+                  <tr>
+                    <td>
+                      <?php echo $row['cin']; ?>
+                    </td>
+                    <td>
+                      <?php echo $row['nom']; ?>
+                    </td>
+                    <td>
+                      <?php echo $row['prenom']; ?>
+                    </td>
+                    <td>
+                      <?php echo $row['categorie']; ?>
+                    </td>
+                    <td>
+                       <?php echo $row['frais_dh'] . " DH"; ?>
+                    </td>
+
+                    <td>
+                       <?php 
+                       if (str_contains($row['exman_th'], '0000-00-00')) 
+                          {
+                           echo '---------'; 
+                          } 
+                          else
+                           {
+                            echo $row['exman_th'];
+                           }
+                        ?>
+                    </td>
+
+                    <td>
+                       <?php 
+                       if (str_contains($row['exman_ratt_th'], '0000-00-00')) 
+                          {
+                           echo '---------'; 
+                          } 
+                          else
+                           {
+                            echo $row['exman_ratt_th'];
+                           }
+                        ?>
+                    </td>
+
+                    <td>
+                       <?php 
+                       if (str_contains($row['exman_pr'], '0000-00-00')) 
+                          {
+                           echo '---------'; 
+                          } 
+                          else
+                           {
+                            echo $row['exman_pr'];
+                           }
+                        ?>
+                    </td>
+
+                    <td>
+                       <?php 
+                       if (str_contains($row['exman_ratt_pr'], '0000-00-00')) 
+                          {
+                           echo '---------'; 
+                          } 
+                          else
+                           {
+                            echo $row['exman_ratt_pr'];
+                           }
+                        ?>
+                    </td>
+
+                    <td>
+                       <a href="">Affécté</a>
+                    </td>
+
+                  </tr>
+                  
+                  <?php endwhile ?>
+                </tbody>
+                
+              </table>
+              <!---->
             </div>
           </div>
 
