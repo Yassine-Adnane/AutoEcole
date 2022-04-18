@@ -4,8 +4,23 @@
 require "../php/connection.php";
 
 
-if(isset($_POST['test']))
+if(isset($_GET['afecte']))
 {
+  $valuedata = $_GET['afecte'];
+  $array_data = explode(",",$valuedata);
+                        
+  $Val_cin       = $array_data[0]; 
+  $Val_categorie = $array_data[1];
+  $Val_exman_th  = $array_data[2];
+
+  //$Val_exman_th = ($_GET['date_th']);
+            
+  /*
+  $con ->query("UPDATE examanes_candidats
+  SET exman_th= '$Val_exman_th'
+  WHERE (cin = '$Val_cin' )")
+  or die($con->error);
+  */
 }
 
 ?>
@@ -50,6 +65,9 @@ if(isset($_POST['test']))
 </head>
 
 <body>
+
+  <!-- ======= Model  ======= -->
+  <!-- ======= End Model ======= -->
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -302,10 +320,10 @@ if(isset($_POST['test']))
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
-
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Listes des Candidats - Examens</h5>
+              <!---->
               <!---->
               <table class="table">
                 <thead>
@@ -347,7 +365,8 @@ if(isset($_POST['test']))
                   <?php
                     while($row = $resultdata->fetch_assoc()) :
                   ?>
-
+                  <form action="" method="GET">
+                 
                   <tr>
                     <td>
                       <?php echo $row['cin']; ?>
@@ -369,8 +388,9 @@ if(isset($_POST['test']))
                        <?php 
                        if (str_contains($row['exman_th'], '0000-00-00')) 
                           {
+                            echo '---------'; 
                           ?>
-                            <input type="date" name="date_th">
+                            
                           <?php
                           } 
                           else
@@ -421,43 +441,13 @@ if(isset($_POST['test']))
 
                     <td>
                        <a href="?afecte=<?php echo $row['cin']?>,
-                                        <?php echo $row['categorie']?>,
-                                        <?php echo $row['exman_th']?>
-                                        ">Affécté</a>
-                        
-                                        
-                       <a href="?afecte=<?php echo $row['cin']?>,<?php echo $row['categorie']?>">Supprimer</a>
-                       
-                       <?php
-
-                        $cin_update = $row['cin'];
-
-                        if(isset($_GET['afecte']))
-                        {
-
-                          $valuedata = $_GET['afecte'];
-                          $array_data = explode(",",$valuedata);
-                        
-                          $Val_cin       = $array_data[0]; 
-                          $Val_categorie = $array_data[1];
-                          //$Val_exman_th  = $array_data[2];
-
-                        
-                          //echo "<script>alert(\"$Val_cin\")</script>";
-
-                          /*
-                          $con ->query("UPDATE examanes_candidats
-                          SET exman_th= '$Val_exman_th'
-                          WHERE (cin = '$Val_cin' )")
-                          or die($con->error);
-                          */
-                        }
-                        ?>
+                                        <?php echo $row['categorie']?>                                        
+                        ">Affécté</a>
                         
                     </td>
 
                   </tr>
-                  
+                  </form>
                   <?php endwhile ?>
                 </tbody>
                 
