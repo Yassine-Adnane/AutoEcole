@@ -63,6 +63,13 @@
     </a>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="examens.php">
+      <i class="bi bi-file-earmark"></i>
+      <span>Gestion Exmans</span>
+    </a>
+  </li>
+
   <!-- 
   <li class="nav-item">
     <a class="nav-link collapsed" href="frais_details.php">
