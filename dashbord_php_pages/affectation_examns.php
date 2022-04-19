@@ -3,7 +3,40 @@
 
 require "../php/connection.php";
 
+if(isset($_GET['show']))
+{
+  $cin_candidat = $_GET['show'];
+
+  $resultdata = $con->query("SELECT * FROM examanes_candidats WHERE cin LIKE '$cin_candidat'") 
+  or die ($mysqli->error());
+
+  while($row = $resultdata->fetch_assoc()) :
+
+    
+    $valeur_cin = $row['cin'];
+    $valeur_th   = $row['exman_th'];
+
+  endwhile;
+  
+
+}
+
+if(isset($_GET['date_ex_th']))
+{
+  
+  $valeur_date_th = $_GET['date_th'];
+
+  echo "<script>alert(\"$valeur_cin\")</script>";
+  echo "<script>alert(\"$valeur_date_th\")</script>";
+
+
+}
+
+
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,10 +66,8 @@ require "../php/connection.php";
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
 
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.2.2
@@ -48,8 +79,6 @@ require "../php/connection.php";
 
 <body>
 
-  <!-- ======= Model  ======= -->
-  <!-- Button trigger modal -->  
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -288,7 +317,7 @@ require "../php/connection.php";
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Gestion Examens</h1>
+      <h1>Examens Candidats</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -301,136 +330,46 @@ require "../php/connection.php";
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
+
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Listes des Candidats - Examens</h5>
+              <h5 class="card-title">Liste des Examens - Candidat</h5>
+                <form action="" method="">
+                <div class="ex_th">
+                  <label style="margin-right:20px">Date Examan Théorique :</label>
+                  <input type="date" class="form-control" name="date_th" value ="<?php echo $valeur_th ?>" style="width:30%; display: inline;" >
+                  <button type="submit" name="date_ex_th" class="btn btn-success" style="width:15%">Affécter</button>
+                  <input type="text" name="test" id="" value="<?php echo $valeur_cin ?>">
+                </div>
+                <br>
+                <div class="ex_ratt_th" style="margin-top:10px">
+                    <label>Date Rattrapage Théorique :</label>
+                    <input type="date" class="form-control" name="coure_label_pr" value ="" style="width:30%; display: inline;" >
+                    <button type="button" class="btn btn-success" style="width:15%">Affécter</button>
+                </div>
+                <br>
+                <div class="ex_pr" style="margin-top:10px">
+                  <label style="margin-right:35px">Date Examan Pratique :</label>
+                  <input type="date" class="form-control" name="coure_label_pr" value ="" style="width:30%; display: inline;"  >
+                  <button type="button" class="btn btn-success" style="width:15%">Affécter</button>
+                </div>
+                <br>
+                <div class="ex_ratt_pr" style="margin-top:10px;margin-bottom:30px;">
+                    <label style="margin-right:10px">Date Rattrapage Pratique :</label>
+                    <input type="date" class="form-control" name="coure_label_pr" value ="" style="width:30%; display: inline;"  >
+                    <button type="button" class="btn btn-success" style="width:15%">Affécter</button>
+                </div>
 
-              <!---->
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">CIN</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Prénom</th>
-                    <th scope="col">Catégorie</th>
-                    <th scope="col">Reste Frais</th>
-                    <th scope="col">Exman Theorique</th>
-                    <th scope="col">Ratt. Theorique</th>
-                    <th scope="col">Examen Pratique</th>
-                    <th scope="col">Ratt. Pratique</th>
-                    <th scope="col">Opération</th>
-                  </tr>
-                </thead>
-                <?php
-                $resultdata = $con ->query("SELECT 
-                      can.cin,
-                      can.nom,
-                      can.prenom,
-                      can.categorie,
-                      can.frais_candidat,
-                      fra.frais_dh,
-                      exman_th,
-                      exman_ratt_th,
-                      exman_pr,
-                      exman_ratt_pr,
-                      status_candidat
-                FROM candidats can
-                INNER JOIN frais fra
-                ON can.cin = fra.cin
-                INNER JOIN examanes_candidats
-                ON can.cin = fra.cin")
-                or die($con->error);
-                
-                ?>
-                <tbody>
-                  
-                  <?php
-                    while($row = $resultdata->fetch_assoc()) :
-                  ?>                 
-                  <tr>
+                <label style="margin-right:80px"><b>Resultat Final :</b></label>
+                <select class="form-select" style="width:30%;display: inline;margin-left:10px">
+                    <option selected>Status</option>
+                    <option value="réussir">Réussir</option>
+                    <option value="redoubler">Redoubler</option>
+                </select>
+                <button type="button" class="btn btn-success " style="width:15%;display: inline;margin-left:10px">Enregistrer Statut</button>
 
-                    <td>
-                      <?php echo $row['cin']; ?>
-                    </td>
-                    <td>
-                      <?php echo $row['nom']; ?>
-                    </td>
-                    <td>
-                      <?php echo $row['prenom']; ?>
-                    </td>
-                    <td>
-                      <?php echo $row['categorie']; ?>
-                    </td>
-                    <td>
-                       <?php echo $row['frais_dh'] . " DH"; ?>
-                    </td>
 
-                    <td>
-                       <?php 
-                       if (str_contains($row['exman_th'], '0000-00-00')) 
-                          {
-                            echo '---------'; 
-                          ?>
-                            
-                          <?php
-                          } 
-                          else
-                           {
-                              echo $row['exman_th'];
-                           }
-                        ?>
-                    </td>
-
-                    <td>
-                    <?php 
-                       if (str_contains($row['exman_ratt_th'], '0000-00-00')) 
-                          {
-                           echo '---------'; 
-                          } 
-                          else
-                           {
-                            echo $row['exman_ratt_th'];
-                           }
-                        ?>
-                    </td>
-
-                    <td>
-                       <?php 
-                       if (str_contains($row['exman_pr'], '0000-00-00')) 
-                          {
-                           echo '---------'; 
-                          } 
-                          else
-                           {
-                            echo $row['exman_pr'];
-                           }
-                        ?>
-                    </td>
-
-                    <td>
-                       <?php 
-                       if (str_contains($row['exman_ratt_pr'], '0000-00-00')) 
-                          {
-                           echo '---------'; 
-                          } 
-                          else
-                           {
-                            echo $row['exman_ratt_pr'];
-                           }
-                        ?>
-                    </td>
-
-                    <td>
-                      <a href="affectation_examns.php?show=<?php echo $row['cin']; ?>">Affécter </a>
-                    </td>
-                    
-                  </tr>
-
-                  <?php endwhile ?>
-                </tbody>
-                
-              </table>
-              <!---->
+                </form>
             </div>
           </div>
 
@@ -471,13 +410,7 @@ require "../php/connection.php";
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
-
-
-
-<script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js"></script>
 
 </body>
 

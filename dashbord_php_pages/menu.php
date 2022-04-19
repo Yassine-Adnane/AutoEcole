@@ -77,6 +77,13 @@
     </a>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="affectation_examns.php">
+      <i class="bi bi-file-earmark"></i>
+      <span>Affectation TEMP</span>
+    </a>
+  </li>
+
   <!-- 
   <li class="nav-item">
     <a class="nav-link collapsed" href="frais_details.php">
