@@ -85,9 +85,15 @@ if(isset($_GET['afecte']))
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
+                  <!--Start Form--> 
                   <div class="modal-body">
-                    <input type="text" name="" id="update_id">
+                      <div class="form-group">
+                        <label>CIN Candidat :</label>
+                        <input type="text" class="form-control" name="cin" placeholder="cin Candidat" require >
+                    </div>
                   </div>
+                  <!--End Form--> 
+                  
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
@@ -533,12 +539,9 @@ if(isset($_GET['afecte']))
         $(document).on("click", "a.show_candidat",function()
         {
           var cin = $(this).data('id');
-
-          alert(cin);
-          
         });
 
-    </script>
+</script>
 
 
 <script src="assets/js/main.js"></script>
